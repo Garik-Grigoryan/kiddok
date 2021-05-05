@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container style="margin-bottom: 120px; max-width: 900px;">
     <v-row>
       <v-col sm="6" xs="12" md="4" v-for="(item, i) in items" :key="i">
         <v-list :three-line="true" :class="item.class">
