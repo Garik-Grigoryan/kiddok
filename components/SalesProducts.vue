@@ -2,6 +2,7 @@
   <v-sheet
     class="mx-auto"
     max-width="120%"
+    style="margin-bottom: 120px;"
   >
     <v-slide-group
       v-model="model"
@@ -19,7 +20,7 @@
             color="grey lighten-4"
             class="ma-4"
             width="280"
-            height="350"
+            height="450"
             style="margin: 16px 10px !important; border-color: transparent !important; background-color: transparent !important; box-shadow: none;"
           >
             <nuxt-link :to="`/product/${product.id}`">
@@ -35,13 +36,21 @@
             <v-slide-y-reverse-transition>
               <v-card-text
                 class="pt-6"
-                style="position: relative; height: 80px; text-align: center;"
+                style="position: relative; height: 80px;"
               >
                 <nuxt-link :to="`/product/${product.id}`">
-                  <h3 v-if="$i18n.locale === 'am'" class=" font-weight-light font-weight-bold white--text mb-2" v-text="product.name_am" style="color: #352249 !important; font-weight: 100 !important;"></h3>
-                  <h3 v-if="$i18n.locale === 'en'" class=" font-weight-light font-weight-bold white--text mb-2" v-text="product.name_en" style="color: #352249 !important; font-weight: 100 !important;"></h3>
-                  <h3 v-if="$i18n.locale === 'ru'" class=" font-weight-light font-weight-bold white--text mb-2" v-text="product.name_ru" style="color: #352249 !important; font-weight: 100 !important;"></h3>
-                  <v-btn style="background: #B22180; padding: 12px; text-align: center; border-radius: 16px; color: white; width: 200px; text-transform: none;">Գնել հիմա</v-btn>
+                  <h3 v-if="$i18n.locale === 'am'" class="font-weight-light font-weight-bold white--text mb-2" v-text="product.name_am" style="color: #352249 !important; font-weight: 100 !important; font-size: 18px; margin-bottom: 16px !important;"></h3>
+                  <h3 v-if="$i18n.locale === 'en'" class="font-weight-light font-weight-bold white--text mb-2" v-text="product.name_en" style="color: #352249 !important; font-weight: 100 !important; font-size: 18px; margin-bottom: 16px !important;"></h3>
+                  <h3 v-if="$i18n.locale === 'ru'" class="font-weight-light font-weight-bold white--text mb-2" v-text="product.name_ru" style="color: #352249 !important; font-weight: 100 !important; font-size: 18px; margin-bottom: 16px !important;"></h3>
+                  <p class="price" style="color: #352249;">Կոդ M8-151</p>
+                  <p class="price" style="color: #352249;">
+                    <span>Գին</span>
+                    <!-- <span v-if="product.discountType == 'percent'"><span class="discount">{{product.price}}</span> {{product.price - (product.price * product.discount)/100}} դրամ</span>
+                    <span v-else-if="product.discountType == 'price'">{{product.price - product.discount}} դրամ</span>
+                    <span v-else>{{product.price}} դրամ</span> -->
+                    <span>{{product.price}} դրամ</span>
+                  </p>
+                  <v-btn style="background: #B22180; padding: 12px; border-radius: 16px; color: white; width: 130px; text-transform: none;">Գնել հիմա</v-btn>
                 </nuxt-link>
               </v-card-text>
             </v-slide-y-reverse-transition>
@@ -57,7 +66,7 @@
 <script>
   export default {
     props: ['count', 'type'],
-    name: 'promoProductComponent',
+    name: 'salesProductComponent',
     data: () => ({
       model: null,
     }),
@@ -79,13 +88,7 @@
     },
     computed: {
       products() {
-        if(this.type === 'new'){
-          return this.$store.getters['products/newProducts'];
-        } else if(this.type === 'best'){
-          return this.$store.getters['products/bestProducts'];
-        } else if(this.type === 'sales'){
-          return this.$store.getters['products/salesProducts'];
-        }
+        return this.$store.getters['products/salesProducts'];
       }
     },
     mounted() {

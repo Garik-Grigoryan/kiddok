@@ -107,11 +107,11 @@
             </v-row>
           </v-container>
 
-          <!-- <h1  class="text-center mb-5" v-text="$t('bestSales')" style="text-transform: uppercase; color: #352249; font-weight: 100;"></h1>
-          <PromoProducts :count="7" type="best"></PromoProducts> -->
-
           <h1  class="text-center mb-5" v-text="'ԶԵՂՉՎԱԾ ՏԵՍԱԿԱՆԻ'" style="text-transform: uppercase; color: #352249; font-weight: 100;"></h1>
-          <PromoProducts :count="7" type="sales"></PromoProducts>
+          <SalesProducts :count="7" type="sales"></SalesProducts>
+
+          <h1  class="text-center mb-5" v-text="'BESTSELLERS'" style="text-transform: uppercase; color: #352249; font-weight: 400;"></h1>
+          <BestProducts :count="7" type="best"></BestProducts>
 
         </v-container>
           <v-snackbar
@@ -143,6 +143,8 @@ import HeadSlider from '~/components/HeadSlider.vue'
 import Brands from '~/components/Brands.vue'
 import ProductsSlider from '~/components/ProductsSlider.vue'
 import PromoProducts from '~/components/PromoProducts.vue'
+import SalesProducts from '~/components/SalesProducts.vue'
+import BestProducts from '~/components/BestProducts.vue'
 import Subscribe from '~/components/Subscribe.vue'
 import MiddleBanner from "../components/MiddleBanner";
 import deliveryBaner from "../components/deliveryBaner";
@@ -172,6 +174,8 @@ export default {
     Brands,
     ProductsSlider,
     PromoProducts,
+    SalesProducts,
+    BestProducts,
     Subscribe,
     MiddleBanner,
     deliveryBaner
