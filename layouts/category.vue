@@ -10,10 +10,10 @@
     </v-content>
 
     <MainDividers></MainDividers>
-    <v-footer style="justify-content: center"
+    <!-- <v-footer style="justify-content: center"
     >
       <span class="m-auto"> Davmar.am &copy; {{ new Date().getFullYear() }} All rights reserved</span>
-    </v-footer>
+    </v-footer> -->
     <client-only>
       <Cookie />
     </client-only>

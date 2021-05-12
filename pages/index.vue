@@ -114,7 +114,7 @@
           <BestProducts :count="7" type="best"></BestProducts>
 
         </v-container>
-          <v-snackbar
+          <!-- <v-snackbar
             v-model="snackbar"
             :color="color"
             :right="true"
@@ -134,7 +134,81 @@
                 <v-icon>mdi-close-circle-outline</v-icon>
               </v-btn>
             </template>
-          </v-snackbar>
+          </v-snackbar> -->
+
+        <v-footer style="justify-content: space-between; background: #01B8BE; align-items: baseline; padding: 90px;">
+          <div>
+            <div>
+              <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button">
+                <v-icon style="margin-right: 10px; font-size: 20px;">mdi-card-account-mail</v-icon>
+                <span>ԿՈՆՏԱԿՏԱՅԻՆ ՏՎՅԱԼՆԵՐ</span>
+              </v-btn>
+            </div>
+            <div>
+              <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button">
+                <v-icon style="margin-right: 10px; font-size: 20px;">mdi-phone</v-icon>
+                <span>+374 96 998996</span>
+              </v-btn>
+            </div>
+            <div>
+              <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button">
+                <v-icon style="margin-right: 10px; font-size: 20px;">mdi-whatsapp</v-icon>
+                <span>+374 96 998996</span>
+              </v-btn>
+            </div>
+            <div>
+              <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button">
+                <v-icon style="margin-right: 10px; font-size: 20px;">mdi-whatsapp</v-icon>
+                <span>+374 96 998996</span>
+              </v-btn>
+            </div>
+          </div>
+          <div>
+            <div>
+              <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button">
+                <span>ՄԵՐ ՀԱՍՑԵՆԵՐԸ</span>
+              </v-btn>
+            </div>
+            <div>
+              <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button">
+                <v-icon style="margin-right: 10px; font-size: 20px;">mdi-map-marker</v-icon>
+                <span style="text-transform: none;">Սուրմալու առևտրի կենտրոն 51Ա տաղավար</span>
+              </v-btn>
+            </div>
+            <div>
+              <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button">
+                <v-icon style="margin-right: 10px; font-size: 20px;">mdi-facebook</v-icon>
+                <v-icon style="margin-right: 10px; font-size: 20px;">mdi-instagram</v-icon>
+              </v-btn>
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button">
+                <span>ԱՅԼ</span>
+              </v-btn>
+            </div>
+            <div>
+              <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button" style="text-transform: none;">
+                <span>Աշխատանք</span>
+              </v-btn>
+            </div>
+            <div>
+              <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button" style="text-transform: none;">
+                <span>Պայմաններ և կանոններ</span>
+              </v-btn>
+            </div>
+            <div>
+              <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button" style="text-transform: none;">
+                <span>Առաքում և վերադարձ</span>
+              </v-btn>
+            </div>
+          </div>
+
+          <div style="width: 200px;"></div>
+        </v-footer>
+
       </div>
 </template>
 
@@ -218,5 +292,13 @@ export default {
       background-image: url(http://127.0.0.1:8000/images/fp_lbk_shop_by_age_0_desk_en_us_1008x330.jfif);
       background-size: cover;
       background-position: center;
+  }
+
+  div[data-v-2401beae] {
+      background-color: #01B8BE !important;
+  }
+
+  .v-footer .theme--light.v-btn--active::before {
+      opacity: 0;
   }
 </style>

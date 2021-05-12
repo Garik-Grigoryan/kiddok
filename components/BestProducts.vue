@@ -39,21 +39,29 @@
                 style="position: relative; height: 80px;"
               >
                 <nuxt-link :to="`/product/${product.id}`">
-                  <div style="display: flex; margin-bottom: 16px;">
-                    <v-icon v-text="'mdi-star-outline'" size="25"></v-icon>
-                    <v-icon v-text="'mdi-star-outline'" size="25"></v-icon>
-                    <v-icon v-text="'mdi-star-outline'" size="25"></v-icon>
-                    <v-icon v-text="'mdi-star-outline'" size="25"></v-icon>
-                    <v-icon v-text="'mdi-star-outline'" size="25"></v-icon>
-                    <div style="color: rgb(112, 112, 112); font-weight: 500; font-size: 17px; margin-left: 8px;"> (58)</div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
+                    <div style="display: flex; align-items: center;">
+                      <v-icon v-text="'mdi-star-outline'" size="20"></v-icon>
+                      <v-icon v-text="'mdi-star-outline'" size="20"></v-icon>
+                      <v-icon v-text="'mdi-star-outline'" size="20"></v-icon>
+                      <v-icon v-text="'mdi-star-outline'" size="20"></v-icon>
+                      <v-icon v-text="'mdi-star-outline'" size="20"></v-icon>
+                      <div style="color: rgb(112, 112, 112); font-weight: 500; font-size: 14px; margin-left: 8px;"> (58)</div>
+                    </div>
+                    <v-btn style="background: #B22180; padding: 6px 15px; border-radius: 16px; color: white; text-transform: none;">NEW</v-btn>
                   </div>
                   <!-- <h3 v-if="$i18n.locale === 'am'" class="font-weight-light font-weight-bold white--text mb-2" v-text="product.name_am" style="color: #352249 !important; font-weight: 100 !important; font-size: 18px; margin-bottom: 16px !important;"></h3>
                   <h3 v-if="$i18n.locale === 'en'" class="font-weight-light font-weight-bold white--text mb-2" v-text="product.name_en" style="color: #352249 !important; font-weight: 100 !important; font-size: 18px; margin-bottom: 16px !important;"></h3>
                   <h3 v-if="$i18n.locale === 'ru'" class="font-weight-light font-weight-bold white--text mb-2" v-text="product.name_ru" style="color: #352249 !important; font-weight: 100 !important; font-size: 18px; margin-bottom: 16px !important;"></h3> -->
-                  <h3 class="font-weight-light font-weight-bold white--text mb-2" v-text="'Մանկական խաղալիք զարգացնող'" style="color: #352249 !important; font-weight: 100 !important; font-size: 15px; margin-bottom: 16px !important;"></h3>
-                  <p class="price" style="color: #352249; font-size: 15px;">
-                    <span>{{product.price}} դրամ</span>
-                  </p>
+                  <h3 class="font-weight-light font-weight-bold white--text mb-2" v-text="'Մանկական խաղալիք զարգացնող'" style="color: #352249 !important; font-weight: 100 !important; font-size: 15px; margin-bottom: 8px !important;"></h3>
+                  <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                    <p class="price" style="color: #352249; font-size: 15px;">
+                      <span>{{product.price}} դրամ</span>
+                    </p>
+                    <v-btn :to="localePath('/cart')" color="#000" text class="my-2 nav_button" width="40px" style="justify-content: flex-end; padding: 0;">
+                      <v-icon >mdi-cart-outline</v-icon>
+                    </v-btn>
+                  </div>
                 </nuxt-link>
               </v-card-text>
             </v-slide-y-reverse-transition>

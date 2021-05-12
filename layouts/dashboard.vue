@@ -4,10 +4,10 @@
     <v-content>
       <nuxt />
     </v-content>
-    <v-footer style="justify-content: center"
+    <!-- <v-footer style="justify-content: center"
     >
       <span class="m-auto"> Davmar.am &copy; {{ new Date().getFullYear() }} All rights reserved</span>
-    </v-footer>
+    </v-footer> -->
   </v-app>
 </template>
 
