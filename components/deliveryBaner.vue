@@ -23,7 +23,7 @@
                   <v-icon v-text="item.icon" size="40"></v-icon>
                 </v-list-item-icon>
               </template>
-              <v-card>
+              <v-card class="questionnaire">
                 <v-list v-if="authenticated" style="background-color: #01235E" dark>
                   <v-list-item :to="localePath('/account')" v-text="$t('myAccount')"></v-list-item>
                   <v-list-item :to="localePath('/account/orders')" v-text="$t('orders')"></v-list-item>
@@ -41,45 +41,27 @@
                         <h3 style="text-align: center; margin-bottom: 30px;">Հարցաթերթիկ</h3>
                         <v-form @submit.prevent="false" ref="form" v-model="valid" :lazy-validation="true" >
                           
-                          <div id="app" style="border: 1px solid #C6C3C3; border-radius: 20px; padding: 15px;">
-                              <span>Որտեղի՞ց եք իմացել Kidd'Ok կազմակերպության մասին *</span>
-                              <br>
-                              <input type="radio" v-bind:value="{title:'Համացանցից'}" name="how_find_out">
-                              <label>Համացանցից</label>
-                              <br>
-                              <input type="radio" v-bind:value="{title:'Կազմակերպության աշխատակիցներից'}" name="how_find_out">
-                              <label>Կազմակերպության աշխատակիցներից</label>
-                              <br>
-                              <input type="radio" v-bind:value="{title:'Երրորդ անձից'}" name="how_find_out">
-                              <label>Երրորդ անձից</label>
+                          <div id="app" style="border: 1px solid #C6C3C3; border-radius: 20px; padding: 15px; margin-bottom: 18px;">
+                              <div style="margin-bottom: 20px;"><span>Որտեղի՞ց եք իմացել Kidd'Ok կազմակերպության մասին *</span></div>
+                              <div style="margin-bottom: 15px;">
+                                <input type="radio" v-bind:value="{title:'Համացանցից'}" name="how_find_out">
+                                <label style="margin-left: 10px;">Համացանցից</label>
+                              </div>
+                              <div style="margin-bottom: 15px;">
+                                <input type="radio" v-bind:value="{title:'Կազմակերպության աշխատակիցներից'}" name="how_find_out">
+                                <label style="margin-left: 10px;">Կազմակերպության աշխատակիցներից</label>
+                              </div>
+                              <div style="margin-bottom: 15px;">
+                                <input type="radio" v-bind:value="{title:'Երրորդ անձից'}" name="how_find_out">
+                                <label style="margin-left: 10px;">Երրորդ անձից</label>
+                              </div>
                           </div>
-
-                          <!-- <v-text-field v-model="loginForm.email" :rules="emailRules" label="ԷԼԵԿՏՐՈՆԱՅԻՆ ՀԱՍՑԵ" required ></v-text-field>
-                          <v-text-field v-model="loginForm.password" :rules="passwordRules" label="ԳԱՂՏՆԱԲԱՌ" type="password" required ></v-text-field> -->
-                          
-                          <!-- <v-card-actions style="display: block; padding: 0;">
-                            <label>ԷԼԵԿՏՐՈՆԱՅԻՆ ՀԱՍՑԵ</label><br>
-                            <input :rules="emailRules" placeholder="Էլ հասցե կամ հեռախոսահամար" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;margin-top: 10px;" required>
-                          </v-card-actions>
-                          <v-card-actions style="display: block; padding: 0;">
-                            <label>ԳԱՂՏՆԱԲԱՌ</label><br>
-                            <input :rules="passwordRules" type="password" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;margin-top: 10px;" required>
-                          </v-card-actions> -->
 
                           <v-card-actions style="padding: 0;">
                             <v-spacer></v-spacer>
-                            <v-btn color="primary" text @click="loginAction" style="background: #B22180; width: 100%; padding: 12px; border-radius: 6px; color: white !important;">ՄՈԻՏՔ</v-btn>
+                            <v-btn color="primary" text @click="loginAction" style="background: #B22180; width: 100%; padding: 12px; border-radius: 6px; color: white !important;">Հաստատել</v-btn>
                           </v-card-actions>
                         </v-form>
-                        <!-- <div style="margin-top: 40px;text-align: center;">
-                            <a href="#">Մոռացե՞լ եք Գաղտնաբառը</a>
-                        </div>
-                        <div style="margin-top: 30px;text-align: center;">
-                            <a href="#">Գրանցվել</a>
-                        </div>
-                        <div style="margin-top: 100px;">
-                          <p>Մուտք գործելով `դուք նշում եք, որ կարդացել եք և ընդունում եք Օգտագործման պայմանները և Գաղտնիության քաղաքականությունը.</p>
-                        </div> -->
                       </v-card-text>
                     </v-card>
                   </v-tab-item>
@@ -97,16 +79,6 @@
 
 <script>
   export default {
-    // data: function (){
-    //   return ({
-    //     item: 1,
-    //     items: [
-    //       { title: this.$t('freeDeliveryTitle'), icon: 'mdi-car', text: this.$t('freeDeliveryText'), class: 'block1' },
-    //       { title: this.$t('support'), icon: 'mdi-help', text: this.$t('supportText'), class: 'block2' },
-    //       { title: this.$t('returnTitle'), icon: 'mdi-backup-restore', text: this.$t('returnText'), class: 'block3' },
-    //     ],
-    //   })
-    // }
     data: function (){
       return ({
         item: 1,

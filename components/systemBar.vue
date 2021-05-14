@@ -116,16 +116,9 @@
       </v-list>
     </v-navigation-drawer>
     <v-system-bar height="auto" style="z-index: 5;" color="#01B8BE" fixed app dark id="create" >
-      <!-- <v-col lg="12" md="12" cols="12" style="display: flex; flex-wrap: wrap; padding: 0">
-        <h3 class="col-md-6 col-sm-12 col-lg-6 col-12 text-lg-left py-0 text-md-center responsive-text" >{{ $t('systemBarText') }}</h3>
-        <h3 class="col-md-6 col-sm-12 col-lg-6 col-12 text-lg-right py-0 text-md-center responsive-text" >
-          Phone: <a href="tel:+37455459550" style="color: #fff;">+37455459550</a> E-Mail: <a href="mailto:info@davmar.am" style="color: #fff;">info@davmar.am</a>
-        </h3>
-      </v-col> -->
       <v-col lg="1" md="1" class="text-center" style="padding: 12px 0;">
         <nuxt-link :to="localePath('/')" style="text-decoration: none;">
           <v-toolbar-title class="font-weight-bold" style="color: #ffffff; font-size: 35px; line-height: 0.8; padding-top: 5px; " v-text="$t('title')" />
-          <!-- <v-toolbar-title class="font-weight-bold" style="color: #ffffff; font-size: 20px" v-text="subTitle" /> -->
         </nuxt-link>
       </v-col>
       <v-col lg="7" md="7">
@@ -133,95 +126,12 @@
           <v-menu :open-on-hover="true" bottom offset-y v-for="(item, i) in leftSide" dark :key="i">
             <template v-slot:activator="{on}">
               <v-btn exact :to="localePath(item.to)" router color="#fff" text class="my-2 nav_button" v-on="on" bottom >
-                <!-- <div v-if="item.to === ''">{{ $t('brands') }}</div>
-                <div v-else-if="item.to === '/sales'">{{ $t('sales') }}</div>
-                <div v-else-if="item.to === '/condition'">{{ $t('conditions') }}</div> -->
-                <!-- <div v-else>{{ item.title }}</div> -->
                 <div>{{ item.title }}</div>
               </v-btn>
             </template>
-            <!-- <v-list v-if="item.items" style="background-color: #01235E">
-              <v-list-item-content style="align-items: normal">
-                <v-list-item-group v-if="item.items" v-for="(item, index) in item.items" :key="index">
-                  <v-list-item style="text-align: center;" exact :to="localePath(item.to)">
-                    <v-list-item-title>
-                      {{ item.title }}
-                    </v-list-item-title>
-                  </v-list-item>
-                  <v-divider style="background-color: #fff"></v-divider>
-                  <v-list-item-content class="">
-                    <v-list-item-group style="max-width: 150px;" v-if="item.items" v-for="(item, index) in item.items" :key="index">
-                      <v-list-item style="text-align: center;" exact :to="localePath(item.to)">
-                        <v-list-item-title>
-                          {{ item.title }}
-                        </v-list-item-title>
-                      </v-list-item>
-                      <v-list-item-content class="mainDivide">
-                        <v-list-item-group style="max-width: 150px;" v-if="item.items" v-for="(item, index) in item.items" :key="index" exact :to="localePath(item.to)">
-                          <v-list-item-title style="text-align: center;">{{ item.title }}</v-list-item-title>
-                        </v-list-item-group>
-                        <v-list-item v-else exact :to="localePath(item.to)">
-                          <v-list-item-title>{{ item.title }}</v-list-item-title>
-                        </v-list-item>
-                      </v-list-item-content>
-                    </v-list-item-group>
-                    <v-list-item v-else exact :to="localePath(item.to)">
-                      <v-list-item-title>{{ item.title }}</v-list-item-title>
-                    </v-list-item>
-                  </v-list-item-content>
-                </v-list-item-group>
-                <v-list style=" background: transparent; text-align: center; width: max-content;">
-                  <v-list-item-group v-for="(item1, index) in item.items" :key="index" style="width:100%">
-                        <v-list-item exact :to="localePath(item1.to)">
-                          <v-list-item-title>{{ item1.title }}</v-list-item-title>
-                        </v-list-item>
-                        <v-divider style="background: white"></v-divider>
-                  </v-list-item-group>
-                </v-list>
-                <v-list-item-group style="width: min-content; ">
-                  <v-list-item disabled>
-                    <v-img style="background-position: -70px !important;" position="-70px" src="/men.jpg" max-width="250" min-height="400" cover></v-img>
-                  </v-list-item>
-                </v-list-item-group>
-              </v-list-item-content>
-            </v-list> -->
           </v-menu>
         </v-row>
       </v-col>
-      <!-- <v-col lg="2" md="2">
-        <v-row justify="end" class="hidden-sm-and-down" no-gutters >
-
-          <v-menu :open-on-hover="true" bottom offset-y v-for="(item, i) in rightSide" dark :key="i">
-            <template v-slot:activator="{ on }">
-              <v-btn exact :to="localePath(item.to)" router color="#fff" text class="my-2 nav_button" v-on="on" bottom >
-                <div v-if="item.title_am !== undefined && $i18n.locale === 'am'">{{ item.title_am }}</div>
-                <div v-if="item.title_ru !== undefined && $i18n.locale === 'ru'">{{ item.title_ru }}</div>
-                <div v-if="item.title_en !== undefined && $i18n.locale === 'en'">{{ item.title_en }}</div>
-                <div v-if="item.to === '/aboutUs'">{{  $t('aboutUs') }}</div>
-              </v-btn>
-            </template>
-            <v-list v-if="item.items" style="background-color: #01235E">
-              <v-list-item-content style="align-items: normal">
-                <v-list-item-group v-for="(item1, index) in item.items" :key="index">
-                  <v-list-item exact exact-active-class="activeLink" :to="localePath(item1.to)" style="text-align:center">
-                    <v-list-item-title v-if="$i18n.locale === 'am'">{{ item1.title_am }}</v-list-item-title>
-                    <v-list-item-title v-if="$i18n.locale === 'ru'">{{ item1.title_ru }}</v-list-item-title>
-                    <v-list-item-title v-if="$i18n.locale === 'en'">{{ item1.title_en }}</v-list-item-title>
-                  </v-list-item>
-                  <v-divider v-if="item.items2.length > 0" style="background: white"></v-divider>
-                  <v-list-item-group v-for="(item2, index) in item.items2" :key="index">
-                    <v-list-item v-if="item1.id === item2.parent" exact :to="localePath(item2.to)">
-                      <v-list-item-title v-if="$i18n.locale === 'am'">{{ item2.title_am }}</v-list-item-title>
-                      <v-list-item-title v-if="$i18n.locale === 'ru'">{{ item2.title_ru }}</v-list-item-title>
-                      <v-list-item-title v-if="$i18n.locale === 'en'">{{ item2.title_en }}</v-list-item-title>
-                    </v-list-item>
-                  </v-list-item-group>
-                </v-list-item-group>
-              </v-list-item-content>
-            </v-list>
-          </v-menu>
-        </v-row>
-      </v-col> -->
       <v-row justify="start">
         <div style="padding: 0; margin: 5px 0;">
             <input v-model="message" placeholder="ՈՐՈՆԵԼ" style="border: 1px solid #FFFFFF; padding: 7px 12px; color: #FFFFFF; outline: none; font-size: 10px; width: 218px;">
@@ -234,7 +144,7 @@
               {{$t('myAccount')}}
             </v-btn>
           </template>
-          <v-card>
+          <v-card class="login-form">
             <v-list v-if="authenticated" style="background-color: #01235E" dark>
               <v-list-item :to="localePath('/account')" v-text="$t('myAccount')"></v-list-item>
               <v-list-item :to="localePath('/account/orders')" v-text="$t('orders')"></v-list-item>
@@ -283,30 +193,6 @@
                   </v-card-text>
                 </v-card>
               </v-tab-item>
-
-              <!-- <v-tab :href="`#tab-2`" >
-                Register
-              </v-tab>
-              <v-tab-item :value="'tab-2'">
-                <v-card flat tile >
-                  <v-card-text>
-                    <v-form @submit.prevent="false" ref="form" v-model="valid" :lazy-validation="true" >
-                      <v-alert v-if="registrationError" text type="error">
-                        {{registrationError.data.errors.email[0]}}
-                      </v-alert>
-                      <v-text-field v-model="registerForm.name" :rules="nameRules" label="Name" required ></v-text-field>
-                      <v-text-field v-model="registerForm.email" :rules="emailRules" label="E-mail" required ></v-text-field>
-                      <v-text-field v-model="registerForm.password" :rules="passwordRules" type="password" label="Password" required ></v-text-field>
-                      <v-text-field v-model="registerForm.password_confirmation" :rules="passwordConfirmation" label="Password"  required ></v-text-field>
-                      <v-checkbox v-model="checkbox" :rules="[v => !!v || 'You must agree to continue!']" label="Do you agree?" required ></v-checkbox>
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary" text @click="registerAction">Register</v-btn>
-                      </v-card-actions>
-                    </v-form>
-                  </v-card-text>
-                </v-card>
-              </v-tab-item> -->
             </v-tabs>
 
           </v-card>
@@ -544,10 +430,6 @@
             },
           ],
           rightSide: [
-            // {
-            //   title: this.$t('aboutUs'),
-            //   to: '/aboutUs'
-            // }
           ],
         }
       },
@@ -629,43 +511,6 @@
           this.cartCount = cookieResCart.length
         }
         this.onResize();
-
-        // this.brands.forEach(elem => {
-        //   this.leftSide[0].items.push(
-        //     {
-        //       id: elem.brand.id,
-        //       title: elem.brand.name,
-        //       to: '/brand/'+elem.brand.id+'?page=1',
-        //     }
-        //   )
-        //   if(elem.categories !== undefined) {
-        //     elem.categories.forEach(elem2 => {
-        //       this.leftSide[0].items2.push(
-        //         {
-        //           id: elem2.id,
-        //           brand: elem2.brand,
-        //           title_am: elem2.name_am,
-        //           title_ru: elem2.name_ru,
-        //           title_en: elem2.name_en,
-        //           to: '/category/'+elem2.id+'?page=1',
-        //         }
-        //       )
-        //       if(elem2.subcategories !== undefined) {
-        //         elem2.subcategories.forEach(elem3 => {
-        //           this.leftSide[0].items3.push(
-        //             {
-        //               parent: elem3.parent,
-        //               title_am: elem3.name_am,
-        //               title_ru: elem3.name_ru,
-        //               title_en: elem3.name_en,
-        //               to: '/category/'+elem3.id+'?page=1',
-        //             }
-        //           )
-        //         })
-        //       }
-        //     })
-        //   }
-        // })
       },
       methods: {
         onResize () {
@@ -804,6 +649,10 @@
     max-width: 600px !important;
     top: 5% !important;
     left: 31% !important;
+  }
+
+  .login-form {
+    width: 600px;
   }
 
   .v-tabs--icons-and-text > .v-tabs-bar {
