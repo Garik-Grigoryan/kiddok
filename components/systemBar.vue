@@ -116,9 +116,9 @@
       </v-list>
     </v-navigation-drawer>
     <v-system-bar height="auto" style="z-index: 5;" color="#01B8BE" fixed app dark id="create" >
-      <v-col lg="1" md="1" class="text-center" style="padding: 12px 0;">
+      <v-col lg="1" md="1" class="text-center" style="padding: 0;">
         <nuxt-link :to="localePath('/')" style="text-decoration: none;">
-          <v-toolbar-title class="font-weight-bold" style="color: #ffffff; font-size: 35px; line-height: 0.8; padding-top: 5px; " v-text="$t('title')" />
+          <img src="http://127.0.0.1:8000/images/Kiddok_logo_02-1.PNG" width="100%">
         </nuxt-link>
       </v-col>
       <v-col lg="7" md="7">
@@ -157,8 +157,9 @@
                 Login
               </v-tab>
               <v-tab-item :value="'tab-1'">
-                <v-card flat tile style="padding: 50px 100px 20px 100px;">
+                <v-card flat tile style="padding: 20px 100px">
                   <v-card-text>
+                    <img src="http://127.0.0.1:8000/images/Kiddok_logo_04-1.PNG" width="40%" style="margin: 0 auto 20px auto; display: flex;">
                     <h3 style="text-align: center; margin-bottom: 30px;">ՄՈՒՏՔ ԱՆՁՆԱԿԱՆ ԷՋ</h3>
                     <v-form @submit.prevent="false" ref="form" v-model="valid" :lazy-validation="true" >
                       <v-alert v-if="errors.email" text type="error">
@@ -649,6 +650,8 @@
     max-width: 600px !important;
     top: 5% !important;
     left: 31% !important;
+    overflow: auto;
+    max-height: 650px;
   }
 
   .login-form {
@@ -657,6 +660,10 @@
 
   .v-tabs--icons-and-text > .v-tabs-bar {
     display: none;
+  }
+
+  .v-btn__content {
+    padding: 3px 0;
   }
 
 </style>
