@@ -59,7 +59,7 @@
         return {
           title: 'About Us',
           meta: [
-            { hid: 'Davmar - About Us', name: 'Davmar About Us', content: 'Davmar About Us' }
+            { hid: 'About Us', name: 'About Us', content: 'About Us' }
           ],
         };
       },

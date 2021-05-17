@@ -1,8 +1,8 @@
 <template>
   <div>
-    <v-btn class="icon_filter" v-if="!drawer" icon @click.stop="drawer = !drawer" @click = "icon_filter" style="">
+    <!-- <v-btn class="icon_filter" v-if="!drawer" icon @click.stop="drawer = !drawer" @click = "icon_filter" style="">
       <v-icon>mdi-filter-plus</v-icon>
-    </v-btn>
+    </v-btn> -->
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant.sync="mini"
@@ -11,7 +11,7 @@
       clipped
       class="product_filter"
     >
-      <v-list-item class="px-2 mt-3">
+      <!-- <v-list-item class="px-2 mt-3">
         <v-img :src="brand[0].image" width="80%"  :contain="true"></v-img>
         <v-btn
           icon
@@ -19,18 +19,14 @@
         >
           <v-icon>mdi-close</v-icon>
         </v-btn>
-      </v-list-item>
+      </v-list-item> -->
 
-      <v-divider></v-divider>
+      <!-- <v-divider></v-divider> -->
       <v-list class="mt-5">
-        <v-list-item class="mt-5">
-          <v-range-slider v-model="range" :max="max" :min="min" hide-details class="align-center" thumb-label="always" color="#ea5a21" track-color="#f39513" @change="filter($event)" >
-          </v-range-slider>
-        </v-list-item>
         <v-list-item v-for="item in items" :key="item.title" >
           <v-list-item-content>
             <v-list-item-title>{{ item.title }}</v-list-item-title>
-            <div v-if="item.type === 'color'">
+            <!-- <div v-if="item.type === 'color'">
               <v-item-group :multiple="true" >
                 <v-row class="colors">
                   <v-item  v-for="(color, n) in item.data"  :key="n" v-slot:default="{ active, toggle }">
@@ -42,11 +38,14 @@
                   </v-item>
                 </v-row>
               </v-item-group>
-            </div>
-            <v-combobox v-else @change="filter($event)" v-model="item.select" :items="item.data" label="" dense chips small-chips multiple >
-
-            </v-combobox>
+            </div> -->
+            <!-- <v-combobox v-else @change="filter($event)" v-model="item.select" :items="item.data" label="" dense chips small-chips multiple >
+            </v-combobox> -->
           </v-list-item-content>
+        </v-list-item>
+        <v-list-item class="mt-5">
+          <v-range-slider v-model="range" :max="max" :min="min" hide-details class="align-center" thumb-label="always" color="#ea5a21" track-color="#f39513" @change="filter($event)" >
+          </v-range-slider>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -59,7 +58,7 @@
       return {
         title: this.brand[0].name,
         meta: [
-          { hid: 'Davmar - ' + this.brand[0].name, name: 'Davmar ' + this.brand[0].name, content: 'Davmar ' + this.brand[0].name }
+          { hid: this.brand[0].name, name: this.brand[0].name, content: this.brand[0].name }
         ],
       };
     },
@@ -70,8 +69,11 @@
         range: [15000, 30000],
         drawer: true,
         items: [
-          { title: this.$t('sex'), icon: 'mdi-home-city', data: ['Men', 'Women',], select: [], type: 'sex' },
-          { title: this.$t('size'), icon: 'mdi-account', data: [], select: [], type: 'size'},
+          // { title: this.$t('sex'), icon: 'mdi-home-city', data: ['Men', 'Women',], select: [], type: 'sex' },
+          // { title: this.$t('size'), icon: 'mdi-account', data: [], select: [], type: 'size'},
+          // { title: this.$t('colors'), icon: 'mdi-account-group-outline', data: [], select: [], type: 'color'},
+          { title: "ՍԵՌ", icon: 'mdi-home-city', data: ['Տղա', 'Աղջիկ',], select: [], type: 'sex' },
+          { title: "ՏԱՐԻՔ", icon: 'mdi-account', data: ['0-12 ամսական', '12-24 ամսական', '2-5 տարեկան', '5-8 տարեկան', '8-12 տարեկան', '12-16 տարեկան'], select: [], type: 'size'},
           { title: this.$t('colors'), icon: 'mdi-account-group-outline', data: [], select: [], type: 'color'},
         ],
         select: [],
@@ -153,4 +155,13 @@
       background-color: rgb(1, 35, 94);
     }
   /*}*/
+
+  nav.product_filter {
+    position: relative !important;
+    height: max-content !important;
+    width: 256px !important;
+    top: 0 !important;
+    transform: none !important;
+    max-height: none !important;
+  }
 </style>

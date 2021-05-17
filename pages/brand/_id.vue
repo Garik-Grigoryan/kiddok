@@ -1,20 +1,34 @@
 <template>
-  <div>
-    <TopMenu></TopMenu>
+  <div class="brand-page-block">
+    <!-- <TopMenu></TopMenu> -->
+    
     <v-container>
+      <div class="top-block">
+        <div class="left-block"></div>
+        <div class="center-block">
+          <img src="http://127.0.0.1:8000/images/Kiddok_logo_04-1.PNG" width="100px">
+          <span>Brand</span>
+        </div>
+        <div class="right-block"></div>
+      </div>
       <v-row justify="center">
-        <productCard
-          v-for="(product, i) in products.products"
-          :key="i"
-          :image="JSON.parse(product.images)[0]"
-          :id="product.id"
-          :title_en="product.name_en"
-          :title_ru="product.name_ru"
-          :title_am="product.name_am"
-          :price="product.price"
-          :discountType="product.discountType"
-          :discount="product.discount"
-        ></productCard>
+        <div style="width: 25%;">
+          <Filters></Filters>
+        </div>
+        <div style="display: flex; width: 75%; flex-wrap: wrap; justify-content: space-between;">
+          <productCard
+            v-for="(product, i) in products.products"
+            :key="i"
+            :image="JSON.parse(product.images)[0]"
+            :id="product.id"
+            :title_en="product.name_en"
+            :title_ru="product.name_ru"
+            :title_am="product.name_am"
+            :price="product.price"
+            :discountType="product.discountType"
+            :discount="product.discount"
+          ></productCard>
+        </div>
       </v-row>
       <div v-if="products.count > 1" class="text-center">
         <v-pagination
@@ -30,7 +44,8 @@
 
 <script>
   import productCard from "../../components/productCard";
-  import TopMenu from '../../components/Topmenu'
+  import TopMenu from '../../components/Topmenu';
+  import Filters from "../../components/Filters";
     export default {
       watchQuery: ["page"],
 
@@ -44,7 +59,8 @@
       layout: 'brand',
       components: {
         productCard,
-        TopMenu
+        TopMenu,
+        Filters
       },
       data () {
         return {
@@ -90,3 +106,25 @@
       },
     }
 </script>
+
+<style scoped>
+  .brand-page-block .top-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .brand-page-block .left-block, .right-block {
+    border-top: 3px solid #B22180;
+    width: 100%;
+  }
+  .brand-page-block .center-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 20px;
+  }
+
+  .brand-page-block .container {
+    max-width: 1300px !important;
+  }
+</style>

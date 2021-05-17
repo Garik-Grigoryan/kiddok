@@ -3,8 +3,9 @@
   <v-card
     color="grey lighten-4"
     class="ma-4"
-    width="350"
-    height="350"
+    width="250"
+    height="450"
+    style="margin: 16px 10px !important; border-color: transparent !important; background-color: transparent !important; box-shadow: none;"
   >
     <nuxt-link :to="localePath(`/product/${id}`)">
       <v-img
@@ -12,17 +13,16 @@
         :src="image"
         position="top"
         cover
-        height="100%"
+        height="270px"
       >
       </v-img>
     </nuxt-link>
     <v-slide-y-reverse-transition>
       <v-card-text
-
         class="pt-6"
-        style="position: absolute; bottom: 0; background-color: #b20839c9; height: 80px"
+        style="position: relative; height: 80px; padding: 0;"
       >
-        <v-btn
+        <!-- <v-btn
           absolute
           color="#01235e"
           class="white--text"
@@ -43,9 +43,27 @@
           @click="addToWishlist($event, id)"
         >
           <v-icon>mdi-heart</v-icon>
-        </v-btn>
+        </v-btn> -->
         <nuxt-link :to="localePath(`/product/${id}`)">
-          <h3 v-if="$i18n.locale === 'am'" class=" font-weight-light font-weight-bold white--text mb-2">{{title_am}}</h3>
+          <h3 class="font-weight-light font-weight-bold white--text mb-2" v-text="title_am" style="color: #352249 !important; font-weight: 100 !important; font-size: 15px; margin-bottom: 8px !important;"></h3>
+          <div style="display: flex; justify-content: center;">
+            <div style="display: flex; align-items: center;">
+              <v-icon v-text="'mdi-star-outline'" size="25"></v-icon>
+              <v-icon v-text="'mdi-star-outline'" size="25"></v-icon>
+              <v-icon v-text="'mdi-star-outline'" size="25"></v-icon>
+              <v-icon v-text="'mdi-star-outline'" size="25"></v-icon>
+              <v-icon v-text="'mdi-star-outline'" size="25"></v-icon>
+            </div>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: baseline;">
+            <p class="price" style="color: #352249; font-size: 15px;">
+              <span>{{price}} դրամ</span>
+            </p>
+            <v-btn :to="localePath('/cart')" color="#000" text class="my-2 nav_button" width="40px" style="justify-content: flex-end; padding: 0;">
+              <v-icon >mdi-cart-outline</v-icon>
+            </v-btn>
+          </div>
+          <!-- <h3 v-if="$i18n.locale === 'am'" class=" font-weight-light font-weight-bold white--text mb-2">{{title_am}}</h3>
           <h3 v-if="$i18n.locale === 'en'" class=" font-weight-light font-weight-bold white--text mb-2">{{title_en}}</h3>
           <h3 v-if="$i18n.locale === 'ru'" class=" font-weight-light font-weight-bold white--text mb-2">{{title_ru}}</h3>
           <p class="price white--text">
@@ -54,7 +72,7 @@
             <span v-else-if="discountType == 'price'">{{price - discount}}</span>
             <span v-else>{{price}}</span>
             AMD
-          </p>
+          </p> -->
         </nuxt-link>
       </v-card-text>
     </v-slide-y-reverse-transition>

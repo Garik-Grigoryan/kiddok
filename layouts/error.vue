@@ -13,7 +13,8 @@
     >
       <span class="m-auto"> Davmar.am &copy; {{ new Date().getFullYear() }} All rights reserved</span>
     </v-footer> -->
-    <v-footer style="justify-content: space-between; background: #01B8BE; align-items: center; padding: 90px;">
+    
+    <!-- <v-footer style="justify-content: space-between; background: #01B8BE; align-items: center; padding: 90px;">
       <div style="display: flex; justify-content: space-between; align-items: baseline; width: 70%;">
         <div>
           <div>
@@ -87,7 +88,7 @@
       <div style="width: 25%;">
         <img src="http://127.0.0.1:8000/images/Kiddok_logo_02-1.PNG" width="100%">
       </div>
-    </v-footer>
+    </v-footer> -->
   </v-app>
 
 </template>

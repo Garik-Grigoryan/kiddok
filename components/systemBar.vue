@@ -512,6 +512,43 @@
           this.cartCount = cookieResCart.length
         }
         this.onResize();
+
+        // this.brands.forEach(elem => {
+        //   this.leftSide[0].items.push(
+        //     {
+        //       id: elem.brand.id,
+        //       title: elem.brand.name,
+        //       to: '/brand/'+elem.brand.id+'?page=1',
+        //     }
+        //   )
+        //   if(elem.categories !== undefined) {
+        //     elem.categories.forEach(elem2 => {
+        //       this.leftSide[0].items2.push(
+        //         {
+        //           id: elem2.id,
+        //           brand: elem2.brand,
+        //           title_am: elem2.name_am,
+        //           title_ru: elem2.name_ru,
+        //           title_en: elem2.name_en,
+        //           to: '/category/'+elem2.id+'?page=1',
+        //         }
+        //       )
+        //       if(elem2.subcategories !== undefined) {
+        //         elem2.subcategories.forEach(elem3 => {
+        //           this.leftSide[0].items3.push(
+        //             {
+        //               parent: elem3.parent,
+        //               title_am: elem3.name_am,
+        //               title_ru: elem3.name_ru,
+        //               title_en: elem3.name_en,
+        //               to: '/category/'+elem3.id+'?page=1',
+        //             }
+        //           )
+        //         })
+        //       }
+        //     })
+        //   }
+        // })
       },
       methods: {
         onResize () {
