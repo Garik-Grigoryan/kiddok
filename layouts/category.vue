@@ -78,7 +78,7 @@
             </v-btn>
           </div>
           <div>
-            <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button" style="text-transform: none;">
+            <v-btn :to="localePath('/delivery_and_refund')" color="#fff" text class="my-2 nav_button" style="text-transform: none;">
               <span>Առաքում և վերադարձ</span>
             </v-btn>
           </div>

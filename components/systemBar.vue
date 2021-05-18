@@ -125,9 +125,130 @@
         <v-row class="hidden-sm-and-down" no-gutters >
           <v-menu :open-on-hover="true" bottom offset-y v-for="(item, i) in leftSide" dark :key="i">
             <template v-slot:activator="{on}">
-              <v-btn exact :to="localePath(item.to)" router color="#fff" text class="my-2 nav_button" v-on="on" bottom >
-                <div>{{ item.title }}</div>
-              </v-btn>
+              <div v-if="item.to==='/sections'" style="position: relative">
+                <v-btn  exact color="#fff" text class="my-2 nav_button" v-on="on" bottom @click="openSectionsMenu" style="border: none;">
+                  <div>{{ item.title }}</div>
+                </v-btn>
+
+                <div class="sections-menu-block">
+                  <div>
+                    <div class="section-block" style="display: flex; align-items: center;">
+                      <img src="http://127.0.0.1:8000/images/Kiddok_logo_04-1.PNG" width="60px">
+                      <nuxt-link :to="`/brand/2?page=1`">
+                        <span>Բրենդ</span>
+                      </nuxt-link>
+                    </div>
+                    <div class="section-block">
+                      <nuxt-link :to="`#`">
+                        Գնել ըստ տարիքի
+                      </nuxt-link>
+                      <v-icon v-text="'mdi-chevron-down'" size="30" style="color: #B22180; cursor: pointer;" @click="openAgeMenu"></v-icon>
+                    </div>
+                    <div class="section-block">
+                      <nuxt-link :to="`/product`">
+                        Նորածնային խաղալիքներ
+                      </nuxt-link>
+                    </div>
+                    <div class="section-block">
+                      <nuxt-link :to="`/product`">
+                        Զարգացնող խաղեր
+                      </nuxt-link>
+                    </div>
+                    <div class="section-block">
+                      <nuxt-link :to="`/product`">
+                        Երաժշտական խաղալիքներ
+                      </nuxt-link>
+                    </div>
+                    <div class="section-block">
+                      <nuxt-link :to="`/product`">
+                        Փափուկ խաղալիքներ
+                      </nuxt-link>
+                    </div>
+                    <div class="section-block">
+                      <nuxt-link :to="`/product`">
+                        Մեքենաներ, գնացքներ
+                      </nuxt-link>
+                    </div>
+                    <div class="section-block">
+                      <nuxt-link :to="`/product`">
+                        Էկո և փայտե խաղեր
+                      </nuxt-link>
+                    </div>
+                    <div class="section-block">
+                      <nuxt-link :to="`/product`">
+                        Կոնստրուկտորներ
+                      </nuxt-link>
+                    </div>
+                    <div class="section-block">
+                      <nuxt-link :to="`/product`">
+                        Փազլներ
+                      </nuxt-link>
+                    </div>
+                    <div class="section-block">
+                      <nuxt-link :to="`/product`">
+                        Բակային/սեզոնային խաղեր
+                      </nuxt-link>
+                    </div>
+                    <div class="section-block">
+                      <nuxt-link :to="`/product`">
+                        Սեղանի խաղեր
+                      </nuxt-link>
+                    </div>
+                    <div class="section-block">
+                      <nuxt-link :to="`/product`">
+                        Գրքեր, ուսումնական խաղեր
+                      </nuxt-link>
+                    </div>
+                    <div class="section-block">
+                      <nuxt-link :to="`/product`">
+                        ՈՒսուցանող խաղեր
+                      </nuxt-link>
+                    </div>
+                    <div class="section-block">
+                      <nuxt-link :to="`/product`">
+                        Գրենական պիտույքներ
+                      </nuxt-link>
+                    </div>
+                  </div>
+                  <div class="age-menu-block">
+                      <div class="section-block">
+                        <nuxt-link :to="`/product`">
+                          <span>0–12 ամսական</span>
+                        </nuxt-link>
+                      </div>
+                      <div class="section-block">
+                        <nuxt-link :to="`/product`">
+                          <span>12–24 ամսական</span>
+                        </nuxt-link>
+                      </div>
+                      <div class="section-block">
+                        <nuxt-link :to="`/product`">
+                          <span>2–5 տարեկան</span>
+                        </nuxt-link>
+                      </div>
+                      <div class="section-block">
+                        <nuxt-link :to="`/product`">
+                          <span>5–8 տարեկան</span>
+                        </nuxt-link>
+                      </div>
+                      <div class="section-block">
+                        <nuxt-link :to="`/product`">
+                          <span>8–12 տարեկան</span>
+                        </nuxt-link>
+                      </div>
+                      <div class="section-block">
+                        <nuxt-link :to="`/product`">
+                          <span>12-16 տարեկան</span>
+                        </nuxt-link>
+                      </div>
+                  </div>
+                </div>
+              </div>
+              <div v-else>
+                <v-btn  exact :to="localePath(item.to)" router color="#fff" text class="my-2 nav_button" v-on="on" bottom >
+                  <div>{{ item.title }}</div>
+                </v-btn>
+              </div>
             </template>
           </v-menu>
         </v-row>
@@ -588,6 +709,22 @@
 
 
           });
+        },
+        openAgeMenu() {
+          let block = document.querySelector('.age-menu-block');
+          if(block.style.display === 'none') {
+            block.style.display = 'block';
+          } else {
+            block.style.display = 'none';
+          }
+        },
+        openSectionsMenu() {
+          let block = document.querySelector('.sections-menu-block');
+          if(block.style.display === 'none') {
+            block.style.display = 'flex';
+          } else {
+            block.style.display = 'none';
+          }
         }
       },
     }
@@ -701,6 +838,30 @@
 
   .v-btn__content {
     padding: 3px 0;
+  }
+
+  .section-block {
+    margin-bottom: 15px !important;
+  }
+
+  .section-block a {
+    color: #352249;
+  }
+
+  .age-menu-block {
+    display: none;
+    padding-left: 15px;
+    margin: 50px 0 25px 30px !important;
+  }
+
+  .sections-menu-block {
+    display: none;
+    position: absolute;
+    background: white;
+    top: 145%;
+    padding: 10px 40px;
+    width: max-content;
+    left: -50%;
   }
 
 </style>

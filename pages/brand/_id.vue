@@ -7,15 +7,15 @@
         <div class="left-block"></div>
         <div class="center-block">
           <img src="http://127.0.0.1:8000/images/Kiddok_logo_04-1.PNG" width="100px">
-          <span>Brand</span>
+          <span>{{this.brand[0].name}}</span>
         </div>
         <div class="right-block"></div>
       </div>
       <v-row justify="center">
-        <div style="width: 25%;">
+        <div style="width: 30%;">
           <Filters></Filters>
         </div>
-        <div style="display: flex; width: 75%; flex-wrap: wrap; justify-content: space-between;">
+        <div style="display: flex; width: 70%; flex-wrap: wrap; justify-content: space-between; height: fit-content;">
           <productCard
             v-for="(product, i) in products.products"
             :key="i"
@@ -46,6 +46,7 @@
   import productCard from "../../components/productCard";
   import TopMenu from '../../components/Topmenu';
   import Filters from "../../components/Filters";
+  import BestProducts from '../../components/BestProducts.vue';
     export default {
       watchQuery: ["page"],
 
@@ -55,12 +56,16 @@
         await store.dispatch('brands/fetch');
         await store.dispatch('menus/fetch');
         await store.dispatch('brands/getBrand', [route.params.id]);
+        await store.dispatch('products/filterAsType', ['new']);
+        await store.dispatch('products/filterAsType', ['best']);
+        await store.dispatch('products/filterAsType', ['sales']);
       },
       layout: 'brand',
       components: {
         productCard,
         TopMenu,
-        Filters
+        Filters,
+        BestProducts
       },
       data () {
         return {
@@ -74,6 +79,9 @@
         async categories() {
           return this.$store.getters['categories/categories'];
         },
+        brand() {
+          return this.$store.getters['brands/brand'];
+        }
       },
       beforeRouteLeave (to, from, next) {
         this.$cookies.set('davmar_filter', [], {
@@ -95,7 +103,7 @@
         },
       },
       async mounted() {
-        console.log(123, this.$route.params.id)
+        console.log(123, this.$route.params.id);
         await this.$store.dispatch('brands/getBrand', [this.$route.params.id]);
         await this.$store.dispatch('wishListAndCart/fetch');
         if(this.user){
@@ -112,6 +120,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: 20px 0 30px 0;
   }
   .brand-page-block .left-block, .right-block {
     border-top: 3px solid #B22180;
@@ -122,6 +131,7 @@
     justify-content: center;
     align-items: center;
     margin: 0 20px;
+    min-width: fit-content;
   }
 
   .brand-page-block .container {
