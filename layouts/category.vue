@@ -18,7 +18,7 @@
       <div style="display: flex; justify-content: space-between; align-items: baseline; width: 70%;">
         <div>
           <div>
-            <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button">
+            <v-btn color="#fff" text class="my-2 nav_button" style="cursor: default;">
               <v-icon style="margin-right: 10px; font-size: 20px;">mdi-card-account-mail</v-icon>
               <span>ԿՈՆՏԱԿՏԱՅԻՆ ՏՎՅԱԼՆԵՐ</span>
             </v-btn>
@@ -44,26 +44,28 @@
         </div>
         <div>
           <div>
-            <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button">
+            <v-btn :to="localePath('/address')" color="#fff" text class="my-2 nav_button">
               <span>ՄԵՐ ՀԱՍՑԵՆԵՐԸ</span>
             </v-btn>
           </div>
           <div>
-            <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button">
+            <v-btn :to="localePath('/address')" color="#fff" text class="my-2 nav_button">
               <v-icon style="margin-right: 10px; font-size: 20px;">mdi-map-marker</v-icon>
               <span style="text-transform: none;">Սուրմալու առևտրի կենտրոն 51Ա տաղավար</span>
             </v-btn>
           </div>
-          <div>
-            <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button">
+          <div style="padding: 0 16px;">
+            <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button" style="border: none; min-width: 30px; padding: 0;">
               <v-icon style="margin-right: 10px; font-size: 20px;">mdi-facebook</v-icon>
+            </v-btn>
+            <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button" style="border: none; min-width: 30px; padding: 0;">
               <v-icon style="margin-right: 10px; font-size: 20px;">mdi-instagram</v-icon>
             </v-btn>
           </div>
         </div>
         <div>
           <div>
-            <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button">
+            <v-btn color="#fff" text class="my-2 nav_button" style="cursor: default;">
               <span>ԱՅԼ</span>
             </v-btn>
           </div>

@@ -1,17 +1,18 @@
 <template>
   <div>
-    <productDetail></productDetail>
-    <h2 class="text-center">{{ $t('relatedProducts') }}</h2>
-    <PromoProducts :count="7" type="best"></PromoProducts>
-    <deliveryBaner></deliveryBaner>
-    <Subscribe></Subscribe>
+    <v-container>
+      <v-row>
+        <productDetail></productDetail>
+        <h2 style="font-weight: 300; margin-top: 150px; margin-bottom: 60px;">ԱՌԱՋԱՐԿՎՈՂ ՏԵՍԱԿԱՆԻ</h2>
+        <BestProducts :count="7" type="best" style="width: 100%;"></BestProducts>
+      </v-row>
+    </v-container>
   </div>
 </template>
 <script>
 import productDetail from "../../components/productDetail";
 import PromoProducts from "../../components/PromoProducts";
-import deliveryBaner from "../../components/deliveryBaner";
-import Subscribe from '~/components/Subscribe.vue'
+import BestProducts from '../../components/BestProducts.vue';
 
 export default {
   layout: 'product',
@@ -24,8 +25,7 @@ export default {
   components: {
     productDetail,
     PromoProducts,
-    deliveryBaner,
-    Subscribe
+    BestProducts
   },
   data () {
     return {
