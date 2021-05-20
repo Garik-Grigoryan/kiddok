@@ -1,5 +1,36 @@
 <template>
   <v-container>
+
+    <div class="container section" id="app">
+      <div class="tabs" v-cloack>
+        <ul>
+          <li v-for="(tab, index) in tabs" :class="{'is-active': show == index}">
+            <a @click.prevent="show = index">{{tab.title}}</a>
+          </li>
+          <!-- <li :class="{'is-active': show == index}">
+            <a @click.prevent="show = index">Քայլ 1</a>
+          </li>
+          <li style="display: flex; align-items: center;">
+            <hr style="width: 100px;">
+          </li>
+          <li :class="{'is-active': show == index}">
+            <a @click.prevent="show = index">Քայլ 2</a>
+          </li>
+          <li style="display: flex; align-items: center;">
+            <hr style="width: 100px;">
+          </li>
+          <li :class="{'is-active': show == index}">
+            <a @click.prevent="show = index">Քայլ 3</a>
+          </li> -->
+        </ul>
+      </div>
+      <div class="texts" v-cloack>
+        <transition-group name="fade-up" target="div" appear @click.native="navigate($event); alerts($event);">
+          <div v-for="(tab, index) in tabs" v-if="show == index" :key="index" v-html="tab.content"></div>
+        </transition-group>
+      </div>
+    </div>
+
     <v-row>
       <v-col lg="8" md="12">
         <v-data-table :headers="headers" :items="desserts" hide-default-footer class="elevation-1" >
@@ -155,6 +186,46 @@
 </template>
 
 <script>
+
+var tabs = [
+  {
+    title: "Քայլ 1",
+    content: '<v-col lg="8" md="12">'+
+        '<v-data-table :headers="headers" :items="desserts" hide-default-footer class="elevation-1" >'+
+          '<template v-slot:item.image="{ item }">'+
+            '<v-img :src="item.image" :contain="true" width="100" height="100" ></v-img>'+
+          '</template>'+
+          '<template v-slot:item.count="{ item }">'+
+            '<v-text-field type="number" @input="summCount()" @change="cahngeCount(item)" placeholder="0" v-model="item.count" style="max-width: 60px; margin: 0 auto !important; text-align: center" min="1" ></v-text-field>'+
+          '</template>'+
+          '<template v-slot:item.color="{ item }">'+
+            '<v-card :color="item.color" class="d-flex text-center align-center mx-3" dark height="30" width="30" style="margin: 0 auto !important;" >'+
+            '</v-card>'+
+          '</template>'+
+          '<template v-slot:item.remove="{ item }">'+
+            '<v-icon  @click="deleteItem(item)">mdi-delete</v-icon>'+
+          '</template>'+
+        '</v-data-table>'+
+      '</v-col>'
+  },
+  {
+    title: "",
+    content: ""
+  },
+  {
+    title: "Քայլ 2",
+    content: "Music content. Wanna see some <a href=\"#\" data-show=\"3\">Documents</a> content?"
+  },
+  {
+    title: "",
+    content: ""
+  },
+  {
+    title: "Քայլ 3",
+    content: "Videos content. <a href=\"#\" data-alert=\"VIDEOS!!!\">Alert videos</a>"
+  }
+];
+
   var PhoneNumber = require( 'awesome-phonenumber' );
   export default {
     head() {
@@ -227,7 +298,9 @@
         selected_region: '',
         selected_region_price: '',
         cost_of_delivery: '0',
-        all_regions: []
+        all_regions: [],
+        show: 0,
+        tabs
       }
     },
     computed: {
@@ -277,36 +350,38 @@
         await this.$store.dispatch('wishListAndCart/getWishListAndCartData', [0]);
       }
       this.cartData.forEach((elem, key) => {
-        if(this.$i18n.locale == 'ru'){
-          this.desserts.push({
-            image: JSON.parse(elem.product.images)[0],
-            name: elem.product.nam_rue,
-            size: elem.size && elem.size[0] !== undefined ? elem.size : '',
-            color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
-            count: elem.count,
-            price: elem.product.price,
-            remove: key,
-          })
-        }else if(this.$i18n.locale == 'am'){
-          this.desserts.push({
-            image: JSON.parse(elem.product.images)[0],
-            name: elem.product.name_am,
-            size: elem.size && elem.size[0] !== undefined ? elem.size : '',
-            color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
-            count: elem.count,
-            price: elem.product.price,
-            remove: key,
-          })
-        }else if(this.$i18n.locale == 'en'){
-          this.desserts.push({
-            image: JSON.parse(elem.product.images)[0],
-            name: elem.product.name_en,
-            size: elem.size && elem.size[0] !== undefined ? elem.size : '',
-            color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
-            count: elem.count,
-            price: elem.product.price,
-            remove: key,
-          })
+        if(elem.product !== null) {
+          if(this.$i18n.locale == 'ru'){
+            this.desserts.push({
+              image: JSON.parse(elem.product.images)[0],
+              name: elem.product.nam_rue,
+              size: elem.size && elem.size[0] !== undefined ? elem.size : '',
+              color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
+              count: elem.count,
+              price: elem.product.price,
+              remove: key,
+            })
+          }else if(this.$i18n.locale == 'am'){
+            this.desserts.push({
+              image: JSON.parse(elem.product.images)[0],
+              name: elem.product.name_am,
+              size: elem.size && elem.size[0] !== undefined ? elem.size : '',
+              color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
+              count: elem.count,
+              price: elem.product.price,
+              remove: key,
+            })
+          }else if(this.$i18n.locale == 'en'){
+            this.desserts.push({
+              image: JSON.parse(elem.product.images)[0],
+              name: elem.product.name_en,
+              size: elem.size && elem.size[0] !== undefined ? elem.size : '',
+              color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
+              count: elem.count,
+              price: elem.product.price,
+              remove: key,
+            })
+          }
         }
 
       });
@@ -451,11 +526,53 @@
           this.totalPrice = this.totalPrice - parseInt(this.cost_of_delivery) + parseInt(region_ru.delivery_price);
           this.cost_of_delivery = region_ru.delivery_price;
         }
+      },
+      navigate: function(e){
+        if (e.target.dataset.show) {
+          e.preventDefault();
+          this.show = e.target.dataset.show;
+        }
+      },
+      alerts: function(e){
+        if (e.target.dataset.alert) {
+          e.preventDefault();
+          alert(e.target.dataset.alert);
+        }
       }
     }
   }
 </script>
 
 <style scoped>
+  .section {
+    padding: 2em 0;
+  }
 
+  .fade-up-enter-active,
+  .fade-up-leave-active {
+    transition: all 0.3s ease-in-out;
+  }
+  .fade-up-enter,
+  .fade-up-leave-to {
+    height: 0;
+    transform: translateY(30px);
+    opacity: 0;
+  }
+
+  .tabs ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    color: #352249;
+  }
+
+  .tabs ul li:not(:last-child) {
+    margin-right: 50px;
+  }
+
+  .tabs ul a {
+    color: #352249;
+  }
 </style>

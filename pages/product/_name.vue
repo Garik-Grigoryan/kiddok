@@ -2,7 +2,7 @@
   <div>
     <v-container>
       <v-row>
-        <productDetail></productDetail>
+        <productDetail style="width: 100%;"></productDetail>
         <h2 style="font-weight: 300; margin-top: 150px; margin-bottom: 60px;">ԱՌԱՋԱՐԿՎՈՂ ՏԵՍԱԿԱՆԻ</h2>
         <BestProducts :count="7" type="best" style="width: 100%;"></BestProducts>
       </v-row>
