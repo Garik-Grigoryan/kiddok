@@ -260,7 +260,11 @@
 
         <v-menu v-model="loginMenu" :close-on-content-click="false" :nudge-width="200" offset-y bottom>
           <template v-slot:activator="{ on }">
-            <v-btn color="#fff" text class="my-2 nav_button" v-on="on" >
+            <v-btn v-if="authenticated" color="#fff" text class="my-2 nav_button" v-on="on" style="border: none;">
+              {{user.name}}
+              <v-icon >mdi-chevron-down</v-icon>
+            </v-btn>
+            <v-btn v-else color="#fff" text class="my-2 nav_button" v-on="on" >
               <v-icon >mdi-account-outline</v-icon>
               {{$t('myAccount')}}
             </v-btn>
@@ -269,6 +273,7 @@
             <v-list v-if="authenticated" style="background-color: #01235E" dark>
               <v-list-item :to="localePath('/account')" v-text="$t('myAccount')"></v-list-item>
               <v-list-item :to="localePath('/account/orders')" v-text="$t('orders')"></v-list-item>
+              <v-list-item @click="openHelperModal" v-text="'իմ օգնականը'"></v-list-item>
               <v-list-item @click="logout" v-text="$t('logout')">
               </v-list-item>
             </v-list>
@@ -307,7 +312,7 @@
                         <a href="#">Մոռացե՞լ եք Գաղտնաբառը</a>
                     </div>
                     <div style="margin-top: 30px;text-align: center;">
-                        <a href="#">Գրանցվել</a>
+                        <a href="/register">Գրանցվել</a>
                     </div>
                     <div style="margin-top: 100px;">
                       <p>Մուտք գործելով `դուք նշում եք, որ կարդացել եք և ընդունում եք Օգտագործման պայմանները և Գաղտնիության քաղաքականությունը.</p>
@@ -320,7 +325,7 @@
           </v-card>
         </v-menu>
 
-        <div style="padding: 0; margin: 5px 0;">
+        <div v-if="!authenticated" style="padding: 0; margin: 5px 0;">
             <v-btn :to="localePath('/register')" color="#fff" text class="my-2 nav_button" style="border: none;">
               {{$t('register')}}
             </v-btn>

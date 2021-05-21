@@ -23,13 +23,7 @@
                 </v-list-item-icon>
               </template>
               <v-card class="questionnaire">
-                <v-list v-if="authenticated" style="background-color: #01235E" dark>
-                  <v-list-item :to="localePath('/account')" v-text="$t('myAccount')"></v-list-item>
-                  <v-list-item :to="localePath('/account/orders')" v-text="$t('orders')"></v-list-item>
-                  <v-list-item @click="logout" v-text="$t('logout')">
-                  </v-list-item>
-                </v-list>
-                <v-tabs v-else  background-color="#01235E" class="elevation-2" dark :centered="true" :prev-icon="'mdi-arrow-left-bold-box-outline'" :next-icon="'mdi-arrow-right-bold-box-outline'" :icons-and-text="true" >
+                <v-tabs background-color="#01235E" class="elevation-2" dark :centered="true" :prev-icon="'mdi-arrow-left-bold-box-outline'" :next-icon="'mdi-arrow-right-bold-box-outline'" :icons-and-text="true" >
                   <v-tabs-slider></v-tabs-slider>
                   <v-tab :href="`#tab-1`" >
                     

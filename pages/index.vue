@@ -11,7 +11,7 @@
             <v-row>
               <v-col sm="6" xs="12" md="4">
                 <v-list :three-line="true" :class="'block1'">
-                  <v-list-item style="display: block;">
+                  <v-list-item to="/category/3?page=1" style="display: block; cursor: pointer;">
                     <div style="display: flex; heigth: 200px;">
                         <div style="width: 100px; height: 200px; background: #FDB813; display: flex; justify-content: center; align-items: center;">
                           <p style="font-size: 30px; color: white;">0+</p>
@@ -26,7 +26,7 @@
               </v-col>
               <v-col sm="6" xs="12" md="4">
                 <v-list :three-line="true" :class="'block1'">
-                  <v-list-item style="display: block;">
+                  <v-list-item to="/category/3?page=1" style="display: block; cursor: pointer;">
                     <div style="display: flex; heigth: 200px;">
                         <div style="width: 100px; height: 200px; background: #01B8BE; display: flex; justify-content: center; align-items: center;">
                           <p style="font-size: 30px; color: white;">12+</p>
@@ -41,7 +41,7 @@
               </v-col>
               <v-col sm="6" xs="12" md="4">
                 <v-list :three-line="true" :class="'block1'">
-                  <v-list-item style="display: block;">
+                  <v-list-item to="/category/3?page=1" style="display: block; cursor: pointer;">
                     <div style="display: flex; heigth: 200px;">
                         <div style="width: 100px; height: 200px; background: #B22180; display: flex; justify-content: center; align-items: center;">
                           <p style="font-size: 30px; color: white;">2+</p>
@@ -61,7 +61,7 @@
             <v-row>
               <v-col sm="6" xs="12" md="4">
                 <v-list :three-line="true" :class="'block1'">
-                  <v-list-item style="display: block;">
+                  <v-list-item to="/category/3?page=1" style="display: block; cursor: pointer;">
                     <div style="display: flex; heigth: 200px;">
                         <div style="width: 100px; height: 200px; background: #352249; display: flex; justify-content: center; align-items: center;">
                           <p style="font-size: 30px; color: white;">5+</p>
@@ -76,7 +76,7 @@
               </v-col>
               <v-col sm="6" xs="12" md="4">
                 <v-list :three-line="true" :class="'block1'">
-                  <v-list-item style="display: block;">
+                  <v-list-item to="/category/3?page=1" style="display: block; cursor: pointer;">
                     <div style="display: flex; heigth: 200px;">
                         <div style="width: 100px; height: 200px; background: #B22180; display: flex; justify-content: center; align-items: center;">
                           <p style="font-size: 30px; color: white;">8+</p>
@@ -91,7 +91,7 @@
               </v-col>
               <v-col sm="6" xs="12" md="4">
                 <v-list :three-line="true" :class="'block1'">
-                  <v-list-item style="display: block;">
+                  <v-list-item to="/category/3?page=1" style="display: block; cursor: pointer;">
                     <div style="display: flex; heigth: 200px;">
                         <div style="width: 100px; height: 200px; background: #01B8BE; display: flex; justify-content: center; align-items: center;">
                           <p style="font-size: 30px; color: white;">16+</p>

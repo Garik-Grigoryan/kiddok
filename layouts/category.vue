@@ -1,10 +1,10 @@
 <template>
   <v-app dark>
-    <v-system-bar fixed app height="5" dark color="#ea5a21" style="justify-content: center;">
-    </v-system-bar>
+    <!-- <v-system-bar fixed app height="5" dark color="#ea5a21" style="justify-content: center;">
+    </v-system-bar> -->
     <SystemBar></SystemBar>
     <!--    <TopMenu></TopMenu>-->
-    <Filters></Filters>
+    <!-- <Filters></Filters> -->
     <v-content>
       <nuxt />
     </v-content>

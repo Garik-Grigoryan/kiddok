@@ -1,174 +1,331 @@
 <template>
   <v-container>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
-    <div class="container section" id="app">
-      <div class="tabs" v-cloack>
-        <ul>
-          <li v-for="(tab, index) in tabs" :class="{'is-active': show == index}">
-            <a @click.prevent="show = index">{{tab.title}}</a>
-          </li>
-          <!-- <li :class="{'is-active': show == index}">
-            <a @click.prevent="show = index">Քայլ 1</a>
-          </li>
-          <li style="display: flex; align-items: center;">
-            <hr style="width: 100px;">
-          </li>
-          <li :class="{'is-active': show == index}">
-            <a @click.prevent="show = index">Քայլ 2</a>
+    <div id="app">
+      <div class="container">
+        <ul class="nav nav-tabs nav-justified">
+          <li class="nav-item">
+            <v-icon v-if="isActive('step1')" color="#B22381">mdi-check-circle</v-icon>
+            <v-icon v-else color="#C6C3C3">mdi-numeric-1-circle</v-icon>
+            <a class="nav-link" @click.prevent="setActive('step1')" :class="{ active: isActive('step1') }" href="#step1">Քայլ 1</a>
           </li>
           <li style="display: flex; align-items: center;">
-            <hr style="width: 100px;">
+            <hr style="width: 100px; border-top: 2px solid rgba(0,0,0,.1);">
           </li>
-          <li :class="{'is-active': show == index}">
-            <a @click.prevent="show = index">Քայլ 3</a>
-          </li> -->
+          <li class="nav-item">
+            <v-icon v-if="isActive('step2')" color="#B22381">mdi-check-circle</v-icon>
+            <v-icon v-else color="#C6C3C3">mdi-numeric-2-circle</v-icon>
+            <a class="nav-link" :class="{ active: isActive('step2') }">Քայլ 2</a>
+          </li>
+          <li style="display: flex; align-items: center;">
+            <hr style="width: 100px; border-top: 2px solid rgba(0,0,0,.1);">
+          </li>
+          <li class="nav-item">
+            <v-icon v-if="isActive('step3')" color="#B22381">mdi-check-circle</v-icon>
+            <v-icon v-else color="#C6C3C3">mdi-numeric-3-circle</v-icon>
+            <a class="nav-link" :class="{ active: isActive('step3') }">Քայլ 3</a>
+          </li>
         </ul>
-      </div>
-      <div class="texts" v-cloack>
-        <transition-group name="fade-up" target="div" appear @click.native="navigate($event); alerts($event);">
-          <div v-for="(tab, index) in tabs" v-if="show == index" :key="index" v-html="tab.content"></div>
-        </transition-group>
+        <div class="tab-content py-3" id="myTabContent">
+          <div class="tab-pane fade" :class="{ 'active show': isActive('step1') }" id="step1">
+            <v-row>
+              <v-col lg="12" md="12">
+                <v-data-table :headers="headers" :items="desserts" hide-default-footer class="elevation-1" >
+                  <template v-slot:item.image="{ item }">
+                    <v-img :src="item.image" :contain="true" width="100" height="100" ></v-img>
+                  </template>
+                  <template v-slot:item.count="{ item }">
+                    <div class="product-count">
+                      <div class="minus" @click="countMinus()"><v-icon :color="black" left style="margin-left: 10px;">mdi-minus-thick</v-icon></div>
+                      <input id="product-count-val" placeholder="0" @input="summCount()" @change="cahngeCount(item)" type="text" v-model="item.count" disabled>
+                      <div class="plus" @click="countPlus()"><v-icon :color="black" left style="margin-left: 10px;">mdi-plus</v-icon></div>
+                    </div>
+                    <!-- <v-text-field type="number" @input="summCount()" @change="cahngeCount(item)" placeholder="0" v-model="item.count" style="max-width: 60px; margin: 0 auto !important; text-align: center" min="1" ></v-text-field> -->
+                  </template>
+                  <template v-slot:item.color="{ item }">
+                    <v-card :color="item.color" class="d-flex text-center align-center mx-3" dark height="30" width="30" style="margin: 0 auto !important;" >
+                    </v-card>
+                  </template>
+                  <template v-slot:item.remove="{ item }">
+                    <v-icon  @click="deleteItem(item)">mdi-close-circle</v-icon>
+                  </template>
+                </v-data-table>
+
+                <div style="margin-top: 30px; display: flex; justify-content: flex-end;">
+                  <span>Ապրանքի գին: {{totalPrice}} դր</span>
+                </div>
+                <div style="margin-top: 20px; display: flex; justify-content: flex-end;">
+                  <a class="white--text approve-btn" @click.prevent="setActive('step2')" href="#step2">
+                    Հաստատել <v-icon color="white" left style="margin: 0;">mdi-chevron-right</v-icon>
+                  </a>
+                </div>
+              </v-col>
+            </v-row>
+          </div>
+          <div class="tab-pane fade" :class="{ 'active show': isActive('step2') }" id="step2">
+            <v-row>
+              <v-col lg="8" md="12">
+                <v-card style="box-shadow: none;">
+                  <v-form v-model="formValid" style="background: #EBE7E7;">
+                    <div class="step2_block">
+                      <v-divider style="margin: 20px 0 0 0;"></v-divider>
+                    </div>
+                    <div class="step2_block">
+                        <div style="margin-bottom: 15px;">
+                          <select class="country-select" v-model="country" value="Երկիր">
+                            <option selected>Երկիր</option>
+                            <option>Armenia</option>
+                          </select>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                      <div class="step2_block">
+                          <div style="margin-bottom: 10px;"><span>Ամբողջական անուն *</span></div>
+                          <div style="margin-bottom: 15px;">
+                            <input class="step2_input" v-model="nameLastName" :rules="requiredField" type="text" name="name" required>
+                          </div>
+                      </div>
+                      <div class="step2_block">
+                          <div style="margin-bottom: 10px;"><span>Էլ. հասցե *</span></div>
+                          <div style="margin-bottom: 15px;">
+                            <input class="step2_input"  v-model="email" :rules="emailRules" type="email" name="email" required>
+                          </div>
+                      </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                      <div class="step2_block">
+                          <div style="margin-bottom: 10px;"><span>Հասցե *</span></div>
+                          <div style="margin-bottom: 15px;">
+                            <input class="step2_input" v-model="address" :rules="addressRules" type="text" name="address" placeholder="Փողոց /համար..." required>
+                          </div>
+                      </div>
+                      <div class="step2_block">
+                          <div style="margin-bottom: 10px;"></div>
+                          <div>
+                            <input class="step2_input"  v-model="phone" :rules="phoneRules" type="text" name="apartment" placeholder="Բնակարան,նրբանցք, թաղամաս, շենք, հարկ եւ այլն:" required>
+                          </div>
+                      </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                      <div class="step2_block">
+                          <div style="margin-bottom: 10px;"><span>Քաղաք *</span></div>
+                          <div style="margin-bottom: 15px;">
+                            <input class="step2_input" v-model="nameLastName" :rules="requiredField" type="text" name="city" required>
+                          </div>
+                      </div>
+                      <div class="step2_block">
+                          <div style="margin-bottom: 10px;"><span>Քաղաք / Մարզ / Տարածաշրջան *</span></div>
+                          <div style="margin-bottom: 15px;">
+                            <input class="step2_input" :label="$t('region')" v-model="selected_region" type="text" name="region" required>
+                          </div>
+                      </div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                      <div class="step2_block">
+                          <div style="margin-bottom: 10px;"><span>Փոստային Ինդեքս *</span></div>
+                          <div style="margin-bottom: 15px;">
+                            <input class="step2_input"  v-model="phone" :rules="phoneRules" type="text" name="zip" required>
+                          </div>
+                      </div>
+                      <div class="step2_block">
+                          <div style="margin-bottom: 10px;"><span>Հեռ. *</span></div>
+                          <div style="margin-bottom: 15px;">
+                            <input class="step2_input"  v-model="phone" :rules="phoneRules" type="text" name="phone" required>
+                          </div>
+                      </div>
+                    </div>
+
+                    <div class="step2_block" style="margin-top: 40px;">
+                      <span style="text-transform: uppercase; font-weight: 700;">Վճարման տարբերակ</span>
+                      <v-divider style="margin: 5px 0 0 0;"></v-divider>
+                    </div>
+                    <div class="step2_block">
+                        <div class="radio-input">
+                          <input type="radio" name="payment" value="visa">
+                          <label>Visa, MasterCard</label>
+                        </div>
+                        <div class="radio-input">
+                          <input type="radio" name="payment" value="cash">
+                          <label>Կանխիկ</label>
+                        </div>
+                        <div class="radio-input">
+                          <input type="radio" name="payment" value="idram">
+                          <label>Idram</label>
+                        </div>
+                    </div>
+
+                    <div class="step2_block">
+                      <span style="text-transform: uppercase; font-weight: 700;">ԱՌԱՔՈՒՄ</span>
+                      <v-divider style="margin: 5px 0 0 0;"></v-divider>
+                    </div>
+                    <div class="step2_block">
+                        <div class="radio-input">
+                          <span>Անվճար առաքում Երևանում, 10000դր. և ավելի գնման դեպքում</span>
+                        </div>
+                        <div class="radio-input">
+                          <span>500 դր առաքում Երևանում, մինչև 10000դր. գնման դեպքում</span>
+                        </div>
+                        <div class="radio-input">
+                          <span>1000դր. շտապ առաքում, Երևանում *Շտապ առաքում իրագործելի է մինչ ժամը 20:00 կատարած պատվերների համար:</span>
+                        </div>
+                        <div class="radio-input">
+                          <span>1500դր առաքում ՀՀ մարզեր</span>
+                        </div>
+                        <div class="radio-input">
+                          <span>Առաքում ՀԱՅՓՈՍՏԻ միջոցով անվճար</span>
+                        </div>
+                    </div>
+                    <div class="step2_block">
+                      <label>Լրացուցիչ նշումներ. Ցանկալի է նշել 2 -րդ հեռ.</label>
+                      <textarea></textarea>
+                    </div>
+
+                    <div style="margin: 40px 0; display: flex; justify-content: center; padding-bottom: 40px;">
+                      <a class="white--text approve-btn" @click.prevent="setActive('step3')" href="#step3">
+                        Հաստատել
+                      </a>
+                    </div>
+
+                    <!-- <v-card-text>
+                      <v-list-item-group >
+                        <v-list-item v-if="settings">
+                          <v-text-field
+                            v-model="address"
+                            :rules="addressRules"
+                            :label="$t('address')"
+                            required
+                          ></v-text-field>
+                        </v-list-item>
+                        <v-list-item v-if="settings">
+                          <v-select
+                            :items="payments"
+                            :label="$t('paymentMethod')"
+                            v-model="payment"
+                            :rules="[v => !!v || 'Payment Method is required']"
+                            required
+                          ></v-select>
+                        </v-list-item>
+                        <v-list-item v-if="settings">
+                          <v-select
+                            :items="all_regions"
+                            :label="$t('region')"
+                            v-model="selected_region"
+                            @change="onChangeSelectedRegion"
+                            required
+                          ></v-select>
+                        </v-list-item>
+                        <v-list-item three-line>
+                          <v-list-item-action>
+                            <v-checkbox :rules="requiredField" v-model="agree" color="primary"></v-checkbox>
+                          </v-list-item-action>
+                          <v-list-item-content style="display: block" @click="dialog = true">
+                            <v-list-item-title>{{$t('conditions')}}</v-list-item-title>
+                            <v-list-item-subtitle>{{$t('readConditions')}}</v-list-item-subtitle>
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-list-item-group>
+                    </v-card-text>
+                    <v-list v-if="selected_region !== ''">
+                      <v-list-item-group>
+                        <v-list-item v-if="selected_region_price !== '0'" style="font-size: 18px;">
+                          <v-list-item-icon>
+                            {{$t('delivery')}}
+                          </v-list-item-icon>
+                          <v-list-item-content>
+                            <v-list-item-title> {{selected_region_price}} AMD</v-list-item-title>
+                          </v-list-item-content>
+                        </v-list-item>
+                        <v-list-item v-else style="font-size: 18px;">
+                          <v-list-item-icon>
+                            {{$t('freeDelivery')}}
+                          </v-list-item-icon>
+                          <v-list-item-content></v-list-item-content>
+                        </v-list-item>
+                      </v-list-item-group>
+                    </v-list>
+                    <v-list disabled>
+                      <v-list-item-group>
+                        <v-list-item style="font-size: 18px;">
+                          <v-list-item-icon>
+                            {{$t('totalCount')}}
+                          </v-list-item-icon>
+                          <v-list-item-content>
+                            <v-list-item-title> {{count}}</v-list-item-title>
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-list-item-group>
+                      <v-list-item-group>
+                        <v-list-item style="font-size: 18px;">
+                          <v-list-item-icon>
+                            {{$t('totalPrice')}}
+                          </v-list-item-icon>
+                          <v-list-item-content>
+                            <v-list-item-title style="color: #e60000; font-weight: 600; min-width: 100px"> {{totalPrice}} AMD</v-list-item-title>
+                          </v-list-item-content>
+                        </v-list-item>
+                      </v-list-item-group>
+                    </v-list>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn :disabled="!formValid" @click="buy"  color="#e60000" dark >
+                        {{$t('buy')}}
+                      </v-btn>
+                    </v-card-actions> -->
+                  </v-form>
+                </v-card>
+              </v-col>
+              <v-col lg="4" md="12">
+                <v-card style="box-shadow: none; background: #EBE7E7; padding: 15px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                      <div>
+                        <span>Ընդհանուր զամբյուղ</span>
+                      </div>
+                      <div>
+                        <a href="#" style="color: #B22180;">Խմբագրել</a>
+                      </div>
+                    </div>
+                    <div v-for="dessert in desserts" :key="dessert" style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                        <div>
+                          <span>{{dessert.name}}</span>
+                        </div>
+                        <div>
+                          <span>{{dessert.total_price}} դրամ</span>
+                        </div>
+                    </div>
+                    <v-divider style="margin: 20px 0 0 0;"></v-divider>
+                    <div style="display: flex; justify-content: flex-end; margin: 20px 0 5px 0;">
+                      <span>Ընդհանուր գումար {{totalPrice}} դր</span>
+                    </div>
+                </v-card>
+              </v-col>
+            </v-row>
+          </div>
+          <div class="tab-pane fade" :class="{ 'active show': isActive('step3') }" id="step3">
+            <v-card style="box-shadow: none; background: #EBE7E7; padding: 20px 40px;">
+              <div>
+                <div>
+                  <span>Ձեր պատվերը հաստատված է՝</span>
+                </div>
+                <v-btn class="white--text approve-btn" style="text-transform: none; margin-top: 10px; padding: 5px 30px !important;" @click="logout">Կտրոն</v-btn>
+              </div>
+              <div style="display: flex; margin-top: 20px;">
+                  <div style="width: 20%;"><span>Պատվիրատու՝</span></div>
+                  <div style="width: 30%;">
+                    <input class="step2_input" v-model="nameLastName" :rules="requiredField" type="text" name="name" required>
+                  </div>
+              </div>
+              <div style="display: flex; margin-top: 20px;">
+                  <div style="width: 20%;"><span>Վճարման տարբերակ</span></div>
+                  <div style="width: 30%;">
+                    <input class="step2_input" v-model="nameLastName" :rules="requiredField" type="text" name="name" required>
+                  </div>
+              </div>
+            </v-card>
+          </div>
+        </div>
       </div>
     </div>
-
-    <v-row>
-      <v-col lg="8" md="12">
-        <v-data-table :headers="headers" :items="desserts" hide-default-footer class="elevation-1" >
-          <template v-slot:item.image="{ item }">
-            <v-img :src="item.image" :contain="true" width="100" height="100" ></v-img>
-          </template>
-          <template v-slot:item.count="{ item }">
-            <v-text-field type="number" @input="summCount()" @change="cahngeCount(item)" placeholder="0" v-model="item.count" style="max-width: 60px; margin: 0 auto !important; text-align: center" min="1" ></v-text-field>
-          </template>
-          <template v-slot:item.color="{ item }">
-            <v-card :color="item.color" class="d-flex text-center align-center mx-3" dark height="30" width="30" style="margin: 0 auto !important;" >
-            </v-card>
-          </template>
-          <template v-slot:item.remove="{ item }">
-            <v-icon  @click="deleteItem(item)">mdi-delete</v-icon>
-          </template>
-        </v-data-table>
-      </v-col>
-      <v-col lg="4" md="12">
-        <v-card>
-          <v-form v-model="formValid">
-            <v-toolbar color="#b20839" dark>
-              <v-toolbar-title>
-                {{$t('cart')}}
-              </v-toolbar-title>
-            </v-toolbar>
-            <v-card-text>
-
-              <v-list-item-group >
-<!--                <v-list-item>-->
-<!--                  <v-list-item-action>-->
-<!--                    <v-checkbox v-model="settings" color="primary"></v-checkbox>-->
-<!--                  </v-list-item-action>-->
-<!--                  <v-list-item-content>-->
-<!--                    <v-list-item-title>{{$t('withDelivery')}}</v-list-item-title>-->
-<!--                  </v-list-item-content>-->
-<!--                </v-list-item>-->
-                <v-list-item>
-                  <v-text-field v-model="nameLastName" :rules="requiredField" :label="$t('nameLastName')" required ></v-text-field>
-                </v-list-item>
-                <v-list-item>
-                  <v-text-field v-model="email" :rules="emailRules" label="E-mail" required ></v-text-field>
-                </v-list-item>
-                <v-list-item>
-                  <v-text-field v-model="phone" :rules="phoneRules" :label="$t('phone')" required ></v-text-field>
-                </v-list-item>
-
-<!--                <v-list-item v-if="settings">-->
-<!--                  <v-select :items="items" label="State" v-model="state" @change="changeState" :rules="[v => !!v || 'State is required']" required ></v-select>-->
-<!--                </v-list-item>-->
-
-                <v-list-item v-if="settings">
-                  <v-text-field
-                    v-model="address"
-                    :rules="addressRules"
-                    :label="$t('address')"
-                    required
-                  ></v-text-field>
-                </v-list-item>
-                <v-list-item v-if="settings">
-                  <v-select
-                    :items="payments"
-                    :label="$t('paymentMethod')"
-                    v-model="payment"
-                    :rules="[v => !!v || 'Payment Method is required']"
-                    required
-                  ></v-select>
-                </v-list-item>
-                <v-list-item v-if="settings">
-                  <v-select
-                    :items="all_regions"
-                    :label="$t('region')"
-                    v-model="selected_region"
-                    @change="onChangeSelectedRegion"
-                    required
-                  ></v-select>
-                </v-list-item>
-                <v-list-item three-line>
-                  <v-list-item-action>
-                    <v-checkbox :rules="requiredField" v-model="agree" color="primary"></v-checkbox>
-                  </v-list-item-action>
-                  <v-list-item-content style="display: block" @click="dialog = true">
-                    <v-list-item-title>{{$t('conditions')}}</v-list-item-title>
-                    <v-list-item-subtitle>{{$t('readConditions')}}</v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list-item-group>
-            </v-card-text>
-            <v-list v-if="selected_region !== ''">
-              <v-list-item-group>
-                <v-list-item v-if="selected_region_price !== '0'" style="font-size: 18px;">
-                  <v-list-item-icon>
-                    {{$t('delivery')}}
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    <v-list-item-title> {{selected_region_price}} AMD</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-                <v-list-item v-else style="font-size: 18px;">
-                  <v-list-item-icon>
-                    {{$t('freeDelivery')}}
-                  </v-list-item-icon>
-                  <v-list-item-content></v-list-item-content>
-                </v-list-item>
-              </v-list-item-group>
-            </v-list>
-            <v-list disabled>
-              <v-list-item-group>
-                <v-list-item style="font-size: 18px;">
-                  <v-list-item-icon>
-                    {{$t('totalCount')}}
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    <v-list-item-title> {{count}}</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list-item-group>
-              <v-list-item-group>
-                <v-list-item style="font-size: 18px;">
-                  <v-list-item-icon>
-                    {{$t('totalPrice')}}
-                  </v-list-item-icon>
-                  <v-list-item-content>
-                    <v-list-item-title style="color: #e60000; font-weight: 600; min-width: 100px"> {{totalPrice}} AMD</v-list-item-title>
-                  </v-list-item-content>
-                </v-list-item>
-              </v-list-item-group>
-            </v-list>
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-btn :disabled="!formValid" @click="buy"  color="#e60000" dark >
-                {{$t('buy')}}
-              </v-btn>
-            </v-card-actions>
-          </v-form>
-        </v-card>
-      </v-col>
-    </v-row>
 
     <v-dialog v-model="dialog" max-width="996" >
       <v-card>
@@ -186,45 +343,6 @@
 </template>
 
 <script>
-
-var tabs = [
-  {
-    title: "Քայլ 1",
-    content: '<v-col lg="8" md="12">'+
-        '<v-data-table :headers="headers" :items="desserts" hide-default-footer class="elevation-1" >'+
-          '<template v-slot:item.image="{ item }">'+
-            '<v-img :src="item.image" :contain="true" width="100" height="100" ></v-img>'+
-          '</template>'+
-          '<template v-slot:item.count="{ item }">'+
-            '<v-text-field type="number" @input="summCount()" @change="cahngeCount(item)" placeholder="0" v-model="item.count" style="max-width: 60px; margin: 0 auto !important; text-align: center" min="1" ></v-text-field>'+
-          '</template>'+
-          '<template v-slot:item.color="{ item }">'+
-            '<v-card :color="item.color" class="d-flex text-center align-center mx-3" dark height="30" width="30" style="margin: 0 auto !important;" >'+
-            '</v-card>'+
-          '</template>'+
-          '<template v-slot:item.remove="{ item }">'+
-            '<v-icon  @click="deleteItem(item)">mdi-delete</v-icon>'+
-          '</template>'+
-        '</v-data-table>'+
-      '</v-col>'
-  },
-  {
-    title: "",
-    content: ""
-  },
-  {
-    title: "Քայլ 2",
-    content: "Music content. Wanna see some <a href=\"#\" data-show=\"3\">Documents</a> content?"
-  },
-  {
-    title: "",
-    content: ""
-  },
-  {
-    title: "Քայլ 3",
-    content: "Videos content. <a href=\"#\" data-alert=\"VIDEOS!!!\">Alert videos</a>"
-  }
-];
 
   var PhoneNumber = require( 'awesome-phonenumber' );
   export default {
@@ -284,13 +402,13 @@ var tabs = [
           v => !!v || 'Address is required',
         ],
         headers: [
+          { text: "", value: 'remove',  sortable: false,  align: 'center', },
           { text: this.$t('image'), value: 'image',  sortable: false,  align: 'start', },
-          { text: this.$t('name'),value: 'name',  sortable: false,  align: 'center', },
-          { text: this.$t('size'), value: 'size',  sortable: false,  align: 'center', },
-          { text: this.$t('color'), value: 'color',  sortable: false,  align: 'center', },
-          { text: this.$t('count'), value: 'count',  sortable: false,  align: 'center', },
-          { text: this.$t('price'), value: 'price',  sortable: false,  align: 'center', },
-          { text: this.$t('remove'), value: 'remove',  sortable: false,  align: 'center', },
+          { text: 'Ապրանքի անվանում',value: 'name',  sortable: false,  align: 'center', },
+          { text: 'Գին', value: 'price',  sortable: false,  align: 'center', },
+          { text: 'Կոդ', value: 'code',  sortable: false,  align: 'center', },
+          { text: 'Քանակ', value: 'count',  sortable: false,  align: 'center', },
+          { text: 'Ընդհանուր գին', value: 'total_price',  sortable: false,  align: 'center', },
         ],
         desserts: [
 
@@ -299,8 +417,7 @@ var tabs = [
         selected_region_price: '',
         cost_of_delivery: '0',
         all_regions: [],
-        show: 0,
-        tabs
+        activeItem: 'step1'
       }
     },
     computed: {
@@ -360,6 +477,7 @@ var tabs = [
               count: elem.count,
               price: elem.product.price,
               remove: key,
+              total_price: elem.product.price*elem.count
             })
           }else if(this.$i18n.locale == 'am'){
             this.desserts.push({
@@ -370,6 +488,7 @@ var tabs = [
               count: elem.count,
               price: elem.product.price,
               remove: key,
+              total_price: elem.product.price*elem.count
             })
           }else if(this.$i18n.locale == 'en'){
             this.desserts.push({
@@ -380,6 +499,7 @@ var tabs = [
               count: elem.count,
               price: elem.product.price,
               remove: key,
+              total_price: elem.product.price*elem.count
             })
           }
         }
@@ -396,6 +516,10 @@ var tabs = [
           this.all_regions.push(elem.name_en);
         }
       });
+
+      window.onload = function() {
+        document.querySelector('.country-select').value = 'Երկիր';
+      }
     },
     methods: {
       buy() {
@@ -439,31 +563,34 @@ var tabs = [
             this.desserts.push({
               image: JSON.parse(elem.product.images)[0],
               name: elem.product.nam_rue,
-              size: elem.size && elem.size[0] !== undefined ? elem.size :'',
-              color: elem.color && elem.color.length > 0 ? elem.color[0] : '#000000',
+              size: elem.size && elem.size[0] !== undefined ? elem.size : '',
+              color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
               count: elem.count,
               price: elem.product.price,
               remove: key,
+              total_price: elem.product.price*elem.count
             })
           }else if(this.$i18n.locale == 'am'){
             this.desserts.push({
               image: JSON.parse(elem.product.images)[0],
               name: elem.product.name_am,
-              size: elem.size && elem.size[0] !== undefined ? elem.size :'',
-              color: elem.color && elem.color.length > 0 ? elem.color[0] : '#000000',
+              size: elem.size && elem.size[0] !== undefined ? elem.size : '',
+              color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
               count: elem.count,
               price: elem.product.price,
               remove: key,
+              total_price: elem.product.price*elem.count
             })
           }else if(this.$i18n.locale == 'en'){
             this.desserts.push({
               image: JSON.parse(elem.product.images)[0],
               name: elem.product.name_en,
               size: elem.size && elem.size[0] !== undefined ? elem.size : '',
-              color: elem.color && elem.color.length > 0 ? elem.color[0] : '#000000',
+              color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
               count: elem.count,
               price: elem.product.price,
               remove: key,
+              total_price: elem.product.price*elem.count
             })
           }
         });
@@ -538,6 +665,21 @@ var tabs = [
           e.preventDefault();
           alert(e.target.dataset.alert);
         }
+      },
+      isActive (menuItem) {
+        return this.activeItem === menuItem
+      },
+      setActive (menuItem) {
+        this.activeItem = menuItem
+      },
+      countMinus() {
+        let old_val = parseInt(document.getElementById('product-count-val').value);
+        if(old_val >= 1) {
+          document.getElementById('product-count-val').value = old_val - 1;
+        }
+      },
+      countPlus() {
+        document.getElementById('product-count-val').value = parseInt(document.getElementById('product-count-val').value) + 1;
       }
     }
   }
@@ -559,20 +701,112 @@ var tabs = [
     opacity: 0;
   }
 
-  .tabs ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active, .nav-tabs .nav-item .nav-link:hover, .nav-tabs .nav-link.active:hover, .nav-tabs {
+    border: none;
+  }
+
+  .nav-tabs .nav-link {
+    color: #352249;
+  }
+
+  .nav-tabs .nav-item {
     display: flex;
     justify-content: center;
-    color: #352249;
   }
 
-  .tabs ul li:not(:last-child) {
-    margin-right: 50px;
+  .nav-tabs {
+    margin: 20px 0 40px 0;
   }
 
-  .tabs ul a {
-    color: #352249;
+  .approve-btn {
+    background: #B22180 !important;
+    color: white !important;
+    padding: 5px 20px !important;
+    width: max-content !important;
+    border-radius: 6px !important;
+    text-decoration: none;
+  }
+
+  .product-count {
+    display: flex;
+    justify-content: space-between;
+    width: 100px;
+  }
+
+  .product-count input {
+    outline: none;
+    width: inherit;
+    text-align: center;
+    max-width: inherit;
+  }
+
+  .product-count .minus, .product-count .plus {
+    background: #C6C3C3;
+    border-radius: 50%;
+    padding: 5px 0;
+    cursor: pointer;
+  }
+
+  .product-count .minus i, .product-count .plus i {
+    color: black;
+    font-size: 16px;
+  }
+
+  tr {
+    background: #EBE7E7 !important;
+  }
+
+  .country-select {
+    width: 100%;
+    color: black;
+    border: 1px solid #C6C3C3;
+    border-radius: 6px;
+    padding: 5px 10px;
+    background: white;
+  }
+
+  .theme--light.v-text-field > .v-input__control > .v-input__slot:before {
+    border: none !important;
+  }
+
+  .step2_block {
+    padding: 15px 30px;
+    width: 100%;
+  }
+
+  .step2_block textarea {
+    width: 100%;
+    background: white;
+    border-radius: 6px;
+    border: 1px solid #C6C3C3;
+    height: 100px;
+  }
+
+  .step2_input {
+    padding: 5px;
+    width: 100%;
+    border: 1px solid #C6C3C3;
+    outline: none;
+    border-radius: 6px;
+    background: white;
+  }
+
+  .radio-input {
+    margin-bottom: 15px;
+    display: flex;
+    background: white;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #C6C3C3;
+  }
+
+  .radio-input label {
+    margin: 0;
+  }
+
+  .radio-input input {
+    margin-right: 10px;
+    width: 20px;
+    height: 20px;
   }
 </style>
