@@ -5,7 +5,7 @@
     <v-content>
         <nuxt />
     </v-content>
-    <MainDividers></MainDividers>
+    <!-- <MainDividers></MainDividers> -->
     <!-- <v-footer style="justify-content: center"
     >
       <span class="m-auto"> Davmar.am &copy; {{ new Date().getFullYear() }} All rights reserved</span>

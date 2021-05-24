@@ -7,15 +7,33 @@
 
     <v-row>
       <v-col md="2" sm="12" class="product-images-slider">
-        <v-carousel :continuous="false" :cycle="false" :vertical="true" hide-delimiter-background delimiter-icon="mdi-minus" height="100%">
+        <v-carousel :continuous="false" :cycle="false" :vertical="true" hide-delimiter-background :hide-delimiters="true" delimiter-icon="mdi-minus" height="100%">
           <!-- <v-carousel-item v-for="(slide, i) in JSON.parse(product.images)" :key="i" :src="slide" top></v-carousel-item> -->
-          <v-carousel-item v-for="(slide, i) in imagesCount" :key="i" style="margin-top: 60px;">
+          <!-- <v-carousel-item v-for="(slide, i) in imagesCount" :key="i" style="margin: 60px 0;"> -->
+          <v-carousel-item v-for="(slide, i) in imagesCount" :key="i">
             <v-card
+              v-if="i === 0"
               v-for="(slide2, j) in JSON.parse(product.images)"
               :key="j"
               style="background: transparent; width: 70%; box-shadow: none; margin-bottom: 20px;"
             >
-              <v-img v-if="i = 1 && j <= 2"
+              <v-img v-if="j <= 2"
+                :src="JSON.parse(product.images)[j]"
+                height="100%"
+                style="border-radius: 50%; transform: scale(-1, 1); cursor: pointer; opacity: 0.5;"
+                cover
+                :class="'productImage_'+j"
+                @click="showImage(JSON.parse(product.images)[j], 'productImage_'+j)"
+              >
+              </v-img>
+            </v-card>
+            <v-card
+              v-if="i === 1"
+              v-for="(slide2, j) in JSON.parse(product.images)"
+              :key="j"
+              style="background: transparent; width: 70%; box-shadow: none; margin-bottom: 20px;"
+            >
+              <v-img v-if="j > 2 && j <= 5"
                 :src="JSON.parse(product.images)[j]"
                 height="100%"
                 style="border-radius: 50%; transform: scale(-1, 1); cursor: pointer; opacity: 0.5;"
@@ -46,14 +64,14 @@
             </p>
           </div>
           <div class="mt-5">
-            <span>Ապրանքի կոդը՝ M8-151</span>
+            <span>Ապրանքի կոդը՝ {{product.code}}</span>
           </div>
           <div class="mt-5 pl-0" style="display: flex; align-items: center;">
             <p class="mr-5" style="margin-bottom: 0;"><span>{{ $t('count') }}</span></p>
             <div class="product-count">
-                <div class="minus" @click="countMinus()"><v-icon :color="black" left style="margin-left: 10px;">mdi-minus-thick</v-icon></div>
+                <div class="minus" @click="countMinus()"><v-icon color="black" left style="margin-left: 10px;">mdi-minus-thick</v-icon></div>
                 <input id="product-count-val" placeholder="0" type="text" v-model="count" disabled>
-                <div class="plus" @click="countPlus()"><v-icon :color="black" left style="margin-left: 10px;">mdi-plus</v-icon></div>
+                <div class="plus" @click="countPlus()"><v-icon color="black" left style="margin-left: 10px;">mdi-plus</v-icon></div>
             </div>
             <!-- <v-col cols="2" class="pa-0">
               <v-text-field type="number" placeholder="0" v-model="count" style="padding-top: 0;"/>
@@ -72,8 +90,8 @@
             </div>
           </div>
           <div class="mt-5">
-            <p class="ma-0"><span>{{ $t('size') }}</span></p>
-            <v-item-group :multiple="false" >
+            <p class="ma-0"><span>{{ $t('size') }} {{product.size}}</span></p>
+            <!-- <v-item-group :multiple="false" >
               <v-row>
                 <v-item  v-for="(size, n) in productSizes" :key="n" v-slot:default="{ active, toggle }">
                   <v-card class="d-flex text-center align-center mx-3 justify-center" :color="active? 'green' : '#fff'" height="30" width="30" :data-value="size" @click="toggle(), selectSize($event)">
@@ -81,7 +99,7 @@
                   </v-card>
                 </v-item>
               </v-row>
-            </v-item-group>
+            </v-item-group> -->
           </div>
           <div class="mt-5 product-availability">
             <div>
@@ -293,10 +311,12 @@
         let old_val = parseInt(document.getElementById('product-count-val').value);
         if(old_val >= 1) {
           document.getElementById('product-count-val').value = old_val - 1;
+          this.count = old_val - 1;
         }
       },
       countPlus() {
         document.getElementById('product-count-val').value = parseInt(document.getElementById('product-count-val').value) + 1;
+        this.count = document.getElementById('product-count-val').value;
       }
     },
     computed: {
@@ -373,6 +393,15 @@
   .product-count .minus i, .product-count .plus i {
     color: black;
     font-size: 16px;
+  }
+
+  .product-images-slider .v-window__prev, .product-images-slider .v-window__next {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 50%;
+      position: absolute;
+      margin: 0 50% !important;
+      top: 100% !important;
+      z-index: 1;
   }
 </style>
 

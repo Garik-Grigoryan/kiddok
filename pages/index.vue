@@ -269,6 +269,9 @@ export default {
     }
   },
   async mounted() {
+    window.onload = function() {
+      document.querySelector('.v-slide-group__prev .mdi-chevron-left').style.color = "#B22180";
+    }
     if(this.$route.query.payment){
       if(this.$route.query.payment == 'success'){
         this.color = 'success';
@@ -306,5 +309,10 @@ export default {
 
   .v-footer .theme--light.v-btn--active::before {
       opacity: 0 !important;
+  }
+
+  .v-slide-group__prev .mdi-chevron-left {
+    color: #B22180;
+    font-size: 100px;
   }
 </style>

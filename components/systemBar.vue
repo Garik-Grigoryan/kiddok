@@ -130,7 +130,7 @@
                   <div>{{ item.title }}</div>
                 </v-btn>
 
-                <div class="sections-menu-block">
+                <div class="sections-menu-block" style="display: none;">
                   <div>
                     <div class="section-block" style="display: flex; align-items: center;">
                       <img src="http://127.0.0.1:8000/images/Kiddok_logo_04-1.PNG" width="60px">
@@ -210,7 +210,7 @@
                       </nuxt-link>
                     </div>
                   </div>
-                  <div class="age-menu-block">
+                  <div class="age-menu-block" style="display: none;">
                       <div class="section-block">
                         <nuxt-link :to="`/product`">
                           <span>0–12 ամսական</span>
@@ -254,28 +254,43 @@
         </v-row>
       </v-col>
       <v-row justify="start">
-        <div style="padding: 0; margin: 5px 0;">
-            <input v-model="message" placeholder="ՈՐՈՆԵԼ" style="border: 1px solid #FFFFFF; padding: 7px 12px; color: #FFFFFF; outline: none; font-size: 10px; width: 218px;">
+        <div style="padding: 0; margin: 5px 10px 5px 0;">
+            <input class="search-input" placeholder="ՈՐՈՆԵԼ">
         </div>
 
-        <v-menu v-model="loginMenu" :close-on-content-click="false" :nudge-width="200" offset-y bottom>
+        <v-btn v-if="authenticated" color="#fff" text class="my-2 nav_button" v-on="on" style="border: none; position: relative;">
+          <a href="/account" style="color: white;">{{user.name}}</a>
+          <v-icon @click="openAccountMenu">mdi-chevron-down</v-icon>
+
+          <v-list v-if="authenticated" class="accountMenu" style="display: none;">
+            <v-list-item @click="openHelperModal" v-text="'իմ օգնականը'" style="color: black !important;"></v-list-item>
+            <v-list-item @click="logout" v-text="'Դուրս գալ'" style="color: black !important;"></v-list-item>
+          </v-list>
+        </v-btn>
+
+        <v-menu v-if="!authenticated" v-model="loginMenu" :close-on-content-click="false" :nudge-width="200" offset-y bottom>
           <template v-slot:activator="{ on }">
-            <v-btn v-if="authenticated" color="#fff" text class="my-2 nav_button" v-on="on" style="border: none;">
+            <!-- <v-btn v-if="authenticated" :to="localePath('/account')" color="#fff" text class="my-2 nav_button" v-on="on" style="border: none; position: relative;">
               {{user.name}}
-              <v-icon >mdi-chevron-down</v-icon>
-            </v-btn>
-            <v-btn v-else color="#fff" text class="my-2 nav_button" v-on="on" >
+              <v-icon @click="openAccountMenu">mdi-chevron-down</v-icon>
+
+              <v-list v-if="authenticated" class="accountMenu" style="display: none;">
+                <v-list-item @click="openHelperModal" v-text="'իմ օգնականը'"></v-list-item>
+                <v-list-item @click="logout" v-text="'Դուրս գալ'"></v-list-item>
+              </v-list>
+            </v-btn> -->
+            <v-btn color="#fff" text class="my-2 nav_button" v-on="on" >
               <v-icon >mdi-account-outline</v-icon>
               {{$t('myAccount')}}
             </v-btn>
           </template>
           <v-card class="login-form">
             <v-list v-if="authenticated" style="background-color: #01235E" dark>
-              <v-list-item :to="localePath('/account')" v-text="$t('myAccount')"></v-list-item>
+              <!-- <v-list-item :to="localePath('/account')" v-text="$t('myAccount')"></v-list-item>
               <v-list-item :to="localePath('/account/orders')" v-text="$t('orders')"></v-list-item>
               <v-list-item @click="openHelperModal" v-text="'իմ օգնականը'"></v-list-item>
               <v-list-item @click="logout" v-text="$t('logout')">
-              </v-list-item>
+              </v-list-item> -->
             </v-list>
              <v-tabs v-else  background-color="#01235E" class="elevation-2" dark :centered="true" :prev-icon="'mdi-arrow-left-bold-box-outline'" :next-icon="'mdi-arrow-right-bold-box-outline'" :icons-and-text="true" >
               <v-tabs-slider></v-tabs-slider>
@@ -461,6 +476,43 @@
       </v-speed-dial> -->
       <!-- <v-app-bar-nav-icon class="hidden-md-and-up" style="position: absolute; right: 0" @click.stop="drawerForHeader = !drawerForHeader" /> -->
     </v-system-bar>
+
+    <div id="helperModal" style="display: none;" class="modal-shadow" @click.self="closeModal">
+        <div class="modal">
+            <slot name="body">
+                <div class="modal-content">
+                  <div>
+                    <h2 style="color: #B22180;">իմ օգնականը</h2>
+                  </div>
+                  <div style="display: flex; align-items: center; margin: 20px 0;">
+                    <div style="margin-right: 20px;">
+                      <v-icon size="100">mdi-account-circle-outline</v-icon>
+                    </div>
+                    <div v-if="authenticated">
+                      <span style="color: #B22180;">{{user.name}}</span>
+                    </div>
+                  </div>
+                  <v-form @submit.prevent="false" ref="form" :lazy-validation="true" style="width: 100%; margin-top: 30px;">
+                    <v-card-actions style="display: block; padding: 0;">
+                      <label style="color: #352249;">Հեռ.</label>
+                      <input type="text" class="helper-block-input" required>
+                    </v-card-actions>
+                    <v-card-actions style="display: block; padding: 0;">
+                      <label style="color: #352249;">Գրել նամակ</label>
+                      <textarea class="helper-block-input"></textarea>
+                    </v-card-actions>
+                  </v-form>
+                </div>
+            </slot>
+            <slot name="footer">
+                <div class="modal-footer">
+                    <button class="modal-footer__button_approve" @click="closeModal">
+                        Հաստատել
+                    </button>
+                </div>
+            </slot>
+        </div>
+    </div>
   </div>
 </template>
 
@@ -730,6 +782,20 @@
           } else {
             block.style.display = 'none';
           }
+        },
+        closeModal: function () {
+          document.getElementById('helperModal').style.display = 'none';
+        },
+        openHelperModal(){
+          document.getElementById('helperModal').style.display = 'block';
+        },
+        openAccountMenu() {
+          let accountMenu = document.querySelector('.accountMenu');
+          if(accountMenu.style.display === 'none') {
+            accountMenu.style.display = 'block';
+          } else {
+            accountMenu.style.display = 'none';
+          }
         }
       },
     }
@@ -854,13 +920,13 @@
   }
 
   .age-menu-block {
-    display: none;
+    /* display: none; */
     padding-left: 15px;
     margin: 50px 0 25px 30px !important;
   }
 
   .sections-menu-block {
-    display: none;
+    /* display: none; */
     position: absolute;
     background: white;
     top: 145%;
@@ -869,4 +935,110 @@
     left: -50%;
   }
 
+  .helper-block-input {
+    width: 100%;
+    border: 2px solid #C6C3C3;
+    border-radius: 6px;
+    padding: 6px 12px;
+    margin-bottom: 20px;
+    background: white;
+    margin-top: 10px;
+  }
+
+  .accountMenu {
+    position: absolute !important;
+    top: 110% !important;
+    background: white !important;
+    color: black !important;
+    width: 124% !important;
+    border-radius: 0 !important;
+    border: 1px solid #C6C3C3 !important;
+    text-transform: none !important;
+    background: white !important;
+  }
+
+  .search-input {
+    border: 1px solid #FFFFFF; 
+    padding: 7px 12px; 
+    color: #FFFFFF; 
+    outline: none; 
+    font-size: 10px; 
+    width: 218px;
+  }
+
+  .search-input::placeholder {
+    color: #ffffff;
+  }
+
+</style>
+
+<style scoped
+       lang="scss">
+    .modal-shadow {
+        position: absolute;
+        top: 0;
+        left: 0;
+        min-height: 100%;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.39);
+        z-index: 10;
+    }
+ 
+    .modal {
+        background: white;
+        border-radius: 0;
+        min-width: 600px;
+        max-width: 600px;
+        position: absolute;
+        top: 25%;
+        left: 31%;
+        display: block;
+        height: fit-content;
+ 
+        &-close {
+            border-radius: 50%;
+            color: #fff;
+            background: #2a4cc7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            top: 7px;
+            right: 7px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+        }
+ 
+        &-title {
+            color: white;
+            background: #B22180;
+            padding: 10px 30px;
+            font-weight: 300;
+            font-size: 16px;
+        }
+ 
+        &-content {
+            padding: 50px;
+            padding-bottom: 0;
+            width: 100%;
+        }
+ 
+        &-footer {
+            &__button_approve {
+                background-color: #B22180;
+                color: #fff;
+                border: none;
+                text-align: center;
+                padding: 10px 35px;
+                font-size: 16px;
+                font-weight: 500;
+                border-radius: 8px;
+                min-width: 150px;
+            }
+            padding: 30px;
+            display: flex;
+            justify-content: center;
+        }
+    }
 </style>

@@ -95,7 +95,7 @@
               </nuxt-link>
               <v-icon v-text="'mdi-chevron-down'" size="30" style="color: #B22180; cursor: pointer;" @click="openAgeMenu"></v-icon>
             </div>
-            <div class="age-menu-block2">
+            <div class="age-menu-block2" style="display: none;">
                 <div class="section-block">
                   <nuxt-link :to="`/product`">
                     <span>0–12 ամսական</span>
@@ -243,7 +243,7 @@
                             <v-icon v-text="'mdi-star-outline'" size="20"></v-icon>
                             <div style="color: rgb(112, 112, 112); font-weight: 500; font-size: 14px; margin-left: 8px;"> (58)</div>
                           </div>
-                          <v-btn style="background: #B22180; padding: 6px 15px; border-radius: 16px; color: white; text-transform: none;">NEW</v-btn>
+                          <v-btn style="background: #B22180; padding: 6px 15px; border-radius: 16px; color: white; text-transform: none;"><v-icon color="white" style="margin-right: 5px;">mdi-bullhorn</v-icon> NEW</v-btn>
                         </div>
                         <!-- <h3 v-if="$i18n.locale === 'am'" class="font-weight-light font-weight-bold white--text mb-2" v-text="product.name_am" style="color: #352249 !important; font-weight: 100 !important; font-size: 18px; margin-bottom: 16px !important;"></h3>
                         <h3 v-if="$i18n.locale === 'en'" class="font-weight-light font-weight-bold white--text mb-2" v-text="product.name_en" style="color: #352249 !important; font-weight: 100 !important; font-size: 18px; margin-bottom: 16px !important;"></h3>
@@ -278,10 +278,10 @@ import BestProducts from './BestProducts.vue';
     // brand[0]
     head() {
       return {
-        title: this.brand[0].name,
-        meta: [
-          { hid: this.brand[0].name, name: this.brand[0].name, content: this.brand[0].name }
-        ],
+        // title: this.brand[0].name,
+        // meta: [
+        //   { hid: this.brand[0].name, name: this.brand[0].name, content: this.brand[0].name }
+        // ],
       };
     },
     components: {
@@ -310,6 +310,7 @@ import BestProducts from './BestProducts.vue';
       }
     },
     mounted() {
+      console.log(this.brand);
       // for(let elem in this.filters.colors){
       //   if(elem != ''){
       //     this.items[2].data.push(elem)
@@ -454,7 +455,7 @@ import BestProducts from './BestProducts.vue';
   }
 
   .age-menu-block2 {
-    display: none;
+    /* display: none; */
     border-left: 1px solid rgba(0, 0, 0, 0.12);
     padding-left: 15px;
     margin: 20px 0 25px 30px !important;

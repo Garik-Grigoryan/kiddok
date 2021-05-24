@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="brand-page-block">
     <v-container>
       <div class="top-block">
           <div>
@@ -13,7 +13,7 @@
       </div>
       <v-row justify="center">
         <div style="width: 30%;">
-          <!-- <Filters></Filters> -->
+          <Filters></Filters>
         </div>
         <div style="width: 70%; height: fit-content;">
           <div>
@@ -100,6 +100,7 @@
 <script>
   import productCard from "../../components/productCard";
   import Filters from "../../components/Filters";
+  import BestProducts from '../../components/BestProducts.vue';
   export default {
     watchQuery: ["page"],
     head() {
@@ -115,12 +116,15 @@
       await store.dispatch('brands/fetch');
       await store.dispatch('menus/fetch');
       await store.dispatch('products/getCategoryFilters', [route.params.id]);
-
+      await store.dispatch('products/filterAsType', ['new']);
+      await store.dispatch('products/filterAsType', ['best']);
+      await store.dispatch('products/filterAsType', ['sales']);
     },
     layout: 'category',
     components: {
       productCard,
-      Filters
+      Filters,
+      BestProducts
     },
     data () {
       return {
@@ -165,26 +169,26 @@
 <style scoped>
 
   .brand-page-block .top-block {
-      margin: 20px 0 30px 0;
-    }
-    .brand-page-block .center-block {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin: 0 20px;
-      min-width: fit-content;
-    }
+    margin: 20px 0 30px 0;
+  }
+  .brand-page-block .center-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 20px;
+    min-width: fit-content;
+  }
 
-    .brand-page-block .container {
-      max-width: 1300px !important;
-    }
+  .brand-page-block .container {
+    max-width: 1300px !important;
+  }
 
-    .img-block {
-      width: 100%;
-      height: 200px;
-      background-image: url(http://127.0.0.1:8000/images/fp_lbk_shop_by_age_0_desk_en_us_1008x330.jfif);
-      background-size: cover;
-      background-position: center;
-    }
+  .img-block {
+    width: 100%;
+    height: 200px;
+    background-image: url(http://127.0.0.1:8000/images/fp_lbk_shop_by_age_0_desk_en_us_1008x330.jfif);
+    background-size: cover;
+    background-position: center;
+  }
 
 </style>

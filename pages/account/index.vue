@@ -42,7 +42,7 @@
                         </div>
                         <v-form @submit.prevent="false" ref="form" v-model="valid" :lazy-validation="true" >
                           <div class="questionnaire_block">
-                              <v-btn color="primary" text @click="loginAction" class="questionnaire_btn" style="text-transform: uppercase;">Հարցաթերթիկ</v-btn>
+                              <v-btn color="primary" text @click="closeModal" class="questionnaire_btn" style="text-transform: uppercase;">Հարցաթերթիկ</v-btn>
                               <div style="margin-bottom: 20px;"><span>Ձեր կարծիքը շատ կարևոր է մեզ համար</span></div>
                           </div>
 
@@ -250,6 +250,9 @@
       async asyncData({store}){
         await store.dispatch('brands/fetch');
         await store.dispatch('menus/fetch');
+        await store.dispatch('products/filterAsType', ['new']);
+        await store.dispatch('products/filterAsType', ['best']);
+        await store.dispatch('products/filterAsType', ['sales']);
       },
       data () {
           return {
@@ -315,6 +318,13 @@
             await this.$store.dispatch('wishListAndCart/getWishListAndCartData', [0]);
           }
       },
+      async closeModal() {
+        let modal = document.querySelector('.v-menu__content');
+        for(let i = 0; i < modal.length; i++) {
+          modal[i].classList.remove('menuable__content__active');
+          modal[i].style.display = 'none';
+        }
+      }
     }
 </script>
 

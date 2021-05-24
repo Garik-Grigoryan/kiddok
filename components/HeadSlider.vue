@@ -2,7 +2,7 @@
   <v-carousel
     cycle
     :height="sliderMaxWidth"
-    :hide-delimiters="true"
+    :hide-delimiters="false"
     show-arrows-on-hover
     v-resize="onResize"
     style="width: 716px; margin: 100px auto;"

@@ -31,17 +31,17 @@
           <div class="tab-pane fade" :class="{ 'active show': isActive('step1') }" id="step1">
             <v-row>
               <v-col lg="12" md="12">
-                <v-data-table :headers="headers" :items="desserts" hide-default-footer class="elevation-1" >
+                <v-data-table :headers="headers" :items="desserts" hide-default-footer class="elevation-1 mytable" style="box-shadow: none !important;">
                   <template v-slot:item.image="{ item }">
                     <v-img :src="item.image" :contain="true" width="100" height="100" ></v-img>
                   </template>
                   <template v-slot:item.count="{ item }">
                     <div class="product-count">
-                      <div class="minus" @click="countMinus()"><v-icon :color="black" left style="margin-left: 10px;">mdi-minus-thick</v-icon></div>
-                      <input id="product-count-val" placeholder="0" @input="summCount()" @change="cahngeCount(item)" type="text" v-model="item.count" disabled>
-                      <div class="plus" @click="countPlus()"><v-icon :color="black" left style="margin-left: 10px;">mdi-plus</v-icon></div>
+                      <div class="minus" @click="countMinus($event, item)"><v-icon color="black" left style="margin-left: 10px;">mdi-minus-thick</v-icon></div>
+                      <input class="product-count-val" placeholder="0" @input="summCount()" @change="changeCount(item)" type="text" v-model="item.count" disabled>
+                      <div class="plus" @click="countPlus($event, item)"><v-icon color="black" left style="margin-left: 10px;">mdi-plus</v-icon></div>
                     </div>
-                    <!-- <v-text-field type="number" @input="summCount()" @change="cahngeCount(item)" placeholder="0" v-model="item.count" style="max-width: 60px; margin: 0 auto !important; text-align: center" min="1" ></v-text-field> -->
+                    <!-- <v-text-field type="number" @input="summCount()" @change="changeCount(item)" placeholder="0" v-model="item.count" style="max-width: 60px; margin: 0 auto !important; text-align: center" min="1" ></v-text-field> -->
                   </template>
                   <template v-slot:item.color="{ item }">
                     <v-card :color="item.color" class="d-flex text-center align-center mx-3" dark height="30" width="30" style="margin: 0 auto !important;" >
@@ -49,6 +49,11 @@
                   </template>
                   <template v-slot:item.remove="{ item }">
                     <v-icon  @click="deleteItem(item)">mdi-close-circle</v-icon>
+                  </template>
+                  <template v-slot:item.total_price="{ item }">
+                    <div>
+                      <span class="product-total-price">{{item.total_price}}</span>
+                    </div>
                   </template>
                 </v-data-table>
 
@@ -73,7 +78,7 @@
                     </div>
                     <div class="step2_block">
                         <div style="margin-bottom: 15px;">
-                          <select class="country-select" v-model="country" value="Երկիր">
+                          <select class="country-select" value="Երկիր" v-model="country">
                             <option selected>Երկիր</option>
                             <option>Armenia</option>
                           </select>
@@ -103,7 +108,7 @@
                       <div class="step2_block">
                           <div style="margin-bottom: 10px;"></div>
                           <div>
-                            <input class="step2_input"  v-model="phone" :rules="phoneRules" type="text" name="apartment" placeholder="Բնակարան,նրբանցք, թաղամաս, շենք, հարկ եւ այլն:" required>
+                            <input class="step2_input"  v-model="apartment" type="text" name="apartment" placeholder="Բնակարան,նրբանցք, թաղամաս, շենք, հարկ եւ այլն:" required>
                           </div>
                       </div>
                     </div>
@@ -111,7 +116,7 @@
                       <div class="step2_block">
                           <div style="margin-bottom: 10px;"><span>Քաղաք *</span></div>
                           <div style="margin-bottom: 15px;">
-                            <input class="step2_input" v-model="nameLastName" :rules="requiredField" type="text" name="city" required>
+                            <input class="step2_input" v-model="city" :rules="requiredField" type="text" name="city" required>
                           </div>
                       </div>
                       <div class="step2_block">
@@ -125,7 +130,7 @@
                       <div class="step2_block">
                           <div style="margin-bottom: 10px;"><span>Փոստային Ինդեքս *</span></div>
                           <div style="margin-bottom: 15px;">
-                            <input class="step2_input"  v-model="phone" :rules="phoneRules" type="text" name="zip" required>
+                            <input class="step2_input"  v-model="zip" :rules="requiredField" type="text" name="zip" required>
                           </div>
                       </div>
                       <div class="step2_block">
@@ -142,15 +147,15 @@
                     </div>
                     <div class="step2_block">
                         <div class="radio-input">
-                          <input type="radio" name="payment" value="visa">
+                          <input type="radio" name="payment" value="visa" v-model="payment">
                           <label>Visa, MasterCard</label>
                         </div>
                         <div class="radio-input">
-                          <input type="radio" name="payment" value="cash">
+                          <input type="radio" name="payment" value="cash" v-model="payment">
                           <label>Կանխիկ</label>
                         </div>
                         <div class="radio-input">
-                          <input type="radio" name="payment" value="idram">
+                          <input type="radio" name="payment" value="idram" v-model="payment">
                           <label>Idram</label>
                         </div>
                     </div>
@@ -178,11 +183,11 @@
                     </div>
                     <div class="step2_block">
                       <label>Լրացուցիչ նշումներ. Ցանկալի է նշել 2 -րդ հեռ.</label>
-                      <textarea></textarea>
+                      <textarea v-model="more_info"></textarea>
                     </div>
 
                     <div style="margin: 40px 0; display: flex; justify-content: center; padding-bottom: 40px;">
-                      <a class="white--text approve-btn" @click.prevent="setActive('step3')" href="#step3">
+                      <a class="white--text approve-btn" @click="buy" href="#step3">
                         Հաստատել
                       </a>
                     </div>
@@ -307,7 +312,7 @@
                 <div>
                   <span>Ձեր պատվերը հաստատված է՝</span>
                 </div>
-                <v-btn class="white--text approve-btn" style="text-transform: none; margin-top: 10px; padding: 5px 30px !important;" @click="logout">Կտրոն</v-btn>
+                <v-btn class="white--text approve-btn" style="text-transform: none; margin-top: 10px; padding: 5px 30px !important;" @click="">Կտրոն</v-btn>
               </div>
               <div style="display: flex; margin-top: 20px;">
                   <div style="width: 20%;"><span>Պատվիրատու՝</span></div>
@@ -380,10 +385,15 @@
         totalPriceWithoutDelivery: 0,
         items: ['Yerevan', 'Kirovakan', 'Lennakan'],
         address: '',
+        apartment: '',
         payment: '',
         payments: ['Cash', 'Online Payment'],
+        country: '',
         nameLastName: '',
         email: '',
+        city: '',
+        zip: '',
+        more_info: '',
         agree: false,
         count: 0,
         emailRules: [
@@ -477,7 +487,8 @@
               count: elem.count,
               price: elem.product.price,
               remove: key,
-              total_price: elem.product.price*elem.count
+              total_price: elem.product.price*elem.count,
+              code: elem.product.code
             })
           }else if(this.$i18n.locale == 'am'){
             this.desserts.push({
@@ -488,7 +499,8 @@
               count: elem.count,
               price: elem.product.price,
               remove: key,
-              total_price: elem.product.price*elem.count
+              total_price: elem.product.price*elem.count,
+              code: elem.product.code
             })
           }else if(this.$i18n.locale == 'en'){
             this.desserts.push({
@@ -499,7 +511,8 @@
               count: elem.count,
               price: elem.product.price,
               remove: key,
-              total_price: elem.product.price*elem.count
+              total_price: elem.product.price*elem.count,
+              code: elem.product.code
             })
           }
         }
@@ -523,29 +536,31 @@
     },
     methods: {
       buy() {
+        console.log(this.country);
+        this.setActive('step3');
         if(this.payment == 'Cash'){
           if(this.user){
-            this.$store.dispatch('user/buy', [this.user.id, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone]).then(() => {
+            this.$store.dispatch('user/buy', [this.user.id, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info]).then(() => {
               this.$store.dispatch('wishListAndCart/emptyCart')
               this.desserts = [];
             });
-          }else{
-            this.$store.dispatch('user/buy', [null, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone]).then(() => {
+          }else {
+            this.$store.dispatch('user/buy', [null, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info]).then(() => {
               this.$store.dispatch('wishListAndCart/emptyCart')
               this.desserts = [];
             });
           }
-        }else{
+        } else{
           if(this.user){
-            this.$store.dispatch('user/buy', [this.user.id, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone]).then((res) => {
+            this.$store.dispatch('user/buy', [this.user.id, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info]).then((res) => {
               this.$store.dispatch('wishListAndCart/emptyCart');
               this.desserts = [];
               this.$store.dispatch('user/initOrder', [res.orderID+' order from davmar.am', res.orderID, this.totalPrice]).then((redirectUrl) => {
                 window.location.href = redirectUrl.url;
               });
             });
-          }else{
-            this.$store.dispatch('user/buy', [null, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone]).then((res) => {
+          } else {
+            this.$store.dispatch('user/buy', [null, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info]).then((res) => {
               this.$store.dispatch('wishListAndCart/emptyCart');
               this.desserts = [];
               this.$store.dispatch('user/initOrder', [res.orderID+' order from davmar.am', res.orderID, this.totalPrice]).then((redirectUrl) => {
@@ -559,39 +574,44 @@
       init() {
         this.desserts = [];
         this.cartData.forEach((elem, key) => {
-          if(this.$i18n.locale == 'ru'){
-            this.desserts.push({
-              image: JSON.parse(elem.product.images)[0],
-              name: elem.product.nam_rue,
-              size: elem.size && elem.size[0] !== undefined ? elem.size : '',
-              color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
-              count: elem.count,
-              price: elem.product.price,
-              remove: key,
-              total_price: elem.product.price*elem.count
-            })
-          }else if(this.$i18n.locale == 'am'){
-            this.desserts.push({
-              image: JSON.parse(elem.product.images)[0],
-              name: elem.product.name_am,
-              size: elem.size && elem.size[0] !== undefined ? elem.size : '',
-              color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
-              count: elem.count,
-              price: elem.product.price,
-              remove: key,
-              total_price: elem.product.price*elem.count
-            })
-          }else if(this.$i18n.locale == 'en'){
-            this.desserts.push({
-              image: JSON.parse(elem.product.images)[0],
-              name: elem.product.name_en,
-              size: elem.size && elem.size[0] !== undefined ? elem.size : '',
-              color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
-              count: elem.count,
-              price: elem.product.price,
-              remove: key,
-              total_price: elem.product.price*elem.count
-            })
+          if(elem.product !== null) {
+            if(this.$i18n.locale == 'ru'){
+              this.desserts.push({
+                image: JSON.parse(elem.product.images)[0],
+                name: elem.product.nam_rue,
+                size: elem.size && elem.size[0] !== undefined ? elem.size : '',
+                color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
+                count: elem.count,
+                price: elem.product.price,
+                remove: key,
+                total_price: elem.product.price*elem.count,
+                code: elem.product.code
+              })
+            }else if(this.$i18n.locale == 'am'){
+              this.desserts.push({
+                image: JSON.parse(elem.product.images)[0],
+                name: elem.product.name_am,
+                size: elem.size && elem.size[0] !== undefined ? elem.size : '',
+                color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
+                count: elem.count,
+                price: elem.product.price,
+                remove: key,
+                total_price: elem.product.price*elem.count,
+                code: elem.product.code
+              })
+            }else if(this.$i18n.locale == 'en'){
+              this.desserts.push({
+                image: JSON.parse(elem.product.images)[0],
+                name: elem.product.name_en,
+                size: elem.size && elem.size[0] !== undefined ? elem.size : '',
+                color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
+                count: elem.count,
+                price: elem.product.price,
+                remove: key,
+                total_price: elem.product.price*elem.count,
+                code: elem.product.code
+              })
+            }
           }
         });
       },
@@ -617,7 +637,7 @@
 
         }
       },
-      async cahngeCount(item) {
+      async changeCount(item) {
         const index = this.desserts.indexOf(item);
         let user_id = 0;
         if(this.user){
@@ -672,14 +692,68 @@
       setActive (menuItem) {
         this.activeItem = menuItem
       },
-      countMinus() {
-        let old_val = parseInt(document.getElementById('product-count-val').value);
-        if(old_val >= 1) {
-          document.getElementById('product-count-val').value = old_val - 1;
+      countMinus(e, item) {
+        // console.log(e);
+        let count = 0;
+        // console.log(e.path[0].classList.contains('minus'));
+        if(e.path[0].classList.contains('minus')){
+          let old_val = parseInt(e.path[1].querySelector('.product-count-val').value);
+          count = old_val;
+          if(old_val >= 1) {
+            e.path[1].querySelector('.product-count-val').value = old_val - 1;
+            count = old_val - 1;
+            e.path[3].querySelector('.product-total-price').innerText = item.price*count;
+          }
+        } else {
+          let old_val = parseInt(e.path[2].querySelector('.product-count-val').value);
+          count = old_val;
+          if(old_val >= 1) {
+            e.path[2].querySelector('.product-count-val').value = old_val - 1;
+            count = old_val - 1;
+            e.path[4].querySelector('.product-total-price').innerText = item.price*count;
+          }
         }
+        item.count = count;
+
+        this.changeCount(item);
+
+        // let index_minus = this.desserts.indexOf(item);
+        // let user_id = 0;
+        // if(this.user){
+        //   user_id = this.user.id;
+        // }
+        // this.$store.dispatch('wishListAndCart/updateFromCart', [index_minus, user_id, count]).then(() => {
+        //   this.init();
+        //   this.summCount();
+        // });
       },
-      countPlus() {
-        document.getElementById('product-count-val').value = parseInt(document.getElementById('product-count-val').value) + 1;
+      countPlus(e, item) {
+        // console.log(e);
+        let count = 0;
+        if(e.path[0].classList.contains('plus')){
+          count = parseInt(e.path[1].querySelector('.product-count-val').value);
+          e.path[1].querySelector('.product-count-val').value = parseInt(e.path[1].querySelector('.product-count-val').value) + 1;
+          count++;
+          e.path[3].querySelector('.product-total-price').innerText = item.price*count;
+        } else {
+          count = parseInt(e.path[2].querySelector('.product-count-val').value);
+          e.path[2].querySelector('.product-count-val').value = parseInt(e.path[2].querySelector('.product-count-val').value) + 1;
+          count++;
+          e.path[4].querySelector('.product-total-price').innerText = item.price*count;
+        }
+        item.count = count;
+
+        this.changeCount(item);
+
+        // let index_plus = this.desserts.indexOf(item);
+        // let user_id = 0;
+        // if(this.user){
+        //   user_id = this.user.id;
+        // }
+        // this.$store.dispatch('wishListAndCart/updateFromCart', [index_plus, user_id, count]).then(() => {
+        //   this.init();
+        //   this.summCount();
+        // });
       }
     }
   }
@@ -808,5 +882,17 @@
     margin-right: 10px;
     width: 20px;
     height: 20px;
+  }
+
+  #myTabContent .v-data-table-header {
+    background: #EBE7E7 !important;
+  }
+
+  #myTabContent .v-data-table tbody tr {
+    border-bottom: thin solid #B22180 !important;
+  }
+
+  .mytable .v-data-table tbody tr td {
+    border-bottom: thin solid #B22180 !important;
   }
 </style>
