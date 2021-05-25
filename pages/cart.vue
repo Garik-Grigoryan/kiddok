@@ -187,9 +187,10 @@
                     </div>
 
                     <div style="margin: 40px 0; display: flex; justify-content: center; padding-bottom: 40px;">
-                      <a class="white--text approve-btn" @click="buy" href="#step3">
+                      <a class="white--text approve-btn" @click="buy" href="#">
                         Հաստատել
                       </a>
+                      <a class="white--text go-to-next-step" href="#step3" style="display: none;"></a>
                     </div>
 
                     <!-- <v-card-text>
@@ -317,13 +318,13 @@
               <div style="display: flex; margin-top: 20px;">
                   <div style="width: 20%;"><span>Պատվիրատու՝</span></div>
                   <div style="width: 30%;">
-                    <input class="step2_input" v-model="nameLastName" :rules="requiredField" type="text" name="name" required>
+                    <input class="step2_input" :rules="requiredField" type="text" name="name" required>
                   </div>
               </div>
               <div style="display: flex; margin-top: 20px;">
                   <div style="width: 20%;"><span>Վճարման տարբերակ</span></div>
                   <div style="width: 30%;">
-                    <input class="step2_input" v-model="nameLastName" :rules="requiredField" type="text" name="name" required>
+                    <input class="step2_input" :rules="requiredField" type="text" name="name" required>
                   </div>
               </div>
             </v-card>
@@ -536,18 +537,22 @@
     },
     methods: {
       buy() {
-        console.log(this.country);
-        this.setActive('step3');
         if(this.payment == 'Cash'){
           if(this.user){
             this.$store.dispatch('user/buy', [this.user.id, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info]).then(() => {
               this.$store.dispatch('wishListAndCart/emptyCart')
               this.desserts = [];
+              this.setActive('step3');
+              document.querySelector('.go-to-next-step').click();
+              this.totalPrice = 0;
             });
           }else {
             this.$store.dispatch('user/buy', [null, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info]).then(() => {
               this.$store.dispatch('wishListAndCart/emptyCart')
               this.desserts = [];
+              this.setActive('step3');
+              document.querySelector('.go-to-next-step').click();
+              this.totalPrice = 0;
             });
           }
         } else{
@@ -555,18 +560,23 @@
             this.$store.dispatch('user/buy', [this.user.id, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info]).then((res) => {
               this.$store.dispatch('wishListAndCart/emptyCart');
               this.desserts = [];
-              this.$store.dispatch('user/initOrder', [res.orderID+' order from davmar.am', res.orderID, this.totalPrice]).then((redirectUrl) => {
-                window.location.href = redirectUrl.url;
-              });
+              this.setActive('step3');
+              document.querySelector('.go-to-next-step').click();
+              // this.$store.dispatch('user/initOrder', [res.orderID+' order from davmar.am', res.orderID, this.totalPrice]).then((redirectUrl) => {
+              //   window.location.href = redirectUrl.url;
+              // });
+              this.totalPrice = 0;
             });
           } else {
             this.$store.dispatch('user/buy', [null, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info]).then((res) => {
               this.$store.dispatch('wishListAndCart/emptyCart');
               this.desserts = [];
-              this.$store.dispatch('user/initOrder', [res.orderID+' order from davmar.am', res.orderID, this.totalPrice]).then((redirectUrl) => {
-                window.location.href = redirectUrl.url;
-
-              });
+              this.setActive('step3');
+              document.querySelector('.go-to-next-step').click();
+              // this.$store.dispatch('user/initOrder', [res.orderID+' order from davmar.am', res.orderID, this.totalPrice]).then((redirectUrl) => {
+              //   window.location.href = redirectUrl.url;
+              // });
+              this.totalPrice = 0;
             });
           }
         }

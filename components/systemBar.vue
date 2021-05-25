@@ -259,7 +259,7 @@
         </div>
 
         <v-btn v-if="authenticated" color="#fff" text class="my-2 nav_button" v-on="on" style="border: none; position: relative;">
-          <a href="/account" style="color: white;">{{user.name}}</a>
+          <a href="/account" style="color: white;">{{user.name + ' ' + user.lastname}}</a>
           <v-icon @click="openAccountMenu">mdi-chevron-down</v-icon>
 
           <v-list v-if="authenticated" class="accountMenu" style="display: none;">
@@ -310,12 +310,18 @@
                       <v-text-field v-model="loginForm.password" :rules="passwordRules" label="ԳԱՂՏՆԱԲԱՌ" type="password" required ></v-text-field> -->
                       
                       <v-card-actions style="display: block; padding: 0;">
-                        <label>ԷԼԵԿՏՐՈՆԱՅԻՆ ՀԱՍՑԵ</label><br>
-                        <input v-model="loginForm.email" :rules="emailRules" placeholder="Էլ հասցե կամ հեռախոսահամար" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;margin-top: 10px;" required>
+                        <label>ԷԼԵԿՏՐՈՆԱՅԻՆ ՀԱՍՑԵ</label>
+                        <div style="position: relative;">
+                          <input v-model="loginForm.email" :rules="emailRules" placeholder="Էլ հասցե կամ հեռախոսահամար" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;margin-top: 10px;" required>
+                          <v-icon style="position: absolute; top: 23%; right: 3%;">mdi-email-outline</v-icon>
+                        </div>
                       </v-card-actions>
                       <v-card-actions style="display: block; padding: 0;">
-                        <label>ԳԱՂՏՆԱԲԱՌ</label><br>
-                        <input v-model="loginForm.password" :rules="passwordRules" type="password" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;margin-top: 10px;" required>
+                        <label>ԳԱՂՏՆԱԲԱՌ</label>
+                        <div style="position: relative;">
+                          <input v-model="loginForm.password" :rules="passwordRules" type="password" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;margin-top: 10px;" required>
+                          <v-icon style="position: absolute; top: 23%; right: 3%;">mdi-lock-outline</v-icon>
+                        </div>
                       </v-card-actions>
 
                       <v-card-actions style="padding: 0;">
@@ -489,7 +495,7 @@
                       <v-icon size="100">mdi-account-circle-outline</v-icon>
                     </div>
                     <div v-if="authenticated">
-                      <span style="color: #B22180;">{{user.name}}</span>
+                      <span style="color: #B22180;">{{user.name + ' ' + user.lastname}}</span>
                     </div>
                   </div>
                   <v-form @submit.prevent="false" ref="form" :lazy-validation="true" style="width: 100%; margin-top: 30px;">

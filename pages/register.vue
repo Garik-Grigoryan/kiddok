@@ -35,11 +35,11 @@
               <v-form @submit.prevent="false" ref="form" :lazy-validation="true" style="width: 30%; margin-top: 30px;">
                 <v-card-actions style="display: block; padding: 0;">
                   <label style="color: #C6C3C3;">ԱՆՈՒՆ *</label>
-                  <input type="text" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;" required>
+                  <input type="text" v-model="registerPhysicalPerson.name" :rules="nameRules" class="register-input" required>
                 </v-card-actions>
                 <v-card-actions style="display: block; padding: 0;">
                   <label style="color: #C6C3C3;">ԱԶԳԱՆՈՒՆ *</label>
-                  <input type="text" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;" required>
+                  <input type="text" v-model="registerPhysicalPerson.lastname" :rules="nameRules" class="register-input" required>
                 </v-card-actions>
 
                 <div>
@@ -54,9 +54,11 @@
                 </div>
 
                 <div style="margin: 20px 0; display: flex;">
-                  <a class="white--text approve-btn" @click.prevent="setActive('step2')" href="#step2">
+                  <a class="white--text approve-btn" @click="step1Action()" href="#">
                     Հաստատել
                   </a>
+                  <a class="go-to-physical-register" href="#step2" style="display: none;"></a>
+                  <a class="go-to-juridical-register" href="#step3" style="display: none;"></a>
                 </div>
               </v-form>
             </v-row>
@@ -69,30 +71,33 @@
               <div>
                 <span>Գրանցվել ՝ լրացնելով Ձեր տվյալները ստորև</span>
               </div>
-              <v-form @submit.prevent="false" ref="form" v-model="valid" :lazy-validation="true" style="width: 30%; margin-top: 30px;">
+              <v-form @submit.prevent="false" ref="form" :lazy-validation="true" style="width: 30%; margin-top: 30px;">
+                <v-alert v-if="registrationError" text type="error">
+                  {{JSON.stringify(registrationError.data.errors)}}
+                </v-alert>
                 <v-card-actions style="display: block; padding: 0;">
                   <label style="color: #C6C3C3;">ԱՆՈՒՆ *</label>
-                  <input type="text" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;" required>
+                  <input type="text" v-model="registerPhysicalPerson.name" :rules="nameRules" class="register-input" required>
                 </v-card-actions>
                 <v-card-actions style="display: block; padding: 0;">
                   <label style="color: #C6C3C3;">ԱԶԳԱՆՈՒՆ *</label>
-                  <input type="text" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;" required>
+                  <input type="text" v-model="registerPhysicalPerson.lastname" :rules="nameRules" class="register-input" required>
                 </v-card-actions>
                 <v-card-actions style="display: block; padding: 0;">
                   <label style="color: #C6C3C3;">ՀԵՌ. *</label>
-                  <input type="text" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;" required>
+                  <input type="text" v-model="registerPhysicalPerson.phone" :rules="phoneRules" class="register-input" required>
                 </v-card-actions>
                 <v-card-actions style="display: block; padding: 0;">
                   <label style="color: #C6C3C3;">ԷԼԵԿՏՐՈՆԱՅԻՆ ՀԱՍՑԵ *</label>
                   <div style="position: relative;">
-                    <input type="email" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;" required>
+                    <input type="email" v-model="registerPhysicalPerson.email" :rules="emailRules" class="register-input" required>
                     <v-icon style="position: absolute; top: 15%; right: 3%;">mdi-email-outline</v-icon>
                   </div>
                 </v-card-actions>
                 <v-card-actions style="display: block; padding: 0;">
                   <label style="color: #C6C3C3;">ԳԱՂՏՆԱԲԱՌ *</label>
                   <div style="position: relative;">
-                    <input type="password" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;" required>
+                    <input type="password" v-model="registerPhysicalPerson.password" :rules="passwordRules" class="register-input" required>
                     <v-icon style="position: absolute; top: 15%; right: 3%;">mdi-lock-outline</v-icon>
                   </div>
                   <div>
@@ -101,7 +106,7 @@
                 </v-card-actions>
 
                 <div style="margin: 20px 0; display: flex;">
-                  <a class="white--text approve-btn" @click.prevent="setActive('step3')" href="#step3">
+                  <a class="white--text approve-btn" @click="registerPhysicalAction()" href="#">
                     Հաստատել
                   </a>
                 </div>
@@ -116,42 +121,45 @@
               <div>
                 <span>Գրանցվել ՝ լրացնելով Ձեր տվյալները ստորև</span>
               </div>
-              <v-form @submit.prevent="false" ref="form" v-model="valid" :lazy-validation="true" style="width: 30%; margin-top: 30px;">
+              <v-form @submit.prevent="false" ref="form" :lazy-validation="true" style="width: 30%; margin-top: 30px;">
+                <v-alert v-if="registrationError && registrationError.data.errors" text type="error">
+                  {{JSON.stringify(registrationError.data.errors).match(/\[(.*?)\]/)[1]}}
+                </v-alert>
                 <v-card-actions style="display: block; padding: 0;">
                   <label style="color: #C6C3C3;">ԱՆՈՒՆ *</label>
-                  <input type="text" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;" required>
+                  <input type="text" v-model="registerJuridicalPerson.name" :rules="nameRules" class="register-input" required>
                 </v-card-actions>
                 <v-card-actions style="display: block; padding: 0;">
                   <label style="color: #C6C3C3;">ԱԶԳԱՆՈՒՆ *</label>
-                  <input type="text" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;" required>
+                  <input type="text" v-model="registerJuridicalPerson.lastname" :rules="nameRules" class="register-input" required>
                 </v-card-actions>
                 <v-card-actions style="display: block; padding: 0;">
                   <label style="color: #C6C3C3;">ՀԵՌ. *</label>
-                  <input type="text" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;" required>
+                  <input type="text" v-model="registerJuridicalPerson.phone" :rules="phoneRules" class="register-input" required>
                 </v-card-actions>
                 <v-card-actions style="display: block; padding: 0;">
                   <label style="color: #C6C3C3;">ԿԱԶՄԱԿԵՐՊՈՒԹՅԱՆ ԱՆՎԱՆՈՒՄ *</label>
-                  <input type="text" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;" required>
+                  <input type="text" v-model="registerJuridicalPerson.company_name" :rules="nameRules" class="register-input" required>
                 </v-card-actions>
                 <v-card-actions style="display: block; padding: 0;">
                   <label style="color: #C6C3C3;">ԿԱԶՄԱԿԵՐՊՈՒԹՅԱՆ ՀՎՀՀ *</label>
-                  <input type="text" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;" required>
+                  <input type="text" v-model="registerJuridicalPerson.company_hvhh" class="register-input" required>
                 </v-card-actions>
                 <v-card-actions style="display: block; padding: 0;">
                   <label style="color: #C6C3C3;">ԿԱԶՄԱԿԵՐՊՈՒԹՅԱՆ ՀԵՌԱՂՈՍԱՀԱՄԱՐ*</label>
-                  <input type="text" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;" required>
+                  <input type="text" v-model="registerJuridicalPerson.company_phone" :rules="phoneRules" class="register-input" required>
                 </v-card-actions>
                 <v-card-actions style="display: block; padding: 0;">
                   <label style="color: #C6C3C3;">ԿԱԶՄԱԿԵՐՊՈՒԹՅԱՆ ԷԼԵԿՏՐՈՆԱՅԻՆ ՀԱՍՑԵ*</label>
                   <div style="position: relative;">
-                    <input type="email" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;" required>
+                    <input type="email" v-model="registerJuridicalPerson.email" :rules="emailRules" class="register-input" required>
                     <v-icon style="position: absolute; top: 15%; right: 3%;">mdi-email-outline</v-icon>
                   </div>
                 </v-card-actions>
                 <v-card-actions style="display: block; padding: 0;">
                   <label style="color: #C6C3C3;">ԳԱՂՏՆԱԲԱՌ *</label>
                   <div style="position: relative;">
-                    <input type="password" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;" required>
+                    <input type="password" v-model="registerJuridicalPerson.password" :rules="passwordRules" class="register-input" required>
                     <v-icon style="position: absolute; top: 15%; right: 3%;">mdi-lock-outline</v-icon>
                   </div>
                   <div>
@@ -160,7 +168,7 @@
                 </v-card-actions>
 
                 <div style="margin: 20px 0; display: flex;">
-                  <a class="white--text approve-btn" @click="openSuccessModal()">
+                  <a class="white--text approve-btn" @click="registerJuridicalAction()">
                     Հաստատել
                   </a>
                 </div>
@@ -203,7 +211,38 @@
         data(){
             return {
               text: '',
-              activeItem: 'step1'
+              activeItem: 'step1',
+              registrationError: false,
+              registerPhysicalPerson: {
+                name: '',
+                lastname: '',
+                email: '',
+                phone: '',
+                password: '',
+              },
+              registerJuridicalPerson: {
+                name: '',
+                lastname: '',
+                phone: '',
+                password: '',
+                company_name: '',
+                company_hvhh: '',
+                company_phone: '',
+                email: ''
+              },
+              passwordRules: [
+                v => !!v || 'Password is required',
+              ],
+              nameRules: [
+                v => !!v || 'Name is required',
+              ],
+              emailRules: [
+                v => !!v || 'E-mail is required',
+                v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+              ],
+              phoneRules: [
+                v => !!v || 'Phone is required',
+              ],
             }
         },
         async fetch({route, store}) {
@@ -229,6 +268,37 @@
         },
         closeModal: function () {
           document.getElementById('successModal').style.display = 'none';
+        },
+        step1Action() {
+          var elements = document.querySelectorAll('input[name="person"]');
+
+          for (var i = 0; i < elements.length; i++) {
+            if (elements[i].checked && elements[i].value === "physical") {
+              this.setActive('step2');
+              document.querySelector('.go-to-physical-register').click();
+            } else if(elements[i].checked && elements[i].value === "juridical") {
+              this.setActive('step3');
+              document.querySelector('.go-to-juridical-register').click();
+            }
+          }
+        },
+        async registerPhysicalAction() {
+          await this.$axios.post('http://127.0.0.1:8000/api/auth/register', this.registerPhysicalPerson).then(response => {
+            this.menu = false;
+            this.$auth.login({data: this.registerPhysicalPerson});
+            window.location.href = '/account';
+          }).catch(e => {
+            this.registrationError = e.response;
+          });
+        },
+        async registerJuridicalAction() {
+          await this.$axios.post('http://127.0.0.1:8000/api/auth/register', this.registerJuridicalPerson).then(response => {
+            this.menu = false;
+            this.$auth.login({data: this.registerJuridicalPerson});
+            this.openSuccessModal();
+          }).catch(e => {
+            this.registrationError = e.response;
+          });
         },
       }
     }
@@ -298,6 +368,14 @@
     padding: 10px 50px 5px 0;
     margin-bottom: 30px;
     font-size: 20px;
+  }
+
+  .register-input {
+    width: 100%;
+    border: 2px solid #C6C3C3;
+    border-radius: 6px;
+    padding: 6px 12px;
+    margin-bottom: 20px;
   }
 
 </style>

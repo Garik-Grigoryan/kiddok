@@ -26,13 +26,13 @@ export const actions = {
   async update(ctx, [id, name, email, password, phone, address]){
     await this.$axios.$post('http://127.0.0.1:8000/api/user/update', {id, name, email, password, phone, address});
   },
-  async buy(ctx, [user_id, cartId, totalPrice, address, payment, nameLastName, email, count, phone]){
+  async buy(ctx, [user_id, cartId, totalPrice, address, payment, nameLastName, email, count, phone, country, apartment, city, selected_region, zip, more_info]){
     let cookieRes = this.$cookies.remove('davmar_cart');
 
     // await this.$axios.$post('http://127.0.0.1:8000/api/order/store', {user_id, cartId, totalPrice, address, payment, nameLastName, email, count, phone});
     // return true;
 
-    let result = await this.$axios.$post('http://127.0.0.1:8000/api/order/store', {user_id, cartId, totalPrice, address, payment, nameLastName, email, count, phone});
+    let result = await this.$axios.$post('http://127.0.0.1:8000/api/order/store', {user_id, cartId, totalPrice, address, payment, nameLastName, email, count, phone, country, apartment, city, selected_region, zip, more_info});
     return result;
   },
   async initOrder(ctx, [description, orderId, amount]){
