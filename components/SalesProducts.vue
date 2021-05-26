@@ -52,7 +52,7 @@
                   </p>
                   <div style="display: flex; justify-content: space-between;">
                     <v-btn style="background: #B22180; padding: 12px; border-radius: 16px; color: white; width: 130px; text-transform: none;">Գնել հիմա</v-btn>
-                    <v-btn :to="localePath('/cart')" color="#000" text class="my-2 nav_button" width="40px" style="justify-content: flex-end; padding: 0;">
+                    <v-btn @click="addToCart($event, product.id)" color="#000" text class="my-2 nav_button" width="40px" style="justify-content: flex-end; padding: 0;">
                       <v-icon >mdi-cart-outline</v-icon>
                     </v-btn>
                   </div>

@@ -28,7 +28,7 @@
       return {
         title: 'Sales',
         meta: [
-          { hid: 'Davmar - sales', name: 'Davmar sales', content: 'Davmar sales' }
+          { hid: 'Sales', name: 'Sales', content: 'Sales' }
         ],
       };
     },

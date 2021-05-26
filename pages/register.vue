@@ -125,6 +125,9 @@
                 <v-alert v-if="registrationError && registrationError.data.errors" text type="error">
                   {{JSON.stringify(registrationError.data.errors).match(/\[(.*?)\]/)[1]}}
                 </v-alert>
+                <v-alert v-if="registrationError2" text type="error">
+                  {{registrationError2}}
+                </v-alert>
                 <v-card-actions style="display: block; padding: 0;">
                   <label style="color: #C6C3C3;">ԱՆՈՒՆ *</label>
                   <input type="text" v-model="registerJuridicalPerson.name" :rules="nameRules" class="register-input" required>
@@ -213,6 +216,7 @@
               text: '',
               activeItem: 'step1',
               registrationError: false,
+              registrationError2: false,
               registerPhysicalPerson: {
                 name: '',
                 lastname: '',
@@ -292,13 +296,18 @@
           });
         },
         async registerJuridicalAction() {
-          await this.$axios.post('http://127.0.0.1:8000/api/auth/register', this.registerJuridicalPerson).then(response => {
-            this.menu = false;
-            this.$auth.login({data: this.registerJuridicalPerson});
-            this.openSuccessModal();
-          }).catch(e => {
-            this.registrationError = e.response;
-          });
+          if(this.registerJuridicalPerson.company_name !== "") {
+            this.registrationError2 = false;
+            await this.$axios.post('http://127.0.0.1:8000/api/auth/register', this.registerJuridicalPerson).then(response => {
+              this.menu = false;
+              this.$auth.login({data: this.registerJuridicalPerson});
+              this.openSuccessModal();
+            }).catch(e => {
+              this.registrationError = e.response;
+            });
+          } else {
+            this.registrationError2 = "The copmany name field is required.";
+          }
         },
       }
     }

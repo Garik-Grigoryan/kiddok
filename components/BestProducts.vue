@@ -53,12 +53,12 @@
                   <!-- <h3 v-if="$i18n.locale === 'am'" class="font-weight-light font-weight-bold white--text mb-2" v-text="product.name_am" style="color: #352249 !important; font-weight: 100 !important; font-size: 18px; margin-bottom: 16px !important;"></h3>
                   <h3 v-if="$i18n.locale === 'en'" class="font-weight-light font-weight-bold white--text mb-2" v-text="product.name_en" style="color: #352249 !important; font-weight: 100 !important; font-size: 18px; margin-bottom: 16px !important;"></h3>
                   <h3 v-if="$i18n.locale === 'ru'" class="font-weight-light font-weight-bold white--text mb-2" v-text="product.name_ru" style="color: #352249 !important; font-weight: 100 !important; font-size: 18px; margin-bottom: 16px !important;"></h3> -->
-                  <h3 class="font-weight-light font-weight-bold white--text mb-2" v-text="'Մանկական խաղալիք զարգացնող'" style="color: #352249 !important; font-weight: 100 !important; font-size: 15px; margin-bottom: 8px !important;"></h3>
+                  <h3 class="font-weight-light font-weight-bold white--text mb-2" v-text="product.name_am" style="color: #352249 !important; font-weight: 100 !important; font-size: 15px; margin-bottom: 8px !important;"></h3>
                   <div style="display: flex; justify-content: space-between; align-items: baseline;">
                     <p class="price" style="color: #352249; font-size: 15px;">
                       <span>{{product.price}} դրամ</span>
                     </p>
-                    <v-btn :to="localePath('/cart')" color="#000" text class="my-2 nav_button" width="40px" style="justify-content: flex-end; padding: 0;">
+                    <v-btn @click="addToCart($event, product.id)" color="#000" text class="my-2 nav_button" width="40px" style="justify-content: flex-end; padding: 0;">
                       <v-icon >mdi-cart-outline</v-icon>
                     </v-btn>
                   </div>

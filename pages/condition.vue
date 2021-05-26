@@ -15,7 +15,7 @@
       return {
         title: 'Conditions',
         meta: [
-          { hid: 'Davmar - conditions', name: 'Davmar conditions', content: 'Davmar conditions' }
+          { hid: 'Conditions', name: 'Conditions', content: 'Conditions' }
         ],
       };
     },

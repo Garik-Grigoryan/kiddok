@@ -59,7 +59,7 @@
             <p class="price" style="color: #352249; font-size: 15px;">
               <span>{{price}} դրամ</span>
             </p>
-            <v-btn :to="localePath('/cart')" color="#000" text class="my-2 nav_button" width="40px" style="justify-content: flex-end; padding: 0;">
+            <v-btn @click="addToCart($event, id)" color="#000" text class="my-2 nav_button" width="40px" style="justify-content: flex-end; padding: 0;">
               <v-icon >mdi-cart-outline</v-icon>
             </v-btn>
           </div>
@@ -89,7 +89,11 @@
           this.$store.dispatch('wishListAndCart/setWishList', [id])
         },
         addToCart(e, id) {
-          this.$store.dispatch('wishListAndCart/setCArt', [id])
+          let user_id = 0;
+          if(this.user){
+            user_id = this.user.id
+          }
+          this.$store.dispatch('wishListAndCart/setCArt', [id, user_id])
         }
       }
     }

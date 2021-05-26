@@ -32,7 +32,7 @@
       return {
         title: 'Wish list',
         meta: [
-          { hid: 'Davmar - wish list', name: 'Davmar wish list', content: 'Davmar wish list' }
+          { hid: 'Wish list', name: 'Wish list', content: 'Wish list' }
         ],
       };
     },

@@ -107,7 +107,7 @@
       return {
         title: this.products.categoryName,
         meta: [
-          { hid: 'Davmar - ' + this.products.categoryName, name: 'Davmar ' + this.products.categoryName, content: 'Davmar ' + this.products.categoryName }
+          { hid: this.products.categoryName, name: this.products.categoryName, content: this.products.categoryName }
         ],
       };
     },

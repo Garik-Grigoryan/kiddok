@@ -234,7 +234,7 @@ export default {
     return {
       title: 'Home',
       meta: [
-        { hid: 'Davmar - home', name: 'Davmar home', content: 'Buy online from anywhere.' }
+        { hid: 'Home', name: 'Home', content: 'Buy online from anywhere.' }
       ],
     };
   },
@@ -269,9 +269,9 @@ export default {
     }
   },
   async mounted() {
-    window.onload = function() {
-      document.querySelector('.v-slide-group__prev .mdi-chevron-left').style.color = "#B22180";
-    }
+    // window.onload = function() {
+    //   document.querySelector('.v-slide-group__prev .mdi-chevron-left').style.color = "#B22180";
+    // }
     if(this.$route.query.payment){
       if(this.$route.query.payment == 'success'){
         this.color = 'success';

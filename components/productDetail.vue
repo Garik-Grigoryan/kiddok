@@ -206,7 +206,7 @@
       return {
         title: this.product.name_am,
         meta: [
-          { hid: 'Davmar - ' + this.product.name_am, name: 'Davmar ' + this.product.name_am, content: 'Davmar ' + this.product.description_am.replace(/<[^>]*>?/gm, '') },
+          { hid: this.product.name_am, name: this.product.name_am, content: this.product.description_am.replace(/<[^>]*>?/gm, '') },
           {
             hid: "og:image",
             property: "og:image",

@@ -356,7 +356,7 @@
       return {
         title: 'Cart',
         meta: [
-          { hid: 'Davmar - cart', name: 'Davmar cart', content: 'Davmar cart' }
+          { hid: 'Cart', name: 'Cart', content: 'Cart' }
         ],
       };
     },
@@ -537,7 +537,7 @@
     },
     methods: {
       buy() {
-        if(this.payment == 'Cash'){
+        if(this.payment == 'cash'){
           if(this.user){
             this.$store.dispatch('user/buy', [this.user.id, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info]).then(() => {
               this.$store.dispatch('wishListAndCart/emptyCart')

@@ -12,7 +12,7 @@
               <v-icon v-text="item.icon" size="40"></v-icon>
             </v-list-item-icon>
 
-            <v-menu v-if="item.class === 'block1'" v-model="loginMenu" :close-on-content-click="false" :nudge-width="200" offset-y bottom>
+            <v-menu v-if="item.class === 'block1'" :close-on-content-click="false" :nudge-width="200" offset-y bottom>
               <template v-slot:activator="{ on }">
                 <v-list-item-content style="display: block; cursor: pointer;" v-on="on">
                   <v-list-item-title v-text="item.title"></v-list-item-title>
@@ -35,24 +35,28 @@
                           <h4>Հարցաթերթիկ</h4>
                           <div><span class="close-modal" @click="closeModal">x</span></div>
                         </div>
-                        <v-form @submit.prevent="false" ref="form" v-model="valid" :lazy-validation="true" >
+                        <v-form @submit.prevent="false" ref="form" :lazy-validation="true" >
+                          <v-alert v-if="questionnaireError" text type="error">
+                            {{questionnaireError}}
+                          </v-alert>
+
                           <div class="questionnaire_block">
-                              <v-btn color="primary" text @click="loginAction" class="questionnaire_btn" style="text-transform: uppercase;">Հարցաթերթիկ</v-btn>
+                              <v-btn color="primary" text class="questionnaire_btn" style="text-transform: uppercase;">Հարցաթերթիկ</v-btn>
                               <div style="margin-bottom: 20px;"><span>Ձեր կարծիքը շատ կարևոր է մեզ համար</span></div>
                           </div>
 
                           <div class="questionnaire_block">
                               <div style="margin-bottom: 20px;"><span>Որտեղի՞ց եք իմացել Kidd'Ok կազմակերպության մասին *</span></div>
                               <div style="margin-bottom: 15px;">
-                                <input type="radio" name="how_find_out" value="internet">
+                                <input type="radio" name="how_find_out" v-model="questionnaireForm.how_find_out" value="Համացանցից">
                                 <label style="margin-left: 10px;">Համացանցից</label>
                               </div>
                               <div style="margin-bottom: 15px;">
-                                <input type="radio" name="how_find_out" value="organization_employees">
+                                <input type="radio" name="how_find_out" v-model="questionnaireForm.how_find_out" value="Կազմակերպության աշխատակիցներից">
                                 <label style="margin-left: 10px;">Կազմակերպության աշխատակիցներից</label>
                               </div>
                               <div style="margin-bottom: 15px;">
-                                <input type="radio" name="how_find_out" value="third_person">
+                                <input type="radio" name="how_find_out" v-model="questionnaireForm.how_find_out" value="Երրորդ անձից">
                                 <label style="margin-left: 10px;">Երրորդ անձից</label>
                               </div>
                           </div>
@@ -60,15 +64,15 @@
                           <div class="questionnaire_block">
                               <div style="margin-bottom: 20px;"><span>Արդյո՞ք Դուք օգտվում եք www.Kidd'Ok.am կայքից *</span></div>
                               <div style="margin-bottom: 15px;">
-                                <input type="radio" name="use_site" value="yes">
+                                <input type="radio" name="use_site" v-model="questionnaireForm.use_site" value="Այո">
                                 <label style="margin-left: 10px;">Այո</label>
                               </div>
                               <div style="margin-bottom: 15px;">
-                                <input type="radio" name="use_site" value="no">
+                                <input type="radio" name="use_site" v-model="questionnaireForm.use_site" value="Ոչ">
                                 <label style="margin-left: 10px;">Ոչ</label>
                               </div>
                               <div style="margin-bottom: 15px;">
-                                <input type="radio" name="use_site" value="did_not_know">
+                                <input type="radio" name="use_site" v-model="questionnaireForm.use_site" value="Տեղյակ չեի">
                                 <label style="margin-left: 10px;">Տեղյակ չեի</label>
                               </div>
                           </div>
@@ -76,68 +80,68 @@
                           <div class="questionnaire_block">
                               <div style="margin-bottom: 20px;"><span>Ինչպիսի՞ նորարարություն կամ փոփոխություն կցանկանայիք տեսնել Kidd'Ok-ի աշխատանքի մեջ</span></div>
                               <div style="margin-bottom: 15px;">
-                                <input class="questionnaire_input" type="text" name="innovations_or_changes" placeholder="Իմ պատասխանը">
+                                <input class="questionnaire_input" v-model="questionnaireForm.innovations_or_changes" type="text" name="innovations_or_changes" placeholder="Իմ պատասխանը">
                               </div>
                           </div>
 
                           <div class="questionnaire_block">
-                              <div style="margin-bottom: 20px;"><span>Ի՞նչը Ձեզ չի գոհացնում ՊՈՊՈ ԳՐՈՒՊ-ի աշխատանքում *</span></div>
+                              <div style="margin-bottom: 20px;"><span>Ի՞նչը Ձեզ չի գոհացնում ՊՈՊՈ ԳՐՈՒՊ-ի աշխատանքում</span></div>
                               <div style="margin-bottom: 15px;">
-                                <input class="questionnaire_input" type="text" name="not_suit_in_work" placeholder="Իմ պատասխանը">
+                                <input class="questionnaire_input" v-model="questionnaireForm.not_suit_in_work" type="text" name="not_suit_in_work" placeholder="Իմ պատասխանը">
                               </div>
                           </div>
 
                           <div class="questionnaire_block">
                               <div style="margin-bottom: 20px;"><span>Խնդրում ենք գնահատել աշխատակիցների սպասարկումը 5 բալանի սանդղակով *</span></div>
                               <div style="display: flex; justify-content: space-between;margin-bottom: 15px;">
-                                <div><span>Շատ լավ</span></div>
+                                <div><span>Վատ</span></div>
                                 <div>
-                                  <input type="radio" name="rating" value="1">
+                                  <input type="radio" name="rating" v-model="questionnaireForm.rating" value="1">
                                   <div>1</div>
                                 </div>
                                 <div>
-                                  <input type="radio" name="rating" value="2">
+                                  <input type="radio" name="rating" v-model="questionnaireForm.rating" value="2">
                                   <div>2</div>
                                 </div>
                                 <div>
-                                  <input type="radio" name="rating" value="3">
+                                  <input type="radio" name="rating" v-model="questionnaireForm.rating" value="3">
                                   <div>3</div>
                                 </div>
                                 <div>
-                                  <input type="radio" name="rating" value="4">
+                                  <input type="radio" name="rating" v-model="questionnaireForm.rating" value="4">
                                   <div>4</div>
                                 </div>
                                 <div>
-                                  <input type="radio" name="rating" value="5">
-                                  <div>4</div>
+                                  <input type="radio" name="rating" v-model="questionnaireForm.rating" value="5">
+                                  <div>5</div>
                                 </div>
-                                <div><span>Վատ</span></div>
+                                <div><span>Շատ լավ</span></div>
                               </div>
                           </div>
 
                           <div class="questionnaire_block">
-                              <div style="margin-bottom: 20px;"><span>Անուն,Ազգանուն(պաշտոն)</span></div>
+                              <div style="margin-bottom: 20px;"><span>Անուն,Ազգանուն(պաշտոն) *</span></div>
                               <div style="margin-bottom: 15px;">
-                                <input class="questionnaire_input" type="text" name="name" placeholder="Իմ պատասխանը">
+                                <input class="questionnaire_input" type="text" v-model="questionnaireForm.name" name="name" placeholder="Իմ պատասխանը">
                               </div>
                           </div>
 
                           <div class="questionnaire_block">
                               <div style="margin-bottom: 20px;"><span>Կազմակերպության անվանում</span></div>
                               <div style="margin-bottom: 15px;">
-                                <input class="questionnaire_input" type="text" name="company_name" placeholder="Իմ պատասխանը">
+                                <input class="questionnaire_input" type="text" v-model="questionnaireForm.company_name" name="company_name" placeholder="Իմ պատասխանը">
                               </div>
                           </div>
 
                           <div class="questionnaire_block">
-                              <div style="margin-bottom: 20px;"><span>Հեռախոսահամար</span></div>
+                              <div style="margin-bottom: 20px;"><span>Հեռախոսահամար *</span></div>
                               <div style="margin-bottom: 15px;">
-                                <input class="questionnaire_input" type="text" name="phone" placeholder="Իմ պատասխանը">
+                                <input class="questionnaire_input" type="text" v-model="questionnaireForm.phone" name="phone" placeholder="Իմ պատասխանը">
                               </div>
                           </div>
 
                           <v-card-actions style="padding: 0;">
-                            <v-btn color="primary" text @click="loginAction" class="questionnaire_btn" style="margin: auto;">Հաստատել</v-btn>
+                            <v-btn color="primary" text @click="sendQuestionnaireForm()" class="questionnaire_btn" style="margin: auto;">Հաստատել</v-btn>
                           </v-card-actions>
                         </v-form>
                       </v-card-text>
@@ -165,6 +169,18 @@
           { title: "Գործ կա", icon: 'mdi-calendar-check', text: "Թափուր աշխատատեղեր", class: 'block2' },
           { title: "Վճարում", icon: 'mdi-currency-usd', text: "Վճարման ամենահարմար եղանակները", class: 'block3' },
         ],
+        questionnaireError: false,
+        questionnaireForm: {
+          user_id: 0,
+          how_find_out: '',
+          use_site: '',
+          innovations_or_changes: '',
+          not_suit_in_work: '',
+          rating: '',
+          name: '',
+          company_name: '',
+          phone: ''
+        },
       })
     },
     methods: {
@@ -172,12 +188,19 @@
         document.querySelector('.v-menu__content').classList.remove('menuable__content__active');
         document.querySelector('.v-menu__content').style.display = 'none';
       },
-      async loginAction() {
-        await this.$auth.login({data: this.loginForm}).then(response => {
-          this.menu = false;
-        }).catch(e => {
-          this.loginError = e.response;
-        });
+      async sendQuestionnaireForm() {
+        if(this.questionnaireForm.name !== "" && this.questionnaireForm.phone !== "" && this.questionnaireForm.rating !== "" && this.questionnaireForm.use_site !== "" && this.questionnaireForm.how_find_out !== "") {
+          if(this.user){
+            this.questionnaireForm.user_id = this.user.id;
+          }
+          await this.$axios.post('http://127.0.0.1:8000/api/questionnaire/store', this.questionnaireForm).then(response => {
+            window.location.href = '/';
+          }).catch(e => {
+            this.questionnaireError = e.response;
+          });
+        } else {
+          this.questionnaireError = "Ոչ բոլոր պարտադիր դաշտերն են լրացվաց";
+        }
       }
     }
   }
