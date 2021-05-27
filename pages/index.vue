@@ -9,97 +9,17 @@
           <h1  class="text-center mb-5" v-text="'ԸՍՏ ՏԱՐԻՔԻ'" style="text-transform: uppercase; color: #352249; font-weight: 100; margin-top: 120px;"></h1>
           <v-container style="margin-bottom: 0px; max-width: 1360px;">
             <v-row>
-              <v-col sm="6" xs="12" md="4">
+              <v-col sm="6" xs="12" md="4" v-for="(item, i) in categoriesBlock" :key="i">
                 <v-list :three-line="true" :class="'block1'">
-                  <v-list-item to="/category/3?page=1" style="display: block; cursor: pointer;">
+                  <v-list-item :to="item.to" style="display: block; cursor: pointer;">
                     <div style="display: flex; heigth: 200px;">
-                        <div style="width: 100px; height: 200px; background: #FDB813; display: flex; justify-content: center; align-items: center;">
-                          <p style="font-size: 30px; color: white;">0+</p>
+                        <div class="age-block" :style="item.ageStyle">
+                          <p style="font-size: 30px; color: white;">{{item.age}}</p>
                         </div>
-                        <div class="img-block"></div>
+                        <div class="img-block" :style="item.imgStyle"></div>
                     </div>
                     <v-list-item-content style="display: block;">
-                      <v-list-item-title v-text="'0-12 ամսական'"></v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list>
-              </v-col>
-              <v-col sm="6" xs="12" md="4">
-                <v-list :three-line="true" :class="'block1'">
-                  <v-list-item to="/category/3?page=1" style="display: block; cursor: pointer;">
-                    <div style="display: flex; heigth: 200px;">
-                        <div style="width: 100px; height: 200px; background: #01B8BE; display: flex; justify-content: center; align-items: center;">
-                          <p style="font-size: 30px; color: white;">12+</p>
-                        </div>
-                        <div class="img-block"></div>
-                    </div>
-                    <v-list-item-content style="display: block;">
-                      <v-list-item-title v-text="'12-24 ամսական'"></v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list>
-              </v-col>
-              <v-col sm="6" xs="12" md="4">
-                <v-list :three-line="true" :class="'block1'">
-                  <v-list-item to="/category/3?page=1" style="display: block; cursor: pointer;">
-                    <div style="display: flex; heigth: 200px;">
-                        <div style="width: 100px; height: 200px; background: #B22180; display: flex; justify-content: center; align-items: center;">
-                          <p style="font-size: 30px; color: white;">2+</p>
-                        </div>
-                        <div class="img-block"></div>
-                    </div>
-                    <v-list-item-content style="display: block;">
-                      <v-list-item-title v-text="'2-5 տարեկան'"></v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list>
-              </v-col>
-            </v-row>
-          </v-container>
-
-          <v-container style="margin-bottom: 120px; max-width: 1360px;">
-            <v-row>
-              <v-col sm="6" xs="12" md="4">
-                <v-list :three-line="true" :class="'block1'">
-                  <v-list-item to="/category/3?page=1" style="display: block; cursor: pointer;">
-                    <div style="display: flex; heigth: 200px;">
-                        <div style="width: 100px; height: 200px; background: #352249; display: flex; justify-content: center; align-items: center;">
-                          <p style="font-size: 30px; color: white;">5+</p>
-                        </div>
-                        <div class="img-block"></div>
-                    </div>
-                    <v-list-item-content style="display: block;">
-                      <v-list-item-title v-text="'5-8 տարեկան'"></v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list>
-              </v-col>
-              <v-col sm="6" xs="12" md="4">
-                <v-list :three-line="true" :class="'block1'">
-                  <v-list-item to="/category/3?page=1" style="display: block; cursor: pointer;">
-                    <div style="display: flex; heigth: 200px;">
-                        <div style="width: 100px; height: 200px; background: #B22180; display: flex; justify-content: center; align-items: center;">
-                          <p style="font-size: 30px; color: white;">8+</p>
-                        </div>
-                        <div class="img-block"></div>
-                    </div>
-                    <v-list-item-content style="display: block;">
-                      <v-list-item-title v-text="'8-12 տարեկան'"></v-list-item-title>
-                    </v-list-item-content>
-                  </v-list-item>
-                </v-list>
-              </v-col>
-              <v-col sm="6" xs="12" md="4">
-                <v-list :three-line="true" :class="'block1'">
-                  <v-list-item to="/category/3?page=1" style="display: block; cursor: pointer;">
-                    <div style="display: flex; heigth: 200px;">
-                        <div style="width: 100px; height: 200px; background: #01B8BE; display: flex; justify-content: center; align-items: center;">
-                          <p style="font-size: 30px; color: white;">16+</p>
-                        </div>
-                        <div class="img-block"></div>
-                    </div>
-                    <v-list-item-content style="display: block;">
-                      <v-list-item-title v-text="'12-16 տարեկան'"></v-list-item-title>
+                      <v-list-item-title v-text="item.title"></v-list-item-title>
                     </v-list-item-content>
                   </v-list-item>
                 </v-list>
@@ -265,10 +185,27 @@ export default {
       justifyCenter: 'center',
       notification: '',
       color: 'success',
-      snackbar: false
+      snackbar: false,
+      categoriesBlock: [],
     }
   },
   async mounted() {
+    let all_categories = await this.$axios.$get('http://127.0.0.1:8000/api/category/get');
+    console.log(all_categories);
+    all_categories.forEach(elem => {
+      if(elem.parent !== 0) {
+        this.categoriesBlock.push({
+          id: elem.id,
+          title: elem.name_am,
+          parentID: elem.parent,
+          image: elem.image,
+          age: elem.description,
+          to: '/category/' + elem.id + '?page=1',
+          imgStyle: 'background-image: url('+JSON.parse(elem.image)[0]+')',
+          ageStyle: 'background: '+elem.color,
+        });
+      }
+    });
     // window.onload = function() {
     //   document.querySelector('.v-slide-group__prev .mdi-chevron-left').style.color = "#B22180";
     // }
@@ -284,13 +221,13 @@ export default {
       }
     }
 
-      await this.$store.dispatch('wishListAndCart/fetch');
-      if(this.user){
-        await this.$store.dispatch('wishListAndCart/getWishListAndCartData', [this.user.id]);
-      }else{
-        await this.$store.dispatch('wishListAndCart/getWishListAndCartData', [0]);
-      }
-  },
+    await this.$store.dispatch('wishListAndCart/fetch');
+    if(this.user){
+      await this.$store.dispatch('wishListAndCart/getWishListAndCartData', [this.user.id]);
+    }else{
+      await this.$store.dispatch('wishListAndCart/getWishListAndCartData', [0]);
+    }
+  }
 }
 </script>
 
@@ -298,9 +235,17 @@ export default {
   .block1 .img-block {
       width: 400px;
       height: 200px;
-      background-image: url(http://127.0.0.1:8000/images/fp_lbk_shop_by_age_0_desk_en_us_1008x330.jfif);
+      /* background-image: url(http://127.0.0.1:8000/images/fp_lbk_shop_by_age_0_desk_en_us_1008x330.jfif); */
       background-size: cover;
       background-position: center;
+  }
+
+  .age-block {
+    width: 100px; 
+    height: 200px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
   }
 
   div[data-v-2401beae] {
@@ -314,5 +259,9 @@ export default {
   .v-slide-group__prev .mdi-chevron-left {
     color: #B22180;
     font-size: 100px;
+  }
+
+  .mytable .v-data-table-header {
+    background: #EBE7E7 !important;
   }
 </style>

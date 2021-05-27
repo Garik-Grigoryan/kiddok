@@ -28,19 +28,25 @@ export const actions = {
   async updatePassword(ctx, [id, old_password, new_password]){
     await this.$axios.$post('http://127.0.0.1:8000/api/user/updatePassword', {id, old_password, new_password});
   },
+  async resetPassword(ctx, [email, new_password]){
+    await this.$axios.$post('http://127.0.0.1:8000/api/user/resetPassword', {email, new_password});
+  },
   async updateAddress(ctx, [id, address]){
     await this.$axios.$post('http://127.0.0.1:8000/api/user/updateAddress', {id, address});
   },
   async updateImage(ctx, [id, image]){
     await this.$axios.$post('http://127.0.0.1:8000/api/user/updateImage', {id, image});
   },
-  async buy(ctx, [user_id, cartId, totalPrice, address, payment, nameLastName, email, count, phone, country, apartment, city, selected_region, zip, more_info]){
+  async updateNotification(ctx, [id, notification]){
+    await this.$axios.$post('http://127.0.0.1:8000/api/user/updateNotification', {id, notification});
+  },
+  async buy(ctx, [user_id, cartId, totalPrice, address, payment, nameLastName, email, count, phone, country, apartment, city, selected_region, zip, more_info, delivery_type]){
     let cookieRes = this.$cookies.remove('davmar_cart');
 
     // await this.$axios.$post('http://127.0.0.1:8000/api/order/store', {user_id, cartId, totalPrice, address, payment, nameLastName, email, count, phone});
     // return true;
 
-    let result = await this.$axios.$post('http://127.0.0.1:8000/api/order/store', {user_id, cartId, totalPrice, address, payment, nameLastName, email, count, phone, country, apartment, city, selected_region, zip, more_info});
+    let result = await this.$axios.$post('http://127.0.0.1:8000/api/order/store', {user_id, cartId, totalPrice, address, payment, nameLastName, email, count, phone, country, apartment, city, selected_region, zip, more_info, delivery_type});
     return result;
   },
   async initOrder(ctx, [description, orderId, amount]){
@@ -55,8 +61,8 @@ export const actions = {
     let result = await this.$axios.$post('http://127.0.0.1:8000/api/payment/RefundPayment', {order_id});
     return result;
   },
-  async subscribe(ctx, [email]){
-    let result = await this.$axios.$post('http://127.0.0.1:8000/api/subscribe/subscribe', {email});
+  async subscribe(ctx, [email, phone]){
+    let result = await this.$axios.$post('http://127.0.0.1:8000/api/subscribe/subscribe', {email, phone});
     return result;
   },
   async getSubscribers({commit}){

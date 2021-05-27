@@ -61,7 +61,10 @@
                   <span>Ապրանքի գին: {{totalPrice}} դր</span>
                 </div>
                 <div style="margin-top: 20px; display: flex; justify-content: flex-end;">
-                  <a class="white--text approve-btn" @click.prevent="setActive('step2')" href="#step2">
+                  <a v-if="totalPrice !== 0" class="white--text approve-btn" @click.prevent="setActive('step2')" href="#step2">
+                    Հաստատել <v-icon color="white" left style="margin: 0;">mdi-chevron-right</v-icon>
+                  </a>
+                  <a v-else class="white--text approve-btn">
                     Հաստատել <v-icon color="white" left style="margin: 0;">mdi-chevron-right</v-icon>
                   </a>
                 </div>
@@ -73,6 +76,10 @@
               <v-col lg="8" md="12">
                 <v-card style="box-shadow: none;">
                   <v-form v-model="formValid" style="background: #EBE7E7;">
+                    <v-alert v-if="cartError" text type="error">
+                      {{cartError}}
+                    </v-alert>
+
                     <div class="step2_block">
                       <v-divider style="margin: 20px 0 0 0;"></v-divider>
                     </div>
@@ -146,38 +153,38 @@
                       <v-divider style="margin: 5px 0 0 0;"></v-divider>
                     </div>
                     <div class="step2_block">
-                        <div class="radio-input">
+                        <!-- <div class="radio-input">
                           <input type="radio" name="payment" value="visa" v-model="payment">
                           <label>Visa, MasterCard</label>
-                        </div>
+                        </div> -->
                         <div class="radio-input">
                           <input type="radio" name="payment" value="cash" v-model="payment">
                           <label>Կանխիկ</label>
                         </div>
-                        <div class="radio-input">
+                        <!-- <div class="radio-input">
                           <input type="radio" name="payment" value="idram" v-model="payment">
                           <label>Idram</label>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="step2_block">
                       <span style="text-transform: uppercase; font-weight: 700;">ԱՌԱՔՈՒՄ</span>
                       <v-divider style="margin: 5px 0 0 0;"></v-divider>
                     </div>
-                    <div class="step2_block">
-                        <div class="radio-input">
+                    <div class="step2_block delivery-block">
+                        <div class="radio-input" @click="chooseDelivery($event)">
                           <span>Անվճար առաքում Երևանում, 10000դր. և ավելի գնման դեպքում</span>
                         </div>
-                        <div class="radio-input">
+                        <div class="radio-input" @click="chooseDelivery($event)">
                           <span>500 դր առաքում Երևանում, մինչև 10000դր. գնման դեպքում</span>
                         </div>
-                        <div class="radio-input">
+                        <div class="radio-input" @click="chooseDelivery($event)">
                           <span>1000դր. շտապ առաքում, Երևանում *Շտապ առաքում իրագործելի է մինչ ժամը 20:00 կատարած պատվերների համար:</span>
                         </div>
-                        <div class="radio-input">
+                        <div class="radio-input" @click="chooseDelivery($event)">
                           <span>1500դր առաքում ՀՀ մարզեր</span>
                         </div>
-                        <div class="radio-input">
+                        <div class="radio-input" @click="chooseDelivery($event)">
                           <span>Առաքում ՀԱՅՓՈՍՏԻ միջոցով անվճար</span>
                         </div>
                     </div>
@@ -192,92 +199,6 @@
                       </a>
                       <a class="white--text go-to-next-step" href="#step3" style="display: none;"></a>
                     </div>
-
-                    <!-- <v-card-text>
-                      <v-list-item-group >
-                        <v-list-item v-if="settings">
-                          <v-text-field
-                            v-model="address"
-                            :rules="addressRules"
-                            :label="$t('address')"
-                            required
-                          ></v-text-field>
-                        </v-list-item>
-                        <v-list-item v-if="settings">
-                          <v-select
-                            :items="payments"
-                            :label="$t('paymentMethod')"
-                            v-model="payment"
-                            :rules="[v => !!v || 'Payment Method is required']"
-                            required
-                          ></v-select>
-                        </v-list-item>
-                        <v-list-item v-if="settings">
-                          <v-select
-                            :items="all_regions"
-                            :label="$t('region')"
-                            v-model="selected_region"
-                            @change="onChangeSelectedRegion"
-                            required
-                          ></v-select>
-                        </v-list-item>
-                        <v-list-item three-line>
-                          <v-list-item-action>
-                            <v-checkbox :rules="requiredField" v-model="agree" color="primary"></v-checkbox>
-                          </v-list-item-action>
-                          <v-list-item-content style="display: block" @click="dialog = true">
-                            <v-list-item-title>{{$t('conditions')}}</v-list-item-title>
-                            <v-list-item-subtitle>{{$t('readConditions')}}</v-list-item-subtitle>
-                          </v-list-item-content>
-                        </v-list-item>
-                      </v-list-item-group>
-                    </v-card-text>
-                    <v-list v-if="selected_region !== ''">
-                      <v-list-item-group>
-                        <v-list-item v-if="selected_region_price !== '0'" style="font-size: 18px;">
-                          <v-list-item-icon>
-                            {{$t('delivery')}}
-                          </v-list-item-icon>
-                          <v-list-item-content>
-                            <v-list-item-title> {{selected_region_price}} AMD</v-list-item-title>
-                          </v-list-item-content>
-                        </v-list-item>
-                        <v-list-item v-else style="font-size: 18px;">
-                          <v-list-item-icon>
-                            {{$t('freeDelivery')}}
-                          </v-list-item-icon>
-                          <v-list-item-content></v-list-item-content>
-                        </v-list-item>
-                      </v-list-item-group>
-                    </v-list>
-                    <v-list disabled>
-                      <v-list-item-group>
-                        <v-list-item style="font-size: 18px;">
-                          <v-list-item-icon>
-                            {{$t('totalCount')}}
-                          </v-list-item-icon>
-                          <v-list-item-content>
-                            <v-list-item-title> {{count}}</v-list-item-title>
-                          </v-list-item-content>
-                        </v-list-item>
-                      </v-list-item-group>
-                      <v-list-item-group>
-                        <v-list-item style="font-size: 18px;">
-                          <v-list-item-icon>
-                            {{$t('totalPrice')}}
-                          </v-list-item-icon>
-                          <v-list-item-content>
-                            <v-list-item-title style="color: #e60000; font-weight: 600; min-width: 100px"> {{totalPrice}} AMD</v-list-item-title>
-                          </v-list-item-content>
-                        </v-list-item>
-                      </v-list-item-group>
-                    </v-list>
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn :disabled="!formValid" @click="buy"  color="#e60000" dark >
-                        {{$t('buy')}}
-                      </v-btn>
-                    </v-card-actions> -->
                   </v-form>
                 </v-card>
               </v-col>
@@ -313,18 +234,18 @@
                 <div>
                   <span>Ձեր պատվերը հաստատված է՝</span>
                 </div>
-                <v-btn class="white--text approve-btn" style="text-transform: none; margin-top: 10px; padding: 5px 30px !important;" @click="">Կտրոն</v-btn>
+                <!-- <v-btn class="white--text approve-btn" style="text-transform: none; margin-top: 10px; padding: 5px 30px !important;" @click="">Կտրոն</v-btn> -->
               </div>
               <div style="display: flex; margin-top: 20px;">
                   <div style="width: 20%;"><span>Պատվիրատու՝</span></div>
                   <div style="width: 30%;">
-                    <input class="step2_input" :rules="requiredField" type="text" name="name" required>
+                    <input class="step2_input" :rules="requiredField" type="text" name="name" v-model="nameLastName" disabled>
                   </div>
               </div>
               <div style="display: flex; margin-top: 20px;">
                   <div style="width: 20%;"><span>Վճարման տարբերակ</span></div>
                   <div style="width: 30%;">
-                    <input class="step2_input" :rules="requiredField" type="text" name="name" required>
+                    <input class="step2_input" :rules="requiredField" type="text" name="payment" v-model="payment" disabled>
                   </div>
               </div>
             </v-card>
@@ -389,12 +310,13 @@
         apartment: '',
         payment: '',
         payments: ['Cash', 'Online Payment'],
-        country: '',
+        country: 'Երկիր',
         nameLastName: '',
         email: '',
         city: '',
         zip: '',
         more_info: '',
+        delivery_type: '',
         agree: false,
         count: 0,
         emailRules: [
@@ -428,7 +350,8 @@
         selected_region_price: '',
         cost_of_delivery: '0',
         all_regions: [],
-        activeItem: 'step1'
+        activeItem: 'step1',
+        cartError: false,
       }
     },
     computed: {
@@ -530,55 +453,57 @@
           this.all_regions.push(elem.name_en);
         }
       });
-
-      window.onload = function() {
-        document.querySelector('.country-select').value = 'Երկիր';
-      }
     },
     methods: {
       buy() {
-        if(this.payment == 'cash'){
-          if(this.user){
-            this.$store.dispatch('user/buy', [this.user.id, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info]).then(() => {
-              this.$store.dispatch('wishListAndCart/emptyCart')
-              this.desserts = [];
-              this.setActive('step3');
-              document.querySelector('.go-to-next-step').click();
-              this.totalPrice = 0;
-            });
-          }else {
-            this.$store.dispatch('user/buy', [null, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info]).then(() => {
-              this.$store.dispatch('wishListAndCart/emptyCart')
-              this.desserts = [];
-              this.setActive('step3');
-              document.querySelector('.go-to-next-step').click();
-              this.totalPrice = 0;
-            });
-          }
-        } else{
-          if(this.user){
-            this.$store.dispatch('user/buy', [this.user.id, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info]).then((res) => {
-              this.$store.dispatch('wishListAndCart/emptyCart');
-              this.desserts = [];
-              this.setActive('step3');
-              document.querySelector('.go-to-next-step').click();
-              // this.$store.dispatch('user/initOrder', [res.orderID+' order from davmar.am', res.orderID, this.totalPrice]).then((redirectUrl) => {
-              //   window.location.href = redirectUrl.url;
-              // });
-              this.totalPrice = 0;
-            });
+        this.delivery_type = document.querySelector('.delivery-block .selected').innerText;
+        console.log(this.delivery_type);
+        if(this.address !== "" && this.payment !== "" && this.nameLastName !== "" && this.email !== "" && this.phone !== "" && this.country !== "Երկիր" && this.city !== "" && this.selected_region !== "" && this.zip !== "") {
+          if(this.payment == 'cash'){
+            if(this.user){
+              this.$store.dispatch('user/buy', [this.user.id, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info, this.delivery_type]).then(() => {
+                this.$store.dispatch('wishListAndCart/emptyCart')
+                this.desserts = [];
+                this.setActive('step3');
+                document.querySelector('.go-to-next-step').click();
+                this.totalPrice = 0;
+              });
+            }else {
+              this.$store.dispatch('user/buy', [null, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info, this.delivery_type]).then(() => {
+                this.$store.dispatch('wishListAndCart/emptyCart')
+                this.desserts = [];
+                this.setActive('step3');
+                document.querySelector('.go-to-next-step').click();
+                this.totalPrice = 0;
+              });
+            }
           } else {
-            this.$store.dispatch('user/buy', [null, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info]).then((res) => {
-              this.$store.dispatch('wishListAndCart/emptyCart');
-              this.desserts = [];
-              this.setActive('step3');
-              document.querySelector('.go-to-next-step').click();
-              // this.$store.dispatch('user/initOrder', [res.orderID+' order from davmar.am', res.orderID, this.totalPrice]).then((redirectUrl) => {
-              //   window.location.href = redirectUrl.url;
-              // });
-              this.totalPrice = 0;
-            });
+            if(this.user){
+              this.$store.dispatch('user/buy', [this.user.id, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info, this.delivery_type]).then((res) => {
+                this.$store.dispatch('wishListAndCart/emptyCart');
+                this.desserts = [];
+                this.setActive('step3');
+                document.querySelector('.go-to-next-step').click();
+                // this.$store.dispatch('user/initOrder', [res.orderID+' order from davmar.am', res.orderID, this.totalPrice]).then((redirectUrl) => {
+                //   window.location.href = redirectUrl.url;
+                // });
+                this.totalPrice = 0;
+              });
+            } else {
+              this.$store.dispatch('user/buy', [null, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info, this.delivery_type]).then((res) => {
+                this.$store.dispatch('wishListAndCart/emptyCart');
+                this.desserts = [];
+                this.setActive('step3');
+                document.querySelector('.go-to-next-step').click();
+                // this.$store.dispatch('user/initOrder', [res.orderID+' order from davmar.am', res.orderID, this.totalPrice]).then((redirectUrl) => {
+                //   window.location.href = redirectUrl.url;
+                // });
+                this.totalPrice = 0;
+              });
+            }
           }
+        } else {
+          this.cartError = "Ոչ բոլոր պարտադիր դաշտերն են լրացվաց";
         }
       },
       init() {
@@ -764,6 +689,20 @@
         //   this.init();
         //   this.summCount();
         // });
+      },
+      chooseDelivery(e) {
+        console.log(e);
+
+        let all = document.querySelectorAll('.delivery-block .radio-input');
+        for(let i = 0; i < all.length; i++) {
+          all[i].classList.remove("selected");
+        }
+
+        if(e.path[0].classList.contains('radio-input')){
+          e.path[0].classList.add("selected");
+        } else {
+          e.path[1].classList.add("selected");
+        }
       }
     }
   }
@@ -882,6 +821,11 @@
     padding: 8px;
     border-radius: 6px;
     border: 1px solid #C6C3C3;
+    cursor: pointer;
+  }
+
+  .radio-input.selected {
+    background: #C6C3C3;
   }
 
   .radio-input label {

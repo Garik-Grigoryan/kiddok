@@ -184,11 +184,11 @@
               <div>Բաժանորդագրում նորություններին</div>
               <div class="radio-input">
                 <div style="margin-right: 30px;">
-                  <input type="radio" name="news" value="yes">
+                  <input type="radio" name="news" v-model="notifications" value="1" @change="changeNotificationsVal()">
                   <label>Այո</label>
                 </div>
                 <div>
-                  <input type="radio" name="news" value="no">
+                  <input type="radio" name="news" v-model="notifications" value="0" @change="changeNotificationsVal()">
                   <label>Ոչ</label>
                 </div>
               </div>
@@ -398,6 +398,7 @@
               address: '',
             },
             userPhoto: '',
+            notifications: '0',
           }
         },
       components: {
@@ -458,7 +459,7 @@
         async changePassword() {
           if(this.changePasswordForm.old_password !== '' && this.changePasswordForm.new_password !== '') {
             await this.$axios.post('http://127.0.0.1:8000/api/user/checkPassword', {id: this.user.id, password: this.changePasswordForm.old_password}).then(response => {
-              if(response.data.success){
+              if(response.data.success) {
                 this.passwordErrors = false;
                 this.$store.dispatch('user/updatePassword', [this.user.id, this.changePasswordForm.old_password, this.changePasswordForm.new_password]).then(response => {
                   document.getElementById('changePassword').style.display = 'none';
@@ -494,10 +495,14 @@
             if(document.getElementById('imageUploadData').value !== "") {
               this.$store.dispatch('user/updateImage', [this.user.id, document.getElementById('imageUploadData').value]).then(response => {
                 document.getElementById('changePhoto').style.display = 'none';
+                document.querySelector('.user-photo-block').style.backgroundImage = "url('"+document.getElementById('imageUploadData').value+"')";
               });
             }
           }
         },
+        changeNotificationsVal() {
+          this.$store.dispatch('user/updateNotification', [this.user.id, this.notifications]);
+        }
       },
       async mounted() {
         await this.$store.dispatch('wishListAndCart/fetch');
@@ -513,8 +518,11 @@
       },
       mounted () {
         if(this.user){
-          console.log(this.user);
-          document.querySelector('.user-photo-block').style.backgroundImage = "url('"+this.user.image+"')";
+          this.notifications = this.user.notifications;
+          let user_photo_blocks = document.querySelectorAll('.user-photo-block');
+          for(let i = 0; i < user_photo_blocks.length; i++) {
+            user_photo_blocks[i].style.backgroundImage = "url('"+this.user.image+"')";
+          }
         }
       }
     }

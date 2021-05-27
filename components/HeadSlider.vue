@@ -40,7 +40,6 @@
       this.onResize();
       if(this.slides.length == 0){
         this.component.componentElements.forEach((el) => {
-          console.log(el.image);
           this.slides.push({text: el.name, src: el.image, url: el.url});
         })
       }

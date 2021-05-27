@@ -29,18 +29,21 @@
             <p>
               Հերթագրվել Kidd'Ok-ի նորությունների և առաջարկների մասին առաջինն իմանալու համար
             </p>
-            <v-form @submit.prevent="false" ref="form" v-model="valid" :lazy-validation="true" style="width: 50%;">
+            <v-form @submit.prevent="false" ref="form" :lazy-validation="true" style="width: 50%;">
+                <v-alert v-if="subscribeError" text type="error">
+                  {{subscribeError}}
+                </v-alert>
                 <div class="mailing_block">
                   <div>
                     <label>Email</label><br>
-                    <input style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;margin-top: 10px;" required>
+                    <input v-model="email" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;margin-top: 10px;" required>
                   </div>
                   <div>
                     <label>ՀԵՌԱՂՈՍԱՀԱՄԱՐ</label><br>
-                    <input type="text" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;margin-top: 10px;" required>
+                    <input v-model="phone" type="text" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;margin-top: 10px;" required>
                   </div>
 
-                  <v-btn color="primary" text @click="loginAction" class="mailing_btn" style="text-transform: uppercase;">ՈՒղարկել</v-btn>
+                  <v-btn color="primary" text @click="subscribe()" class="mailing_btn" style="text-transform: uppercase;">ՈՒղարկել</v-btn>
                 </div>
             </v-form>
 
@@ -66,6 +69,9 @@
         data(){
             return {
               text: '',
+              email: '',
+              phone: '',
+              subscribeError: ''
             }
         },
         async fetch({route, store}) {
@@ -95,6 +101,20 @@
       computed: {
         page() {
           return this.$store.getters['pages/page'];
+        }
+      },
+      methods: {
+        async subscribe() {
+          if(this.email !== "" && this.phone !== "") {
+            await this.$store.dispatch('user/subscribe', [this.email, this.phone]).then((res) => {
+              this.subscribeError = false;
+              alert("Դուք հերթագրվել եք!");
+            });
+          } else {
+            this.subscribeError = "Ոչ բոլոր դաշտերն են լրացվաց";
+            this.email = "";
+            this.phone = "";
+          }
         }
       }
     }

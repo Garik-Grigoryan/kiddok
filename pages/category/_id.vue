@@ -1,15 +1,23 @@
 <template>
   <div class="brand-page-block">
     <v-container>
-      <div class="top-block">
+      <div v-if="this.category.image !== '[]'" class="top-block">
           <div>
             <div style="display: flex; heigth: 200px;">
-                <div style="width: 100px; height: 200px; background: #FDB813; display: flex; justify-content: center; align-items: center;">
-                  <p style="font-size: 30px; color: white;">0+</p>
+                <div class="age-block" style="width: 100px; height: 200px; display: flex; justify-content: center; align-items: center;">
+                  <p style="font-size: 30px; color: white;">{{this.category.description}}</p>
                 </div>
                 <div class="img-block"></div>
             </div>
           </div>
+      </div>
+      <div v-else class="top-block" style="display: flex; align-items: center;">
+        <div class="left-block"></div>
+        <div class="center-block">
+          <img src="http://127.0.0.1:8000/images/Kiddok_logo_04-1.PNG" width="100px">
+          <span>{{this.category.name_am}}</span>
+        </div>
+        <div class="right-block"></div>
       </div>
       <v-row justify="center">
         <div style="width: 30%;">
@@ -119,6 +127,7 @@
       await store.dispatch('products/filterAsType', ['new']);
       await store.dispatch('products/filterAsType', ['best']);
       await store.dispatch('products/filterAsType', ['sales']);
+      await store.dispatch('categories/getCategory', [route.params.id]);
     },
     layout: 'category',
     components: {
@@ -135,6 +144,9 @@
       products() {
         return this.$store.getters['products/productByCategory'];
       },
+      category() {
+        return this.$store.getters['categories/category'];
+      },
     },
     beforeRouteLeave (to, from, next) {
       this.$cookies.set('davmar_filter', [], {
@@ -143,13 +155,19 @@
       });
       next();
     },
-    async mounted() {
-      await this.$store.dispatch('wishListAndCart/fetch');
-      if(this.user){
-        await this.$store.dispatch('wishListAndCart/getWishListAndCartData', [this.user.id]);
-      }else{
-        await this.$store.dispatch('wishListAndCart/getWishListAndCartData', [0]);
-      }
+    // async mounted() {
+      
+    //   await this.$store.dispatch('wishListAndCart/fetch');
+    //   if(this.user){
+    //     await this.$store.dispatch('wishListAndCart/getWishListAndCartData', [this.user.id]);
+    //   }else{
+    //     await this.$store.dispatch('wishListAndCart/getWishListAndCartData', [0]);
+    //   }
+    // },
+    mounted() {
+      console.log(this.category);
+      document.querySelector('.img-block').style.backgroundImage = "url('"+JSON.parse(this.category.image)[0]+"')";
+      document.querySelector('.age-block').style.background = this.category.color;
     },
     methods:{
       next() {
@@ -186,9 +204,21 @@
   .img-block {
     width: 100%;
     height: 200px;
-    background-image: url(http://127.0.0.1:8000/images/fp_lbk_shop_by_age_0_desk_en_us_1008x330.jfif);
     background-size: cover;
     background-position: center;
+  }
+
+  .left-block, .right-block {
+    border-top: 3px solid #B22180;
+    width: 100%;
+  }
+
+  .center-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 20px;
+    min-width: fit-content;
   }
 
 </style>

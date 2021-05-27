@@ -138,80 +138,29 @@
                         <span>Բրենդ</span>
                       </nuxt-link>
                     </div>
-                    <div class="section-block">
-                      <nuxt-link :to="`#`">
-                        Գնել ըստ տարիքի
-                      </nuxt-link>
-                      <v-icon v-text="'mdi-chevron-down'" size="30" style="color: #B22180; cursor: pointer;" @click="openAgeMenu"></v-icon>
-                    </div>
-                    <div class="section-block">
-                      <nuxt-link :to="`/product`">
-                        Նորածնային խաղալիքներ
-                      </nuxt-link>
-                    </div>
-                    <div class="section-block">
-                      <nuxt-link :to="`/product`">
-                        Զարգացնող խաղեր
-                      </nuxt-link>
-                    </div>
-                    <div class="section-block">
-                      <nuxt-link :to="`/product`">
-                        Երաժշտական խաղալիքներ
-                      </nuxt-link>
-                    </div>
-                    <div class="section-block">
-                      <nuxt-link :to="`/product`">
-                        Փափուկ խաղալիքներ
-                      </nuxt-link>
-                    </div>
-                    <div class="section-block">
-                      <nuxt-link :to="`/product`">
-                        Մեքենաներ, գնացքներ
-                      </nuxt-link>
-                    </div>
-                    <div class="section-block">
-                      <nuxt-link :to="`/product`">
-                        Էկո և փայտե խաղեր
-                      </nuxt-link>
-                    </div>
-                    <div class="section-block">
-                      <nuxt-link :to="`/product`">
-                        Կոնստրուկտորներ
-                      </nuxt-link>
-                    </div>
-                    <div class="section-block">
-                      <nuxt-link :to="`/product`">
-                        Փազլներ
-                      </nuxt-link>
-                    </div>
-                    <div class="section-block">
-                      <nuxt-link :to="`/product`">
-                        Բակային/սեզոնային խաղեր
-                      </nuxt-link>
-                    </div>
-                    <div class="section-block">
-                      <nuxt-link :to="`/product`">
-                        Սեղանի խաղեր
-                      </nuxt-link>
-                    </div>
-                    <div class="section-block">
-                      <nuxt-link :to="`/product`">
-                        Գրքեր, ուսումնական խաղեր
-                      </nuxt-link>
-                    </div>
-                    <div class="section-block">
-                      <nuxt-link :to="`/product`">
-                        ՈՒսուցանող խաղեր
-                      </nuxt-link>
-                    </div>
-                    <div class="section-block">
-                      <nuxt-link :to="`/product`">
-                        Գրենական պիտույքներ
-                      </nuxt-link>
+                    <div v-for="(item, i) in categoriesBlock" :key="i">
+                      <div v-if="parentCategoryID !== item.id"  class="section-block">
+                        <nuxt-link :to="item.to">
+                          {{item.title}}
+                        </nuxt-link>
+                      </div>
+                      <div v-else class="section-block">
+                        <nuxt-link :to="`#`">
+                          {{item.title}}
+                        </nuxt-link>
+                        <v-icon v-text="'mdi-chevron-down'" size="30" style="color: #B22180; cursor: pointer;" @click="openAgeMenu"></v-icon>
+                      </div>
                     </div>
                   </div>
                   <div class="age-menu-block" style="display: none;">
-                      <div class="section-block">
+                      <div v-for="(item, i) in subcategoriesBlock" :key="i">
+                        <div class="section-block">
+                          <nuxt-link :to="item.to">
+                            {{item.title}}
+                          </nuxt-link>
+                        </div>
+                      </div>
+                      <!-- <div class="section-block">
                         <nuxt-link :to="`/product`">
                           <span>0–12 ամսական</span>
                         </nuxt-link>
@@ -240,7 +189,7 @@
                         <nuxt-link :to="`/product`">
                           <span>12-16 տարեկան</span>
                         </nuxt-link>
-                      </div>
+                      </div> -->
                   </div>
                 </div>
               </div>
@@ -330,7 +279,7 @@
                       </v-card-actions>
                     </v-form>
                     <div style="margin-top: 40px;text-align: center;">
-                        <a href="#">Մոռացե՞լ եք Գաղտնաբառը</a>
+                        <a href="#" @click="openPasswordModal()">Մոռացե՞լ եք Գաղտնաբառը</a>
                     </div>
                     <div style="margin-top: 30px;text-align: center;">
                         <a href="/register">Գրանցվել</a>
@@ -358,129 +307,6 @@
           </v-btn>
         </v-badge>
       </v-row>
-      <!-- <v-row justify="end" class="hidden-lg-and-down" no-gutters style="position: absolute; right: 0" id="dropdown-language">
-        <v-badge color="error" :content="wishListLength" >
-          <v-btn :to="localePath('/wishlist')" color="#fff" text class="my-2 nav_button" width="50px" >
-            <v-icon>mdi-heart-outline</v-icon>
-          </v-btn>
-        </v-badge>
-        <v-badge color="error" :content="cartLength" >
-          <v-btn :to="localePath('/cart')" color="#fff" text class="my-2 nav_button" width="50px" >
-            <v-icon >mdi-cart-outline</v-icon>
-          </v-btn>
-        </v-badge>
-
-        <v-menu v-model="loginMenu" :close-on-content-click="false" :nudge-width="200" offset-y bottom>
-          <template v-slot:activator="{ on }">
-            <v-btn color="#fff" text class="my-2 nav_button" v-on="on" >
-              <v-icon >mdi-account-outline</v-icon>
-            </v-btn>
-          </template>
-          <v-card>
-            <v-list v-if="authenticated" style="background-color: #01235E" dark>
-              <v-list-item :to="localePath('/account')" v-text="$t('myAccount')"></v-list-item>
-              <v-list-item :to="localePath('/account/orders')" v-text="$t('orders')"></v-list-item>
-              <v-list-item @click="logout" v-text="$t('logout')">
-              </v-list-item>
-            </v-list>
-             <v-tabs v-else  background-color="#01235E" class="elevation-2" dark :centered="true" :prev-icon="'mdi-arrow-left-bold-box-outline'" :next-icon="'mdi-arrow-right-bold-box-outline'" :icons-and-text="true" >
-              <v-tabs-slider></v-tabs-slider>
-              <v-tab :href="`#tab-1`" >
-                Login
-              </v-tab>
-              <v-tab-item :value="'tab-1'">
-                <v-card flat tile >
-                  <v-card-text>
-                    <v-form @submit.prevent="false" ref="form" v-model="valid" :lazy-validation="true" >
-                      <v-alert v-if="errors.email" text type="error">
-                        {{errors.email[0]}}
-                      </v-alert>
-                      <v-text-field v-model="loginForm.email" :rules="emailRules" label="E-mail" required ></v-text-field>
-                      <v-text-field v-model="loginForm.password" :rules="passwordRules" label="Password" type="password" required ></v-text-field>
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary" text @click="loginAction">Login</v-btn>
-                      </v-card-actions>
-                    </v-form>
-                  </v-card-text>
-                </v-card>
-              </v-tab-item>
-
-              <v-tab :href="`#tab-2`" >
-                Register
-              </v-tab>
-              <v-tab-item :value="'tab-2'">
-                <v-card flat tile >
-                  <v-card-text>
-                    <v-form @submit.prevent="false" ref="form" v-model="valid" :lazy-validation="true" >
-                      <v-alert v-if="registrationError" text type="error">
-                        {{registrationError.data.errors.email[0]}}
-                      </v-alert>
-                      <v-text-field v-model="registerForm.name" :rules="nameRules" label="Name" required ></v-text-field>
-                      <v-text-field v-model="registerForm.email" :rules="emailRules" label="E-mail" required ></v-text-field>
-                      <v-text-field v-model="registerForm.password" :rules="passwordRules" type="password" label="Password" required ></v-text-field>
-                      <v-text-field v-model="registerForm.password_confirmation" :rules="passwordConfirmation" label="Password"  required ></v-text-field>
-                      <v-checkbox v-model="checkbox" :rules="[v => !!v || 'You must agree to continue!']" label="Do you agree?" required ></v-checkbox>
-                      <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn color="primary" text @click="registerAction">Register</v-btn>
-                      </v-card-actions>
-                    </v-form>
-                  </v-card-text>
-                </v-card>
-              </v-tab-item>
-            </v-tabs>
-
-          </v-card>
-        </v-menu>
-          <v-overflow-btn
-            v-model="MainLanguage"
-            :items="languages"
-            label="Overflow Btn"
-            target="#dropdown-language"
-            style="width: 85px; height: 50px; margin-top: 0; padding: 0;"
-          >
-              <template v-slot:selection="{item, index}">
-                  <v-img  :src="item.icon" max-width="50"></v-img>
-              </template>
-              <template v-slot:item="{item, index}">
-                <nuxt-link :to="switchLocalePath(item.to)" style="text-decoration: none;">
-                  <v-img  :src="item.icon" max-width="50"></v-img>
-                </nuxt-link>
-              </template>
-          </v-overflow-btn>
-
-      </v-row> -->
-      <!-- <v-speed-dial class="show-in-lg"  v-model="fab" :top="top" :bottom="bottom" :right="right" :left="left" :direction="direction" :open-on-hover="hover" :transition="transition" >
-        <template v-slot:activator>
-          <v-btn small  v-model="fab" color="#01235E" dark fab >
-            <v-icon style="margin: 0;" v-if="fab">mdi-close</v-icon>
-            <v-icon style="margin: 0;" v-else>mdi-account-circle</v-icon>
-          </v-btn>
-        </template>
-        <v-badge color="error" :content="wishListLength" >
-          <v-btn to="/wishlist" fab color="#01235E" class="my-2 nav_button" small >
-            <v-icon>mdi-heart-outline</v-icon>
-          </v-btn>
-        </v-badge>
-        <v-badge color="error" :content="cartLength" >
-          <v-btn to="/cart" fab color="#01235E" class="my-2 nav_button" small >
-            <v-icon >mdi-cart-outline</v-icon>
-          </v-btn>
-        </v-badge>
-
-        <v-menu v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-x >
-          <template v-slot:activator="{ on }">
-            <v-btn fab color="#01235E" class="my-2 nav_button" small v-on="on" >
-              <v-icon style="margin: 0;">mdi-account-outline</v-icon>
-            </v-btn>
-          </template>
-        </v-menu>
-        <v-btn v-for="(item, key) in languages" :key="key" :to="switchLocalePath(item.to)" fab color="#01235E" class="my-2 nav_button" small >
-          <v-img :src="item.icon" max-width="50"></v-img>
-        </v-btn>
-      </v-speed-dial> -->
-      <!-- <v-app-bar-nav-icon class="hidden-md-and-up" style="position: absolute; right: 0" @click.stop="drawerForHeader = !drawerForHeader" /> -->
     </v-system-bar>
 
     <div id="helperModal" style="display: none;" class="modal-shadow" @click.self="closeModal">
@@ -491,7 +317,10 @@
                     <h2 style="color: #B22180;">իմ օգնականը</h2>
                   </div>
                   <div style="display: flex; align-items: center; margin: 20px 0;">
-                    <div style="margin-right: 20px;">
+                    <div v-if="user && user.image" style="margin-right: 20px;">
+                      <div class="user-photo-block" style="width: 100px; height: 100px;"></div>
+                    </div>
+                    <div v-else style="margin-right: 20px;">
                       <v-icon size="100">mdi-account-circle-outline</v-icon>
                     </div>
                     <div v-if="authenticated">
@@ -499,20 +328,55 @@
                     </div>
                   </div>
                   <v-form @submit.prevent="false" ref="form" :lazy-validation="true" style="width: 100%; margin-top: 30px;">
+                    <v-alert v-if="callbackErrors" text type="error">
+                      {{callbackErrors}}
+                    </v-alert>
                     <v-card-actions style="display: block; padding: 0;">
                       <label style="color: #352249;">Հեռ.</label>
-                      <input type="text" class="helper-block-input" required>
+                      <input type="text" v-model="callbackForm.phone" class="helper-block-input" required>
                     </v-card-actions>
                     <v-card-actions style="display: block; padding: 0;">
                       <label style="color: #352249;">Գրել նամակ</label>
-                      <textarea class="helper-block-input"></textarea>
+                      <textarea v-model="callbackForm.message" class="helper-block-input"></textarea>
                     </v-card-actions>
                   </v-form>
                 </div>
             </slot>
             <slot name="footer">
                 <div class="modal-footer">
-                    <button class="modal-footer__button_approve" @click="closeModal">
+                    <button class="modal-footer__button_approve" @click="callback()">
+                        Հաստատել
+                    </button>
+                </div>
+            </slot>
+        </div>
+    </div>
+
+    <div id="resetPassword" style="display: none;" class="modal-shadow" @click.self="closePasswordModal">
+        <div class="modal">
+            <slot name="body">
+                <div class="modal-content">
+                  <div>
+                    <h2 style="color: #B22180;">Վերականգնել գաղտնաբառը</h2>
+                  </div>
+                  <v-form @submit.prevent="false" ref="form" :lazy-validation="true" style="width: 100%; margin-top: 30px;">
+                    <v-alert v-if="passwordErrors" text type="error">
+                      {{passwordErrors}}
+                    </v-alert>
+                    <v-card-actions style="display: block; padding: 0;">
+                      <label style="color: #352249;">Էլ. հասցե</label>
+                      <input type="email" v-model="changePasswordForm.email" class="helper-block-input" required>
+                    </v-card-actions>
+                    <v-card-actions style="display: block; padding: 0;">
+                      <label style="color: #352249;">Նոր գաղտնաբառը</label>
+                      <input type="password" v-model="changePasswordForm.new_password" class="helper-block-input" required>
+                    </v-card-actions>
+                  </v-form>
+                </div>
+            </slot>
+            <slot name="footer">
+                <div class="modal-footer">
+                    <button class="modal-footer__button_approve" @click="resetPassword()">
                         Հաստատել
                     </button>
                 </div>
@@ -616,6 +480,20 @@
           ],
           rightSide: [
           ],
+          categoriesBlock: [],
+          subcategoriesBlock: [],
+          parentCategoryID: 0,
+          passwordErrors: false,
+          callbackErrors: false,
+          changePasswordForm: {
+            email: '',
+            new_password: '',
+          },
+          callbackForm: {
+            user_id: 0,
+            phone: '',
+            message: '',
+          },
         }
       },
       computed: {
@@ -635,7 +513,10 @@
           return this.$store.getters['menus/menus'];
         }
       },
-      mounted () {
+      async mounted () {
+        let all_categories = await this.$axios.$get('http://127.0.0.1:8000/api/category/get');
+        // console.log(all_categories);
+
         if(window.innerWidth >= 960){
           this.drawerForHeader = false;
         }
@@ -697,6 +578,25 @@
         }
         this.onResize();
 
+        all_categories.forEach(elem => {
+          if(elem.parent === 0) {
+            this.categoriesBlock.push({
+              id: elem.id,
+              title: elem.name_am,
+              parentID: elem.parent,
+              to: '/category/' + elem.id + '?page=1'
+            });
+          } else {
+            this.subcategoriesBlock.push({
+              id: elem.id,
+              title: elem.name_am,
+              parentID: elem.parent,
+              to: '/category/' + elem.id + '?page=1'
+            });
+            this.parentCategoryID = elem.parent;
+          }
+        });
+
         // this.brands.forEach(elem => {
         //   this.leftSide[0].items.push(
         //     {
@@ -733,6 +633,10 @@
         //     })
         //   }
         // })
+
+        if(this.user){
+          document.querySelector('.user-photo-block').style.backgroundImage = "url('"+this.user.image+"')";
+        }
       },
       methods: {
         onResize () {
@@ -792,8 +696,18 @@
         closeModal: function () {
           document.getElementById('helperModal').style.display = 'none';
         },
+        closePasswordModal: function () {
+          document.getElementById('resetPassword').style.display = 'none';
+        },
         openHelperModal(){
           document.getElementById('helperModal').style.display = 'block';
+        },
+        openPasswordModal(){
+          let modals = document.querySelectorAll(".v-menu__content");
+          for(let i = 0; i < modals.length; i++) {
+            modals[i].style.display = "none";
+          }
+          document.getElementById('resetPassword').style.display = 'block';
         },
         openAccountMenu() {
           let accountMenu = document.querySelector('.accountMenu');
@@ -801,6 +715,35 @@
             accountMenu.style.display = 'block';
           } else {
             accountMenu.style.display = 'none';
+          }
+        },
+        async resetPassword() {
+          if(this.changePasswordForm.email !== '' && this.changePasswordForm.new_password !== '') {
+            this.passwordErrors = false;
+            this.$store.dispatch('user/resetPassword', [this.changePasswordForm.email, this.changePasswordForm.new_password]).then(response => {
+              document.getElementById('resetPassword').style.display = 'none';
+              alert("Գաղտնաբառը հաջողությամբ փոխվել է");
+            });
+          } else {
+            this.passwordErrors = "Ոչ բոլոր դաշտերն են լրացվաց";
+          }
+        },
+        async callback() {
+          if(this.callbackForm.phone !== "" && this.callbackForm.message !== "") {
+            if(this.user){
+              this.callbackForm.user_id = this.user.id;
+            }
+            await this.$axios.post('http://127.0.0.1:8000/api/callback/store', this.callbackForm).then(response => {
+              alert("Ձեր նամակը հաջողությամբ ուղարկվել է!");
+              document.getElementById('helperModal').style.display = 'none';
+              this.callbackForm.phone = "";
+              this.callbackForm.message = "";
+              this.callbackErrors = false;
+            }).catch(e => {
+              this.callbackErrors = e.response;
+            });
+          } else {
+            this.callbackErrors = "Ոչ բոլոր դաշտերն են լրացվաց";
           }
         }
       },
@@ -922,7 +865,7 @@
   }
 
   .section-block a {
-    color: #352249;
+    color: #352249 !important;
   }
 
   .age-menu-block {
@@ -974,6 +917,15 @@
 
   .search-input::placeholder {
     color: #ffffff;
+  }
+
+  .user-photo-block {
+    width: 100%;
+    height: 240px;
+    margin-bottom: 20px;
+    background-position: 50% 50%;
+    background-size: cover;
+    border-radius: 50%;
   }
 
 </style>

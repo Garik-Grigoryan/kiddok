@@ -89,108 +89,31 @@
                 <span>Բրենդ</span>
               </nuxt-link>
             </div>
-            <div class="section-block">
-              <nuxt-link :to="`#`">
-                Գնել ըստ տարիքի
-              </nuxt-link>
-              <v-icon v-text="'mdi-chevron-down'" size="30" style="color: #B22180; cursor: pointer;" @click="openAgeMenu"></v-icon>
-            </div>
-            <div class="age-menu-block2" style="display: none;">
+            <div v-for="(item, i) in categoriesBlock" :key="i">
+              <div v-if="parentCategoryID !== item.id">
                 <div class="section-block">
-                  <nuxt-link :to="`/product`">
-                    <span>0–12 ամսական</span>
+                  <nuxt-link :to="item.to">
+                    {{item.title}}
                   </nuxt-link>
                 </div>
+              </div>
+              <div v-else>
                 <div class="section-block">
-                  <nuxt-link :to="`/product`">
-                    <span>12–24 ամսական</span>
+                  <nuxt-link :to="`#`">
+                    {{item.title}}
                   </nuxt-link>
+                  <v-icon v-text="'mdi-chevron-down'" size="30" style="color: #B22180; cursor: pointer;" @click="openAgeMenu"></v-icon>
                 </div>
-                <div class="section-block">
-                  <nuxt-link :to="`/product`">
-                    <span>2–5 տարեկան</span>
-                  </nuxt-link>
+                <div class="age-menu-block2" style="display: none;">
+                  <div v-for="(item, i) in subcategoriesBlock" :key="i">
+                    <div class="section-block">
+                      <nuxt-link :to="item.to">
+                        {{item.title}}
+                      </nuxt-link>
+                    </div>
+                  </div>
                 </div>
-                <div class="section-block">
-                  <nuxt-link :to="`/product`">
-                    <span>5–8 տարեկան</span>
-                  </nuxt-link>
-                </div>
-                <div class="section-block">
-                  <nuxt-link :to="`/product`">
-                    <span>8–12 տարեկան</span>
-                  </nuxt-link>
-                </div>
-                <div class="section-block">
-                  <nuxt-link :to="`/product`">
-                    <span>12-16 տարեկան</span>
-                  </nuxt-link>
-                </div>
-            </div>
-            <div class="section-block">
-              <nuxt-link :to="`/product`">
-                Նորածնային խաղալիքներ
-              </nuxt-link>
-            </div>
-            <div class="section-block">
-              <nuxt-link :to="`/product`">
-                Զարգացնող խաղեր
-              </nuxt-link>
-            </div>
-            <div class="section-block">
-              <nuxt-link :to="`/product`">
-                Երաժշտական խաղալիքներ
-              </nuxt-link>
-            </div>
-            <div class="section-block">
-              <nuxt-link :to="`/product`">
-                Փափուկ խաղալիքներ
-              </nuxt-link>
-            </div>
-            <div class="section-block">
-              <nuxt-link :to="`/product`">
-                Մեքենաներ, գնացքներ
-              </nuxt-link>
-            </div>
-            <div class="section-block">
-              <nuxt-link :to="`/product`">
-                Էկո և փայտե խաղեր
-              </nuxt-link>
-            </div>
-            <div class="section-block">
-              <nuxt-link :to="`/product`">
-                Կոնստրուկտորներ
-              </nuxt-link>
-            </div>
-            <div class="section-block">
-              <nuxt-link :to="`/product`">
-                Փազլներ
-              </nuxt-link>
-            </div>
-            <div class="section-block">
-              <nuxt-link :to="`/product`">
-                Բակային/սեզոնային խաղեր
-              </nuxt-link>
-            </div>
-            <div class="section-block">
-              <nuxt-link :to="`/product`">
-                Սեղանի խաղեր
-              </nuxt-link>
-            </div>
-            <div class="section-block">
-              <nuxt-link :to="`/product`">
-                Գրքեր, ուսումնական խաղեր
-              </nuxt-link>
-            </div>
-            <div class="section-block">
-              <nuxt-link :to="`/product`">
-                ՈՒսուցանող խաղեր
-              </nuxt-link>
-            </div>
-            <div class="section-block">
-              <nuxt-link :to="`/product`">
-                Գրենական պիտույքներ
-              </nuxt-link>
+              </div>
             </div>
           </v-list-item-content>
         </v-list-item>
@@ -307,10 +230,34 @@ import BestProducts from './BestProducts.vue';
         ],
         select: [],
         mini: false,
+        categoriesBlock: [],
+        subcategoriesBlock: [],
+        parentCategoryID: 0,
       }
     },
-    mounted() {
-      console.log(this.brand);
+    async mounted() {
+      let all_categories = await this.$axios.$get('http://127.0.0.1:8000/api/category/get');
+
+      all_categories.forEach(elem => {
+        if(elem.parent === 0) {
+          this.categoriesBlock.push({
+            id: elem.id,
+            title: elem.name_am,
+            parentID: elem.parent,
+            to: '/category/' + elem.id + '?page=1'
+          });
+        } else {
+          this.subcategoriesBlock.push({
+            id: elem.id,
+            title: elem.name_am,
+            parentID: elem.parent,
+            to: '/category/' + elem.id + '?page=1'
+          });
+          this.parentCategoryID = elem.parent;
+        }
+      });
+
+      // console.log(this.brand);
       // for(let elem in this.filters.colors){
       //   if(elem != ''){
       //     this.items[2].data.push(elem)
