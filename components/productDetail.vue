@@ -77,29 +77,25 @@
               <v-text-field type="number" placeholder="0" v-model="count" style="padding-top: 0;"/>
             </v-col> -->
           </div>
-          <div class="mt-0">
-            <div style="display: flex; align-items: baseline;">
+          <div class="mt-5">
+            <div class="product-detail-rating" style="display: flex; align-items: center;">
               <div style="margin-right: 20px;"><span>Գնահատել՝</span></div>
-              <div style="display: flex; align-items: center;">
-                <v-icon v-text="'mdi-star-outline'" size="30"></v-icon>
-                <v-icon v-text="'mdi-star-outline'" size="30"></v-icon>
-                <v-icon v-text="'mdi-star-outline'" size="30"></v-icon>
-                <v-icon v-text="'mdi-star-outline'" size="30"></v-icon>
-                <v-icon v-text="'mdi-star-outline'" size="30"></v-icon>
-              </div>
+              <v-rating
+                empty-icon="mdi-star-outline"
+                full-icon="mdi-star"
+                half-icon="mdi-star-half-full"
+                hover
+                length="5"
+                size="25"
+                v-model="rating"
+                half-increments
+                background-color="grey lighten-1"
+                color="orange"
+              ></v-rating>
             </div>
           </div>
           <div class="mt-5">
             <p class="ma-0"><span>{{ $t('size') }} {{product.size}}</span></p>
-            <!-- <v-item-group :multiple="false" >
-              <v-row>
-                <v-item  v-for="(size, n) in productSizes" :key="n" v-slot:default="{ active, toggle }">
-                  <v-card class="d-flex text-center align-center mx-3 justify-center" :color="active? 'green' : '#fff'" height="30" width="30" :data-value="size" @click="toggle(), selectSize($event)">
-                    {{size}}
-                  </v-card>
-                </v-item>
-              </v-row>
-            </v-item-group> -->
           </div>
           <div class="mt-5 product-availability">
             <div>
@@ -121,23 +117,11 @@
             </v-item-group>
           </div>
           
-          <!-- <div class="pl-0">
-            <p class="ma-0">
-              <span class="font-weight-bold">{{ $t('price') }}</span>
-              <span v-if="product.discountType == 'percent'"><span class="discount">{{product.price}}</span> {{product.price - (product.price * product.discount)/100}}</span>
-              <span v-else-if="product.discountType == 'price'">{{product.price - product.discount}}</span>
-              <span v-else>{{product.price}}</span>
-              AMD
-            </p>
-          </div> -->
           <div class="mt-5 pl-0">
             <div class="text-left">
               <v-btn class="white--text add-to-cart-btn" rounded @click="addToCart($event, product.id)" >
                 Ավելացնել զամբյուղ <v-icon left style="margin-left: 10px;">mdi-cart</v-icon>
               </v-btn>
-              <!-- <v-btn color="#01235e" class="white--text" rounded @click="addToWishlist($event, product.id)" >
-                <v-icon left>mdi-heart</v-icon> {{ $t('wishList') }}
-              </v-btn> -->
             </div>
           </div>
         </v-col>
@@ -153,7 +137,6 @@
 
     <div id="addToCartModal" style="display: none;" class="modal-shadow" @click.self="closeModal">
         <div class="modal">
-            <!-- <div class="modal-close" @click="closeModal">&#10006;</div> -->
             <slot name="title">
                 <h3 class="modal-title">Ապրանքը հաջողությամբ ավելացված է զամբյուղի մեջ</h3>
             </slot>
@@ -230,7 +213,13 @@
         cycle: false,
         count: 1,
         imagesCount: 1,
-        show: false
+        show: false,
+        rating: 0,
+        ratingData: {
+          user_id: 0,
+          product_id: '',
+          rating: '',
+        },
       }
     },
     mounted() {
@@ -250,6 +239,25 @@
         document.getElementById('productDescription').innerHTML = this.product.description_en
       } else if(this.$i18n.locale === 'ru'){
         document.getElementById('productDescription').innerHTML = this.product.description_ru
+      }
+      // if(this.user){
+      //   this.rating
+      // }
+      
+    },
+    async mounted() {
+      if(this.user){
+        await this.$axios.get('http://127.0.0.1:8000/api/rating/get/'+this.product.id).then(response => {
+          response.data.forEach(elem => {
+            if(this.user.id === elem.user_id) {
+              this.rating = elem.rating;
+              let stars = document.querySelectorAll('.product-detail-rating .v-rating button');
+              for(let i = 0; i < stars.length; i++) {
+                stars[i].disabled = true;
+              }
+            }
+          });
+        }).catch(e => {});
       }
     },
     methods: {
@@ -317,6 +325,29 @@
       countPlus() {
         document.getElementById('product-count-val').value = parseInt(document.getElementById('product-count-val').value) + 1;
         this.count = document.getElementById('product-count-val').value;
+      },
+      async setRating() {
+        console.log(this.rating);
+
+        if(this.user){
+          this.ratingData.user_id = this.user.id;
+          let stars = document.querySelectorAll('.product-detail-rating .v-rating button');
+          for(let i = 0; i < stars.length; i++) {
+            stars[i].disabled = true;
+          }
+        } else this.ratingData.user_id = null;
+
+        this.ratingData.product_id = this.product.id;
+        this.ratingData.rating = this.rating;
+
+        await this.$axios.post('http://127.0.0.1:8000/api/rating/store', this.ratingData).then(response => {
+        }).catch(e => {
+        });
+      }
+    },
+    watch: {
+      rating: function() {
+        this.setRating();
       }
     },
     computed: {

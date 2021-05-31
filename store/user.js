@@ -40,13 +40,13 @@ export const actions = {
   async updateNotification(ctx, [id, notification]){
     await this.$axios.$post('http://127.0.0.1:8000/api/user/updateNotification', {id, notification});
   },
-  async buy(ctx, [user_id, cartId, totalPrice, address, payment, nameLastName, email, count, phone, country, apartment, city, selected_region, zip, more_info, delivery_type]){
+  async buy(ctx, [user_id, cartId, productId, totalPrice, address, payment, nameLastName, email, count, phone, country, apartment, city, selected_region, zip, more_info, delivery_type]){
     let cookieRes = this.$cookies.remove('davmar_cart');
 
     // await this.$axios.$post('http://127.0.0.1:8000/api/order/store', {user_id, cartId, totalPrice, address, payment, nameLastName, email, count, phone});
     // return true;
 
-    let result = await this.$axios.$post('http://127.0.0.1:8000/api/order/store', {user_id, cartId, totalPrice, address, payment, nameLastName, email, count, phone, country, apartment, city, selected_region, zip, more_info, delivery_type});
+    let result = await this.$axios.$post('http://127.0.0.1:8000/api/order/store', {user_id, cartId, productId, totalPrice, address, payment, nameLastName, email, count, phone, country, apartment, city, selected_region, zip, more_info, delivery_type});
     return result;
   },
   async initOrder(ctx, [description, orderId, amount]){

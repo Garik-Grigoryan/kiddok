@@ -191,7 +191,7 @@ export default {
   },
   async mounted() {
     let all_categories = await this.$axios.$get('http://127.0.0.1:8000/api/category/get');
-    console.log(all_categories);
+    // console.log(all_categories);
     all_categories.forEach(elem => {
       if(elem.parent !== 0) {
         this.categoriesBlock.push({

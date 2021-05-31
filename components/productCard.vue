@@ -22,29 +22,7 @@
         class="pt-6"
         style="position: relative; height: 80px; padding: 0;"
       >
-        <!-- <v-btn
-          absolute
-          color="#01235e"
-          class="white--text"
-          fab
-          right
-          top
-          @click="addToCart($event, id)"
-        >
-          <v-icon>mdi-cart</v-icon>
-        </v-btn>
-        <v-btn
-          absolute
-          color="#01235e"
-          class="white--text"
-          fab
-          top
-          style="right: 90px"
-          @click="addToWishlist($event, id)"
-        >
-          <v-icon>mdi-heart</v-icon>
-        </v-btn> -->
-        <nuxt-link :to="localePath(`/product/${id}`)">
+        <!-- <nuxt-link :to="localePath(`/product/${id}`)"> -->
           <h3 class="font-weight-light font-weight-bold white--text mb-2" v-text="title_am" style="color: #352249 !important; font-weight: 100 !important; font-size: 15px; margin-bottom: 8px !important;"></h3>
           <div style="display: flex; justify-content: center;">
             <div style="display: flex; align-items: center;">
@@ -73,7 +51,7 @@
             <span v-else>{{price}}</span>
             AMD
           </p> -->
-        </nuxt-link>
+        <!-- </nuxt-link> -->
       </v-card-text>
     </v-slide-y-reverse-transition>
   </v-card>

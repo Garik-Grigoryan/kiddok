@@ -1,7 +1,6 @@
 <template>
   <div>
-
-    <v-navigation-drawer v-resize="onResize" v-model="drawerForHeader" :mini-variant="miniVariant" :clipped="clipped" :right="right" fixed app >
+    <!-- <v-navigation-drawer v-resize="onResize" v-model="drawerForHeader" :mini-variant="miniVariant" :clipped="clipped" :right="right" fixed app >
       <v-list style="padding-bottom: 0">
         <v-list-item v-for="(item, i) in leftSide" :key="i" router exact >
           <v-list-item-content class="leftSide-menu">
@@ -114,7 +113,7 @@
           </v-btn>
         </v-list-item-content>
       </v-list>
-    </v-navigation-drawer>
+    </v-navigation-drawer> -->
     <v-system-bar height="auto" style="z-index: 5;" color="#01B8BE" fixed app dark id="create" >
       <v-col lg="1" md="1" class="text-center" style="padding: 0;">
         <nuxt-link :to="localePath('/')" style="text-decoration: none;">
@@ -160,36 +159,6 @@
                           </nuxt-link>
                         </div>
                       </div>
-                      <!-- <div class="section-block">
-                        <nuxt-link :to="`/product`">
-                          <span>0–12 ամսական</span>
-                        </nuxt-link>
-                      </div>
-                      <div class="section-block">
-                        <nuxt-link :to="`/product`">
-                          <span>12–24 ամսական</span>
-                        </nuxt-link>
-                      </div>
-                      <div class="section-block">
-                        <nuxt-link :to="`/product`">
-                          <span>2–5 տարեկան</span>
-                        </nuxt-link>
-                      </div>
-                      <div class="section-block">
-                        <nuxt-link :to="`/product`">
-                          <span>5–8 տարեկան</span>
-                        </nuxt-link>
-                      </div>
-                      <div class="section-block">
-                        <nuxt-link :to="`/product`">
-                          <span>8–12 տարեկան</span>
-                        </nuxt-link>
-                      </div>
-                      <div class="section-block">
-                        <nuxt-link :to="`/product`">
-                          <span>12-16 տարեկան</span>
-                        </nuxt-link>
-                      </div> -->
                   </div>
                 </div>
               </div>
@@ -203,8 +172,10 @@
         </v-row>
       </v-col>
       <v-row justify="start">
-        <div style="padding: 0; margin: 5px 10px 5px 0;">
-            <input class="search-input" placeholder="ՈՐՈՆԵԼ">
+        <div style="padding: 0; margin: 5px 10px 5px 0; position: relative;">
+            <input class="search-input" placeholder="ՈՐՈՆԵԼ" v-model="search_product_name">
+
+            <div class="search-block" style="display: none;"></div>
         </div>
 
         <v-btn v-if="authenticated" color="#fff" text class="my-2 nav_button" v-on="on" style="border: none; position: relative;">
@@ -219,15 +190,6 @@
 
         <v-menu v-if="!authenticated" v-model="loginMenu" :close-on-content-click="false" :nudge-width="200" offset-y bottom>
           <template v-slot:activator="{ on }">
-            <!-- <v-btn v-if="authenticated" :to="localePath('/account')" color="#fff" text class="my-2 nav_button" v-on="on" style="border: none; position: relative;">
-              {{user.name}}
-              <v-icon @click="openAccountMenu">mdi-chevron-down</v-icon>
-
-              <v-list v-if="authenticated" class="accountMenu" style="display: none;">
-                <v-list-item @click="openHelperModal" v-text="'իմ օգնականը'"></v-list-item>
-                <v-list-item @click="logout" v-text="'Դուրս գալ'"></v-list-item>
-              </v-list>
-            </v-btn> -->
             <v-btn color="#fff" text class="my-2 nav_button" v-on="on" >
               <v-icon >mdi-account-outline</v-icon>
               {{$t('myAccount')}}
@@ -235,11 +197,6 @@
           </template>
           <v-card class="login-form">
             <v-list v-if="authenticated" style="background-color: #01235E" dark>
-              <!-- <v-list-item :to="localePath('/account')" v-text="$t('myAccount')"></v-list-item>
-              <v-list-item :to="localePath('/account/orders')" v-text="$t('orders')"></v-list-item>
-              <v-list-item @click="openHelperModal" v-text="'իմ օգնականը'"></v-list-item>
-              <v-list-item @click="logout" v-text="$t('logout')">
-              </v-list-item> -->
             </v-list>
              <v-tabs v-else  background-color="#01235E" class="elevation-2" dark :centered="true" :prev-icon="'mdi-arrow-left-bold-box-outline'" :next-icon="'mdi-arrow-right-bold-box-outline'" :icons-and-text="true" >
               <v-tabs-slider></v-tabs-slider>
@@ -255,8 +212,6 @@
                       <v-alert v-if="errors.email" text type="error">
                         {{errors.email[0]}}
                       </v-alert>
-                      <!-- <v-text-field v-model="loginForm.email" :rules="emailRules" label="ԷԼԵԿՏՐՈՆԱՅԻՆ ՀԱՍՑԵ" required ></v-text-field>
-                      <v-text-field v-model="loginForm.password" :rules="passwordRules" label="ԳԱՂՏՆԱԲԱՌ" type="password" required ></v-text-field> -->
                       
                       <v-card-actions style="display: block; padding: 0;">
                         <label>ԷԼԵԿՏՐՈՆԱՅԻՆ ՀԱՍՑԵ</label>
@@ -301,7 +256,13 @@
             </v-btn>
         </div>
 
-        <v-badge color="error" :content="cartLength" >
+        <div v-if="!cartLength">
+          <v-btn :to="localePath('/cart')" color="#fff" text class="my-2 nav_button" width="50px" style="border: none;">
+            <v-icon >mdi-cart-outline</v-icon>
+          </v-btn>
+        </div>
+
+        <v-badge v-else color="error" :content="cartLength">
           <v-btn :to="localePath('/cart')" color="#fff" text class="my-2 nav_button" width="50px" style="border: none;">
             <v-icon >mdi-cart-outline</v-icon>
           </v-btn>
@@ -458,15 +419,6 @@
             },
             { title: this.$t('sections'),
               to: '/sections',
-              items: [
-
-              ],
-              items2: [
-
-              ],
-              items3: [
-
-              ],
             },
             { title: this.$t('wholesale'),
               to: '/wholesale'
@@ -494,6 +446,7 @@
             phone: '',
             message: '',
           },
+          search_product_name: '',
         }
       },
       computed: {
@@ -514,6 +467,13 @@
         }
       },
       async mounted () {
+        window.addEventListener('click', function(e){
+          if (document.querySelector('.search-block').contains(e.target)){
+          } else{
+            document.querySelector('.search-block').style.display = "none";
+          }
+        });
+
         let all_categories = await this.$axios.$get('http://127.0.0.1:8000/api/category/get');
         // console.log(all_categories);
 
@@ -745,6 +705,32 @@
           } else {
             this.callbackErrors = "Ոչ բոլոր դաշտերն են լրացվաց";
           }
+        },
+        async searchProduct() {
+          document.querySelector('.search-block').style.display = "block";
+          let all_products = await this.$axios.$get('http://127.0.0.1:8000/api/product/get');
+          let result = [];
+
+          all_products.forEach(elem => {
+            if(elem.name_am.toLowerCase().indexOf(this.search_product_name.toLowerCase()) !== -1) {
+              result.push(elem);
+            }
+          });
+
+          let search_result = "";
+          result.forEach(elem => {
+            search_result += "<div><a href='/product/"+elem.id+"'>"+elem.name_am+"</a></div>";
+          });
+
+          document.querySelector('.search-block').innerHTML = search_result;
+        },
+        closeSearch: function() {
+          document.querySelector('.search-block').style.display = "none";
+        },
+      },
+      watch: {
+        search_product_name: function() {
+          this.searchProduct();
         }
       },
     }
@@ -882,6 +868,39 @@
     padding: 10px 40px;
     width: max-content;
     left: -50%;
+  }
+
+  .search-block {
+    position: absolute;
+    background: white;
+    top: 145%;
+    padding: 10px;
+    width: max-content;
+    left: 0;
+    color: #352249;
+    min-width: 218px;
+    max-height: 300px;
+    overflow: auto;
+    border: 1px solid rgb(1, 184, 190);
+  }
+
+  .search-block a {
+    color: #352249 !important;
+  }
+
+  .search-block > div {
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .search-block > div:hover {
+    /* background: #C6C3C3; */
+    background: rgb(1, 184, 190);
+    color: white;
+  }
+
+  .search-block > div:hover a {
+    color: white !important;
   }
 
   .helper-block-input {

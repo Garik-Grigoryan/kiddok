@@ -21,10 +21,10 @@
       </div>
       <v-row justify="center">
         <div style="width: 30%;">
-          <Filters></Filters>
+          <Filters filter_type="category"></Filters>
         </div>
         <div style="width: 70%; height: fit-content;">
-          <div>
+          <div v-if="this.category.image !== '[]'">
             <p style="margin-top: 20px;">
               Երկաթուղի «Իմ 1-ին գնացքը»: Հավաքածուն ներառում է ՝ 8 տարրերից երկաթգիծ (28սմ), լոկոմոտիվ պրոյեկտորով, մեղեդիներ և իրական ծուխ, ուղևորափոխադրման վագո
             </p>
@@ -165,9 +165,11 @@
     //   }
     // },
     mounted() {
-      console.log(this.category);
-      document.querySelector('.img-block').style.backgroundImage = "url('"+JSON.parse(this.category.image)[0]+"')";
-      document.querySelector('.age-block').style.background = this.category.color;
+      // console.log(this.category);
+      if(document.querySelector('.img-block') !== null) {
+        document.querySelector('.img-block').style.backgroundImage = "url('"+JSON.parse(this.category.image)[0]+"')";
+        document.querySelector('.age-block').style.background = this.category.color;
+      }
     },
     methods:{
       next() {

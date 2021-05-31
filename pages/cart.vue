@@ -75,7 +75,7 @@
             <v-row>
               <v-col lg="8" md="12">
                 <v-card style="box-shadow: none;">
-                  <v-form v-model="formValid" style="background: #EBE7E7;">
+                  <v-form style="background: #EBE7E7;">
                     <v-alert v-if="cartError" text type="error">
                       {{cartError}}
                     </v-alert>
@@ -456,12 +456,12 @@
     },
     methods: {
       buy() {
-        this.delivery_type = document.querySelector('.delivery-block .selected').innerText;
+        this.delivery_type = (document.querySelector('.delivery-block .selected') !== null) ? document.querySelector('.delivery-block .selected').innerText : "";
         console.log(this.delivery_type);
-        if(this.address !== "" && this.payment !== "" && this.nameLastName !== "" && this.email !== "" && this.phone !== "" && this.country !== "Երկիր" && this.city !== "" && this.selected_region !== "" && this.zip !== "") {
+        if(this.address !== "" && this.payment !== "" && this.nameLastName !== "" && this.email !== "" && this.phone !== "" && this.country !== "Երկիր" && this.city !== "" && this.selected_region !== "" && this.zip !== "" && this.delivery_type !== "") {
           if(this.payment == 'cash'){
             if(this.user){
-              this.$store.dispatch('user/buy', [this.user.id, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info, this.delivery_type]).then(() => {
+              this.$store.dispatch('user/buy', [this.user.id, this.cartId, null, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info, this.delivery_type]).then(() => {
                 this.$store.dispatch('wishListAndCart/emptyCart')
                 this.desserts = [];
                 this.setActive('step3');
@@ -469,7 +469,7 @@
                 this.totalPrice = 0;
               });
             }else {
-              this.$store.dispatch('user/buy', [null, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info, this.delivery_type]).then(() => {
+              this.$store.dispatch('user/buy', [null, this.cartId, null, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info, this.delivery_type]).then(() => {
                 this.$store.dispatch('wishListAndCart/emptyCart')
                 this.desserts = [];
                 this.setActive('step3');
@@ -479,7 +479,7 @@
             }
           } else {
             if(this.user){
-              this.$store.dispatch('user/buy', [this.user.id, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info, this.delivery_type]).then((res) => {
+              this.$store.dispatch('user/buy', [this.user.id, this.cartId, null, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info, this.delivery_type]).then((res) => {
                 this.$store.dispatch('wishListAndCart/emptyCart');
                 this.desserts = [];
                 this.setActive('step3');
@@ -490,7 +490,7 @@
                 this.totalPrice = 0;
               });
             } else {
-              this.$store.dispatch('user/buy', [null, this.cartId, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info, this.delivery_type]).then((res) => {
+              this.$store.dispatch('user/buy', [null, this.cartId, null, this.totalPrice, this.address, this.payment, this.nameLastName, this.email, this.count, this.phone, this.country, this.apartment, this.city, this.selected_region, this.zip, this.more_info, this.delivery_type]).then((res) => {
                 this.$store.dispatch('wishListAndCart/emptyCart');
                 this.desserts = [];
                 this.setActive('step3');

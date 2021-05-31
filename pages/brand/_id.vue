@@ -13,7 +13,7 @@
       </div>
       <v-row justify="center">
         <div style="width: 30%;">
-          <Filters></Filters>
+          <Filters filter_type="brand"></Filters>
         </div>
         <div style="display: flex; width: 70%; flex-wrap: wrap; justify-content: space-between; height: fit-content;">
           <productCard

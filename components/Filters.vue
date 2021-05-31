@@ -25,28 +25,19 @@
       <!-- <v-divider></v-divider> -->
       <v-list>
         <v-list-item v-for="item in items" :key="item.title" >
-          <v-list-item-content>
+          <v-list-item-content v-if="item.type !== 'sale'">
             <v-list-item-title style="color: #01B8BE; font-size: 18px;">{{ item.title }}</v-list-item-title>
             <v-divider style="margin: 10px 0 20px 0;"></v-divider>
-            <div class="checkbox-block" v-for="(i, n) in item.data"  :key="n">
-              <input class="checkbox-input" type="checkbox" :name="item.type">
+            <div class="checkbox-block" v-for="(i, n) in item.data"  :key="n" @change="filter($event)">
+              <input class="checkbox-input" type="checkbox" :name="item.type" :value="item.values[n]" v-model="item.select">
               <label style="height: 23px;">{{i}}</label>
             </div>
-            <!-- <div v-if="item.type === 'color'">
-              <v-item-group :multiple="true" >
-                <v-row class="colors">
-                  <v-item  v-for="(color, n) in item.data"  :key="n" v-slot:default="{ active, toggle }">
-                    <v-card  :color="color.toLowerCase()" class="d-flex text-center align-center mx-3 my-2" dark height="30" :data-value="color.toLowerCase()" width="30" @click="toggle(), filter($event)" >
-                      <v-scroll-y-transition>
-                        <v-icon v-if="active" :data-value="color.toLowerCase()" color="white" size="27" v-text="'mdi-close-circle-outline'" class="mx-auto" ></v-icon>
-                      </v-scroll-y-transition>
-                    </v-card>
-                  </v-item>
-                </v-row>
-              </v-item-group>
-            </div> -->
-            <!-- <v-combobox v-else @change="filter($event)" v-model="item.select" :items="item.data" label="" dense chips small-chips multiple >
-            </v-combobox> -->
+          </v-list-item-content>
+          <v-list-item-content v-else>
+            <div class="checkbox-block" v-for="(i, n) in item.data"  :key="n" @change="filter($event)">
+              <input class="checkbox-input" type="checkbox" :name="item.type" :value="item.values[n]" v-model="item.select">
+              <label style="height: 23px; color: #01B8BE;">{{i}}</label>
+            </div>
           </v-list-item-content>
         </v-list-item>
 
@@ -70,13 +61,6 @@
               <label>մինչև</label>
               <input type="text" name="max" class="text-input" :value="max" disabled>
             </div>
-          </div>
-        </v-list-item>
-
-        <v-list-item class="mt-10">
-          <div class="checkbox-block">
-            <input class="checkbox-input" type="checkbox" name="sale">
-            <label style="height: 33px; color: #01B8BE;">ԶԵՂՉ</label>
           </div>
         </v-list-item>
 
@@ -156,7 +140,7 @@
                       class="pt-6"
                       style="position: relative; height: 80px;"
                     >
-                      <nuxt-link :to="`/product/${product.id}`">
+                      <!-- <nuxt-link :to="`/product/${product.id}`"> -->
                         <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
                           <div style="display: flex; align-items: center;">
                             <v-icon v-text="'mdi-star-outline'" size="20"></v-icon>
@@ -180,7 +164,7 @@
                             <v-icon >mdi-cart-outline</v-icon>
                           </v-btn>
                         </div>
-                      </nuxt-link>
+                      <!-- </nuxt-link> -->
                     </v-card-text>
                   </v-slide-y-reverse-transition>
                 </v-card>
@@ -199,6 +183,7 @@ import BestProducts from './BestProducts.vue';
 
   export default {
     // brand[0]
+    props: ['filter_type'],
     head() {
       return {
         // title: this.brand[0].name,
@@ -225,8 +210,9 @@ import BestProducts from './BestProducts.vue';
           // { title: this.$t('sex'), icon: 'mdi-home-city', data: ['Men', 'Women',], select: [], type: 'sex' },
           // { title: this.$t('size'), icon: 'mdi-account', data: [], select: [], type: 'size'},
           // { title: this.$t('colors'), icon: 'mdi-account-group-outline', data: [], select: [], type: 'color'},
-          { title: "ՍԵՌ", icon: 'mdi-home-city', data: ['Տղա', 'Աղջիկ',], select: [], type: 'sex' },
-          { title: "ՏԱՐԻՔ", icon: 'mdi-account', data: ['0-12 ամսական', '12-24 ամսական', '2-5 տարեկան', '5-8 տարեկան', '8-12 տարեկան', '12-16 տարեկան'], select: [], type: 'age'},
+          { title: "ՍԵՌ", icon: 'mdi-home-city', data: ['Տղա', 'Աղջիկ'], values: ['men', 'women'], select: [], type: 'sex' },
+          { title: "ՏԱՐԻՔ", icon: 'mdi-account', data: ['0-12 ամսական', '12-24 ամսական', '2-5 տարեկան', '5-8 տարեկան', '8-12 տարեկան', '12-16 տարեկան'], values: ['0-12 months', '12-24 months', '2-5 years old', '5-8 years old', '8-12 years old', '12-16 years old'], select: [], type: 'age'},
+          { title: "", icon: 'mdi-home-city', data: ['ԶԵՂՉ'], values: ['sale'], select: [], type: 'sale' },
         ],
         select: [],
         mini: false,
@@ -236,6 +222,18 @@ import BestProducts from './BestProducts.vue';
       }
     },
     async mounted() {
+      if(this.filter_type === "brand") {
+        this.min = this.filters.minPrice == null ? 0 : this.filters.minPrice;
+        this.max = this.filters.maxPrice == null ? 0 : this.filters.maxPrice;
+        this.range = [this.min, this.max];
+      } else {
+        let categoryFilters = await this.$axios.$get('http://127.0.0.1:8000/api/product/getCategoryFilters/'+this.$route.params.id);
+
+        this.min = categoryFilters.minPrice == null ? 0 : categoryFilters.minPrice;
+        this.max = categoryFilters.maxPrice == null ? 0 : categoryFilters.maxPrice;
+        this.range = [this.min, this.max];
+      }
+
       let all_categories = await this.$axios.$get('http://127.0.0.1:8000/api/category/get');
 
       all_categories.forEach(elem => {
@@ -268,9 +266,6 @@ import BestProducts from './BestProducts.vue';
       //     this.items[1].data.push(elem)
       //   }
       // }
-      this.min = this.filters.minPrice == null ? 0 : this.filters.minPrice;
-      this.max = this.filters.maxPrice == null ? 0 : this.filters.maxPrice;
-      this.range = [this.min, this.max];
 
       if(window.matchMedia('(max-width: 767px)').matches){
         this.drawer = false;
@@ -280,8 +275,10 @@ import BestProducts from './BestProducts.vue';
     methods: {
       filter(e) {
         // console.log(e);
-        document.querySelector('input.text-input[name="min"]').value = e[0];
-        document.querySelector('input.text-input[name="max"]').value = e[1];
+        if(e[0] !== undefined && e[1] !== undefined) {
+          document.querySelector('input.text-input[name="min"]').value = e[0];
+          document.querySelector('input.text-input[name="max"]').value = e[1];
+        }
         if(e.target !== undefined){
           if(e.target.tagName === 'DIV' || e.target.tagName === 'I'){
             if(e.target.tagName === 'I'){
@@ -295,9 +292,17 @@ import BestProducts from './BestProducts.vue';
           path: '/',
           maxAge: 10 * 365 * 24 * 60 * 60
         });
-        this.$store.dispatch('products/Filter', [this.items, this.range, this.$route.params.id]).then(r => {
-          // this.$router.push('/dashboard/categories')
-        })
+        // console.log(this.items);
+        // console.log(this.range);
+        if(this.filter_type === "brand") {
+          this.$store.dispatch('products/Filter', [this.items, this.range, this.$route.params.id]).then(r => {
+            // this.$router.push('/dashboard/categories')
+          })
+        } else {
+          this.$store.dispatch('products/FilterByCategory', [this.items, this.range, this.$route.params.id]).then(r => {
+            // this.$router.push('/dashboard/categories')
+          })
+        }
       },
       icon_filter() {
         if(document.getElementsByClassName("product_filter")[0].className.indexOf('v-navigation-drawer--close') === -1) {
@@ -329,6 +334,9 @@ import BestProducts from './BestProducts.vue';
       },
       filters() {
         return this.$store.getters['brands/brandFilters'];
+      },
+      category_filters() {
+        return this.$store.getters['products/brandFilters'];
       },
       products() {
         return this.$store.getters['products/bestProducts'];
