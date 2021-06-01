@@ -123,13 +123,11 @@
         return this.$store.getters['products/bestProducts'];
       }
     },
-    async mounted() {
-      window.onload = function() {
-        let stars = document.querySelectorAll('.best-product-rating .v-rating button');
-        for(let i = 0; i < stars.length; i++) {
-          stars[i].style.padding = "0";
-          stars[i].disabled = true;
-        }
+    mounted() {
+      let stars = document.querySelectorAll('.best-product-rating .v-rating button');
+      for(let i = 0; i < stars.length; i++) {
+        stars[i].style.padding = "0";
+        stars[i].disabled = true;
       }
       this.products.forEach(async (prod) => {
         await this.$axios.get('http://127.0.0.1:8000/api/rating/get/'+prod.id).then(response => {
@@ -150,7 +148,6 @@
           this.rating[prod.id] = obj;
         }).catch(e => {});
       });
-      console.log(this.rating);
     }
   }
 </script>

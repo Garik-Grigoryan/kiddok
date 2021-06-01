@@ -8,7 +8,9 @@
     >
       <v-list-item class="px-2 mt-3">
 
-        <v-list-item-title class="display-1 font-weight-bold">DavMar</v-list-item-title>
+        <v-list-item-title class="display-1 font-weight-bold">
+          <img src="http://127.0.0.1:8000/images/Kiddok_logo_04-1.PNG" width="100%">
+        </v-list-item-title>
         <v-btn icon @click.stop="mini = !mini" >
           <v-icon>mdi-chevron-left</v-icon>
         </v-btn>
@@ -38,9 +40,9 @@
             </v-list-item-content>
           </template>
 
-          <v-list-item to="/dashboard/settings/sizes">
+          <!-- <v-list-item to="/dashboard/settings/sizes">
             <v-list-item-title>Sizes</v-list-item-title>
-          </v-list-item>
+          </v-list-item> -->
         </v-list-group>
       </v-list>
     </v-navigation-drawer>
@@ -53,12 +55,12 @@
         items: [
           {text: 'Brands', icon: 'mdi-tag-multiple', url: '/dashboard/brands'},
           {text: 'Categories', icon: 'mdi-view-module', url: '/dashboard/categories'},
-          {text: 'Menu', icon: 'mdi-wrap', url: '/dashboard/menu'},
+          // {text: 'Menu', icon: 'mdi-wrap', url: '/dashboard/menu'},
           {text: 'Products', icon: 'mdi-webpack', url: '/dashboard/products'},
           {text: 'Pages', icon: 'mdi-arrange-send-backward', url: '/dashboard/pages'},
           {text: 'Orders', icon: 'mdi-cart', url: '/dashboard/orders'},
           {text: 'Components', icon: 'mdi-shape-plus', url: '/dashboard/components'},
-          {text: 'Regions', icon: 'mdi-google-maps', url: '/dashboard/regions'},
+          // {text: 'Regions', icon: 'mdi-google-maps', url: '/dashboard/regions'},
           // {text: 'Settings', icon: 'mdi-cog', url: '/dashboard/settings'},
           {text: 'Subscribers', icon: 'mdi-email-outline', url: '/dashboard/subscribers'},
           // {text: 'Settings', icon: 'mdi-cog', url: '/dashboard/settings'},

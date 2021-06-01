@@ -468,9 +468,11 @@
       },
       async mounted () {
         window.addEventListener('click', function(e){
-          if (document.querySelector('.search-block').contains(e.target)){
-          } else{
-            document.querySelector('.search-block').style.display = "none";
+          if(document.querySelector('.search-block') !== null) {
+            if (document.querySelector('.search-block').contains(e.target)){
+            } else{
+              document.querySelector('.search-block').style.display = "none";
+            }
           }
         });
 
@@ -594,7 +596,7 @@
         //   }
         // })
 
-        if(this.user){
+        if(this.user && document.querySelector('.user-photo-block') !== null){
           document.querySelector('.user-photo-block').style.backgroundImage = "url('"+this.user.image+"')";
         }
       },

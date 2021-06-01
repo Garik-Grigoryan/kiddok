@@ -48,7 +48,7 @@
                           </v-alert>
 
                           <div class="questionnaire_block">
-                              <v-btn color="primary" text class="questionnaire_btn" style="text-transform: uppercase;">Հարցաթերթիկ</v-btn>
+                              <v-btn text class="questionnaire_btn" style="text-transform: uppercase;">Հարցաթերթիկ</v-btn>
                               <div style="margin-bottom: 20px;"><span>Ձեր կարծիքը շատ կարևոր է մեզ համար</span></div>
                           </div>
 

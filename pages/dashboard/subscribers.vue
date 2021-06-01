@@ -46,6 +46,7 @@
             headers: [
               {text: '#', value: 'id'},
               {text: 'E-mail', value: 'email'},
+              {text: 'Phone', value: 'phone'},
               {text: 'Subscribed at', value: 'created_at'},
             ],
           }

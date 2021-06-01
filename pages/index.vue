@@ -27,7 +27,7 @@
             </v-row>
           </v-container>
 
-          <h1  class="text-center mb-5" v-text="'ԶԵՂՉՎԱԾ ՏԵՍԱԿԱՆԻ'" style="text-transform: uppercase; color: #352249; font-weight: 100;"></h1>
+          <h1  class="text-center mb-5" v-text="'ԶԵՂՉՎԱԾ ՏԵՍԱԿԱՆԻ'" style="text-transform: uppercase; color: #352249; font-weight: 100; margin-top: 120px;"></h1>
           <SalesProducts :count="7" type="sales"></SalesProducts>
 
           <h1  class="text-center mb-5" v-text="'BESTSELLERS'" style="text-transform: uppercase; color: #352249; font-weight: 400;"></h1>
