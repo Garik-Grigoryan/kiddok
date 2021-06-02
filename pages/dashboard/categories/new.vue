@@ -10,7 +10,7 @@
           <v-text-field v-model="name_ru" :counter="10" :rules="nameRules" label="Name (rus)" required ></v-text-field>
           <v-text-field v-model="name_am" :counter="10" :rules="nameRules" label="Name (am)" required ></v-text-field>
           <v-row >
-            <v-col cols="6" >
+            <v-col cols="12" >
               <v-autocomplete v-model="parentCategory" :items="categories" label="Parent Category" item-text="name" item-value="id">
                 <template v-slot:selection="category">
                   <v-list-item-content>
@@ -26,7 +26,7 @@
                 </template>
               </v-autocomplete>
             </v-col>
-            <v-col cols="6" >
+            <!-- <v-col cols="6" >
               <v-autocomplete v-model="selectedBrand" :items="brands" label="Brand" item-text="name" item-value="brand.id">
                 <template v-slot:selection="brand">
                   <v-list-item-content>
@@ -43,8 +43,12 @@
                   </v-list-item-content>
                 </template>
               </v-autocomplete>
-            </v-col>
+            </v-col> -->
           </v-row>
+        
+          <v-col cols="12" class="pl-0">
+            <v-text-field type="text" v-model="description" label="Description"></v-text-field>
+          </v-col>
 
           <v-col cols="5" class="pl-0">
             <v-color-picker v-model="color"></v-color-picker>
@@ -150,11 +154,12 @@
         name_am: '',
         imageName: '',
         order: '',
+        description: '',
         dialog: false,
         uploadDialog: false,
         selectedImages: [],
         color: '',
-        selectedBrand: '',
+        // selectedBrand: '',
         nameRules: [
           v => !!v || 'Field is required',
         ],
@@ -190,7 +195,7 @@
         })
       },
       addCategory() {
-        this.$store.dispatch('categories/addCategory', [this.name_en, this.name_ru, this.name_am, this.order, this.selectedImages, this.color, this.selectedBrand, this.parentCategory]).then(r => {
+        this.$store.dispatch('categories/addCategory', [this.name_en, this.name_ru, this.name_am, this.order, this.selectedImages, this.color, this.description, this.parentCategory]).then(r => {
           this.$router.push('/dashboard/categories')
         })
       }

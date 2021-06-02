@@ -1,6 +1,8 @@
 export const state = () => ({
   orders: [],
   subscribers: [],
+  callbacks: [],
+  questionnairies: []
 });
 
 export const mutations = {
@@ -15,6 +17,12 @@ export const mutations = {
   },
   setSubscribers(state, subscribers){
     state.subscribers = subscribers;
+  },
+  setCallbacks(state, callbacks){
+    state.callbacks = callbacks;
+  },
+  setQuestionnairies(state, questionnairies){
+    state.questionnairies = questionnairies;
   }
 }
 
@@ -68,6 +76,14 @@ export const actions = {
   async getSubscribers({commit}){
     let result = await this.$axios.$get('http://127.0.0.1:8000/api/subscribe/get');
     commit('setSubscribers', result);
+  },
+  async getCallbacks({commit}){
+    let result = await this.$axios.$get('http://127.0.0.1:8000/api/callback/get');
+    commit('setCallbacks', result);
+  },
+  async getQuestionnairies({commit}){
+    let result = await this.$axios.$get('http://127.0.0.1:8000/api/questionnaire/get');
+    commit('setQuestionnairies', result);
   },
   async getOrders({commit}, [userId]){
     if(userId == 'All'){

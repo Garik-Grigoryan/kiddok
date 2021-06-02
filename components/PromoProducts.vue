@@ -1,6 +1,6 @@
 <template>
   <v-sheet
-    class="mx-auto"
+    class="mx-auto new-products-block"
     max-width="120%"
   >
     <v-slide-group
@@ -308,6 +308,11 @@
     },
     mounted() {
       // console.log(this.products);
+      this.$nextTick(function () {
+        // if(document.querySelector('.new-products-block .v-item-group .v-slide-group__next') !== null) {
+        //   document.querySelector('.new-products-block .v-item-group .v-slide-group__next i').style.color = "#B22180";
+        // }
+      });
     }
   }
 </script>

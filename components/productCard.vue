@@ -19,19 +19,32 @@
     </nuxt-link>
     <v-slide-y-reverse-transition>
       <v-card-text
-        class="pt-6"
+        class="pt-6 product-card-rating"
         style="position: relative; height: 80px; padding: 0;"
       >
         <!-- <nuxt-link :to="localePath(`/product/${id}`)"> -->
           <h3 class="font-weight-light font-weight-bold white--text mb-2" v-text="title_am" style="color: #352249 !important; font-weight: 100 !important; font-size: 15px; margin-bottom: 8px !important;"></h3>
           <div style="display: flex; justify-content: center;">
-            <div style="display: flex; align-items: center;">
+            <!-- <div style="display: flex; align-items: center;">
               <v-icon v-text="'mdi-star-outline'" size="25"></v-icon>
               <v-icon v-text="'mdi-star-outline'" size="25"></v-icon>
               <v-icon v-text="'mdi-star-outline'" size="25"></v-icon>
               <v-icon v-text="'mdi-star-outline'" size="25"></v-icon>
               <v-icon v-text="'mdi-star-outline'" size="25"></v-icon>
-            </div>
+            </div> -->
+            <v-rating
+              empty-icon="mdi-star-outline"
+              full-icon="mdi-star"
+              half-icon="mdi-star-half-full"
+              hover
+              length="5"
+              size="20"
+              half-increments
+              v-model="rating"
+              background-color="grey lighten-1"
+              color="orange"
+            >
+            </v-rating>
           </div>
           <div style="display: flex; justify-content: space-between; align-items: baseline;">
             <p class="price" style="color: #352249; font-size: 15px;">
@@ -62,6 +75,9 @@
     export default {
       props: ['image', 'id', 'title_en', 'title_ru', 'title_am', 'price', 'discountType', 'discount'],
       name: "productCard",
+      data: () => ({
+        rating: 0
+      }),
       methods: {
         addToWishlist(e, id) {
           this.$store.dispatch('wishListAndCart/setWishList', [id])
@@ -73,6 +89,22 @@
           }
           this.$store.dispatch('wishListAndCart/setCArt', [id, user_id])
         }
+      },
+      async mounted() {
+        let stars = document.querySelectorAll('.product-card-rating .v-rating button');
+        for(let i = 0; i < stars.length; i++) {
+          stars[i].style.padding = "0";
+          stars[i].disabled = true;
+        }
+        await this.$axios.get('http://127.0.0.1:8000/api/rating/get/'+this.id).then(response => {
+          let rating_count = 0;
+          let rating_val = 0;
+          response.data.forEach(elem => {
+            rating_count++;
+            rating_val += elem.rating;
+          });
+          this.rating = rating_val/rating_count;
+        }).catch(e => {});
       }
     }
 </script>

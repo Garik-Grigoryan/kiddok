@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col lg="8" md="12">
+      <v-col lg="10" md="12">
         <v-data-table
           :headers="headers"
           :items="getUserOrders"
@@ -90,6 +90,7 @@
             {text: 'Address', value: 'address'},
             {text: 'Buy date', value: 'created_at'},
             {text: 'Payment Type', value: 'payment_type'},
+            {text: 'Delivery Type', value: 'delivery_type'},
             {text: 'Total price', value: 'totalPrice'},
             {text: 'Status', value: 'statusName'},
             {text: 'Refund', value: 'refund'},
@@ -98,7 +99,7 @@
           ProdHeaders: [
             {text: this.$t('image'), value: 'image', sortable: false, align: 'start',},
             {text: this.$t('name'), value: 'name', sortable: false, align: 'center',},
-            {text: this.$t('size'), value: 'size', sortable: false, align: 'center',},
+            { text: this.$t('size'), value: 'size',  sortable: false,  align: 'center', },
             {text: this.$t('color'), value: 'color', sortable: false, align: 'center',},
             {text: this.$t('count'), value: 'count', sortable: false, align: 'center',},
             {text: this.$t('price'), value: 'price', sortable: false, align: 'center',},
@@ -135,19 +136,30 @@
       async mounted() {
         await this.$store.dispatch('wishListAndCart/fetch');
         for (let el in this.getUserOrders) {
-          for (let elem in this.getUserOrders[el].productItem.data) {
-            this.getUserOrders[el].mainProducts = []
-            if(this.getUserOrders[el].productItem.data[elem].product != null){
-              this.getUserOrders[el].mainProducts.push({
-                image: JSON.parse(this.getUserOrders[el].productItem.data[elem].product.images)[0],
-                name: this.getUserOrders[el].productItem.data[elem].product.name_en,
-                size: this.getUserOrders[el].productItem.data[elem].size[0] !== undefined ? this.getUserOrders[el].productItem.data[elem].size[0] : '',
-                color: this.getUserOrders[el].productItem.data[elem].color[0] !== undefined ? this.getUserOrders[el].productItem.data[elem].color[0] : '',
-                count: this.getUserOrders[el].productItem.data[elem].count,
-                price: this.getUserOrders[el].productItem.data[elem].product.price,
-              })
+          this.getUserOrders[el].mainProducts = [];
+          if(this.getUserOrders[el].product_id !== null && this.getUserOrders[el].product_id !== 0) {
+            let product_info = await this.$axios.$get(`http://127.0.0.1:8000/api/product/get/${this.getUserOrders[el].product_id}`);
+            this.getUserOrders[el].mainProducts.push({
+              image: JSON.parse(product_info.images)[0],
+              name: product_info.name_en,
+              size: product_info.size,
+              color: '',
+              count: 1,
+              price: product_info.price,
+            });
+          } else {
+            for (let elem in this.getUserOrders[el].productItem.data) {
+              if(this.getUserOrders[el].productItem.data[elem].product != null){
+                this.getUserOrders[el].mainProducts.push({
+                  image: JSON.parse(this.getUserOrders[el].productItem.data[elem].product.images)[0],
+                  name: this.getUserOrders[el].productItem.data[elem].product.name_en,
+                  size: this.getUserOrders[el].productItem.data[elem].product.size,
+                  color: (this.getUserOrders[el].productItem.data[elem].color !== null && this.getUserOrders[el].productItem.data[elem].color[0] !== undefined) ? this.getUserOrders[el].productItem.data[elem].color[0] : '',
+                  count: this.getUserOrders[el].productItem.data[elem].count,
+                  price: this.getUserOrders[el].productItem.data[elem].product.price,
+                })
+              }
             }
-
           }
         }
       }

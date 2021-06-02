@@ -142,13 +142,32 @@
                     >
                       <!-- <nuxt-link :to="`/product/${product.id}`"> -->
                         <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
-                          <div style="display: flex; align-items: center;">
-                            <v-icon v-text="'mdi-star-outline'" size="20"></v-icon>
-                            <v-icon v-text="'mdi-star-outline'" size="20"></v-icon>
-                            <v-icon v-text="'mdi-star-outline'" size="20"></v-icon>
-                            <v-icon v-text="'mdi-star-outline'" size="20"></v-icon>
-                            <v-icon v-text="'mdi-star-outline'" size="20"></v-icon>
-                            <div style="color: rgb(112, 112, 112); font-weight: 500; font-size: 14px; margin-left: 8px;"> (58)</div>
+                          <div class="best-product-rating" style="display: flex; align-items: center;">
+                            <v-rating v-if="rating[product.id] !== undefined"
+                              empty-icon="mdi-star-outline"
+                              full-icon="mdi-star"
+                              half-icon="mdi-star-half-full"
+                              hover
+                              length="5"
+                              size="20"
+                              half-increments
+                              v-model="rating[product.id].rating"
+                              background-color="grey lighten-1"
+                              color="orange"
+                            ></v-rating>
+                            <v-rating v-else
+                              empty-icon="mdi-star-outline"
+                              full-icon="mdi-star"
+                              half-icon="mdi-star-half-full"
+                              hover
+                              length="5"
+                              size="20"
+                              half-increments
+                              background-color="grey lighten-1"
+                              color="orange"
+                            ></v-rating>
+                            <div v-if="rating[product.id] !== undefined" style="color: rgb(112, 112, 112); font-weight: 500; font-size: 14px; margin-left: 8px;"> ({{rating[product.id].count}})</div>
+                            <div v-else style="color: rgb(112, 112, 112); font-weight: 500; font-size: 14px; margin-left: 8px;"> (0)</div>
                           </div>
                           <v-btn style="background: #B22180; padding: 6px 15px; border-radius: 16px; color: white; text-transform: none;"><v-icon color="white" style="margin-right: 5px;">mdi-bullhorn</v-icon> NEW</v-btn>
                         </div>
@@ -219,9 +238,17 @@ import BestProducts from './BestProducts.vue';
         categoriesBlock: [],
         subcategoriesBlock: [],
         parentCategoryID: 0,
+        rating: {},
+        ratingCount: 0
       }
     },
     async mounted() {
+      let stars = document.querySelectorAll('.best-product-rating .v-rating button');
+      for(let i = 0; i < stars.length; i++) {
+        stars[i].style.padding = "0";
+        stars[i].disabled = true;
+      }
+
       if(this.filter_type === "brand") {
         this.min = this.filters.minPrice == null ? 0 : this.filters.minPrice;
         this.max = this.filters.maxPrice == null ? 0 : this.filters.maxPrice;
@@ -271,6 +298,26 @@ import BestProducts from './BestProducts.vue';
         this.drawer = false;
       }
       document.querySelector('.product_filter .v-navigation-drawer__border').style.display = "none";
+
+      this.products.forEach(async (prod) => {
+        await this.$axios.get('http://127.0.0.1:8000/api/rating/get/'+prod.id).then(response => {
+          let rating_count = 0;
+          let rating_val = 0;
+          response.data.forEach(elem => {
+            rating_count++;
+            rating_val += elem.rating;
+          });
+
+          var obj = {};
+          var name = "id";
+          var value = "rating";
+          var count = "count";
+          obj[name] = prod.id;
+          obj[value] = rating_val/rating_count;
+          obj[count] = rating_count;
+          this.rating[prod.id] = obj;
+        }).catch(e => {});
+      });
     },
     methods: {
       filter(e) {

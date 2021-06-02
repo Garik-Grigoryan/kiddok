@@ -28,7 +28,7 @@
           </li>
         </ul>
         <div class="tab-content py-3" id="myTabContent">
-          <div class="tab-pane fade" :class="{ 'active show': isActive('step1') }" id="step1">
+          <div class="tab-pane fade step1-table-block" :class="{ 'active show': isActive('step1') }" id="step1">
             <v-row>
               <v-col lg="12" md="12">
                 <v-data-table :headers="headers" :items="desserts" hide-default-footer class="elevation-1 mytable" style="box-shadow: none !important;">
@@ -379,6 +379,12 @@
       }
     },
     async mounted() {
+      this.$nextTick(function () {
+        if(document.querySelector('.step1-table-block .v-data-table .v-data-table-header') !== null) {
+          document.querySelector('.step1-table-block .v-data-table .v-data-table-header').style.background = "#EBE7E7";
+        }
+      });
+
       if(this.$i18n.locale === 'am'){
         this.conditions = this.conditionsPage.html_am
       }

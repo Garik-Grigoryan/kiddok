@@ -300,7 +300,7 @@
             this.registrationError2 = false;
             await this.$axios.post('http://127.0.0.1:8000/api/auth/register', this.registerJuridicalPerson).then(response => {
               this.menu = false;
-              this.$auth.login({data: this.registerJuridicalPerson});
+              // this.$auth.login({data: this.registerJuridicalPerson});
               this.openSuccessModal();
             }).catch(e => {
               this.registrationError = e.response;

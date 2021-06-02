@@ -1,7 +1,7 @@
 <template>
     <v-container>
       <p>
-        Welcome to Davmar dashboard
+        Welcome to dashboard
       </p>
     </v-container>
 </template>

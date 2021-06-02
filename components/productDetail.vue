@@ -79,7 +79,9 @@
         <v-col md="12" lg="12">
           <div class="pl-0">
             <p class="mb-5 product-price">
-              <span>{{product.price}}</span> դրամ
+              <span v-if="product.discountType == 'percent'"><span class="discount">{{product.price}}</span> {{product.price - (product.price * product.discount)/100}} դրամ</span>
+              <span v-else-if="product.discountType == 'price'">{{product.price - product.discount}} դրամ</span>
+              <span v-else>{{product.price}} դրամ</span>
             </p>
           </div>
           <div class="mt-5">
@@ -260,12 +262,14 @@
     },
     async mounted() {
       this.$nextTick(function () {
-        document.querySelector('.product-images-slider .v-carousel .v-window__container .v-window__next').style.bottom = "0";
-        document.querySelector('.product-images-slider .v-carousel .v-window__container .v-window__next').style.top = "99%";
-        document.querySelector('.product-images-slider .v-carousel .v-window__container .v-window__next').style.left = "15%";
-        document.querySelector('.product-images-slider .v-carousel .v-window__container .v-window__next').style.right = "100%";
-        document.querySelector('.product-images-slider .v-carousel .v-window__container .v-window__next .v-icon').style.color = "#9E357C";
-        document.querySelector('.product-images-slider .v-carousel .v-window__container .v-window__next .v-icon').style.fontSize = "90px";
+        if(document.querySelector('.product-images-slider .v-carousel .v-window__container .v-window__next') !== null) {
+          document.querySelector('.product-images-slider .v-carousel .v-window__container .v-window__next').style.bottom = "0";
+          document.querySelector('.product-images-slider .v-carousel .v-window__container .v-window__next').style.top = "99%";
+          document.querySelector('.product-images-slider .v-carousel .v-window__container .v-window__next').style.left = "15%";
+          document.querySelector('.product-images-slider .v-carousel .v-window__container .v-window__next').style.right = "100%";
+          document.querySelector('.product-images-slider .v-carousel .v-window__container .v-window__next .v-icon').style.color = "#9E357C";
+          document.querySelector('.product-images-slider .v-carousel .v-window__container .v-window__next .v-icon').style.fontSize = "90px";
+        }
       });
       this.product.product_color.forEach(elem => {
         this.productColors.push(elem.color)

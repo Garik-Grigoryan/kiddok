@@ -1,130 +1,16 @@
 <template>
   <div>
-    <!-- <v-navigation-drawer v-resize="onResize" v-model="drawerForHeader" :mini-variant="miniVariant" :clipped="clipped" :right="right" fixed app >
-      <v-list style="padding-bottom: 0">
-        <v-list-item v-for="(item, i) in leftSide" :key="i" router exact >
-          <v-list-item-content class="leftSide-menu">
-            <v-menu v-if="item.items" offset-y>
-              <template v-slot:activator="{ on }">
-                <a href="#"
-                  v-on="on"
-                  class="v-list-item v-list-item--link theme--light"
-                >
-                  {{ item.title }}
-                </a>
-              </template>
-              <v-list class="mobile-category-menu">
-                <v-list-item
-                  v-for="(item1, index) in item.items"
-                  :key="index"
-                  class="category-block"
-                >
-                  <v-list-item exact :to="localePath(item1.to)" style="background-color: rgb(1, 35, 94); color: white !important;">
-                    <v-list-item-title>{{ item1.title }}</v-list-item-title>
-                  </v-list-item>
-                  <v-list style="background: transparent;">
-                    <v-list-item-group v-for="(item2, index) in item.items2" :key="index">
-                          <v-list-item v-if="item1.id === item2.brand" exact :to="localePath(item2.to)" v-on="on">
-                            <v-list-item-title v-if="$i18n.locale === 'am'">{{ item2.title_am }}</v-list-item-title>
-                            <v-list-item-title v-if="$i18n.locale === 'ru'">{{ item2.title_ru }}</v-list-item-title>
-                            <v-list-item-title v-if="$i18n.locale === 'en'">{{ item2.title_en }}</v-list-item-title>
-                          </v-list-item>
-                            <v-list v-if="item1.id === item2.brand" style="background: transparent; margin: 0 16px; border-left: 2px solid rgb(178, 8, 57)">
-                              <v-list-item-group v-for="(item3, index) in item.items3" :key="index">
-                                <v-list-item v-if="item2.id === item3.parent && item1.id === item2.brand" exact :to="localePath(item3.to)">
-                                  <v-list-item-title v-if="$i18n.locale === 'am'">{{ item3.title_am }}</v-list-item-title>
-                                  <v-list-item-title v-if="$i18n.locale === 'ru'">{{ item3.title_ru }}</v-list-item-title>
-                                  <v-list-item-title v-if="$i18n.locale === 'en'">{{ item3.title_en }}</v-list-item-title>
-                                </v-list-item>
-                              </v-list-item-group>
-                            </v-list>
-                    </v-list-item-group>
-                  </v-list>
-                </v-list-item>
-              </v-list>
-            </v-menu>
-            <v-list-item v-else exact :to="localePath(item.to)" class="leftSide-menu-items">
-              <v-list-item-title v-text="item.title" />
-            </v-list-item>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-      <v-list style="padding-top: 0">
-        <v-list-item v-for="(item, i) in rightSide" :key="i" router exact >
-          <v-list-item-content style="display: block; padding: 0">
-            <v-list-item v-if="item.title_am === undefined" exact :to="localePath(item.to)">
-              <v-list-item-title>{{ item.title }}</v-list-item-title>
-            </v-list-item>
-            <v-menu v-if="item.title_am !== undefined" :open-on-hover="true" bottom offset-y >
-                <template v-slot:activator="{ on }">
-                  <a href="#"
-                      v-on="on"
-                      class="v-list-item v-list-item--link theme--light"
-                    >
-                      <div v-if="item.title_am !== undefined && $i18n.locale === 'am'">{{ item.title_am }}</div>
-                      <div v-if="item.title_ru !== undefined && $i18n.locale === 'ru'">{{ item.title_ru }}</div>
-                      <div v-if="item.title_en !== undefined && $i18n.locale === 'en'">{{ item.title_en }}</div>
-                      <div v-if="item.title_am === undefined">{{ item.title }}</div>
-                    </a>
-                </template>
-                <v-list v-if="item.items">
-                  <v-list-item-content style="align-items: normal; display: block">
-                    <v-list-item-group v-for="(item1, index) in item.items" :key="index">
-                      <v-list-item exact exact-active-class="activeLink" :to="localePath(item1.to)">
-                        <v-list-item-title v-if="$i18n.locale === 'am'">{{ item1.title_am }}</v-list-item-title>
-                        <v-list-item-title v-if="$i18n.locale === 'ru'">{{ item1.title_ru }}</v-list-item-title>
-                        <v-list-item-title v-if="$i18n.locale === 'en'">{{ item1.title_en }}</v-list-item-title>
-                      </v-list-item>
-                      <v-list-item-group v-for="(item2, index) in item.items2" :key="index" style="margin: 0 16px; border-left: 2px solid rgb(178, 8, 57)">
-                        <v-list-item v-if="item1.id === item2.parent" exact :to="localePath(item2.to)">
-                          <v-list-item-title v-if="$i18n.locale === 'am'">{{ item2.title_am }}</v-list-item-title>
-                          <v-list-item-title v-if="$i18n.locale === 'ru'">{{ item2.title_ru }}</v-list-item-title>
-                          <v-list-item-title v-if="$i18n.locale === 'en'">{{ item2.title_en }}</v-list-item-title>
-                        </v-list-item>
-                      </v-list-item-group>
-                    </v-list-item-group>
-                  </v-list-item-content>
-                </v-list>
-            </v-menu>
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-      <v-list>
-        <v-list-item-content class="mobile-icons" style="padding: 16px; padding-top: 0">
-          <v-btn :to="localePath('/wishlist')" color="#fff" text class="my-2 nav_button" width="40px" >
-            <v-icon>mdi-heart-outline</v-icon>
-          </v-btn>
-
-          <v-btn :to="localePath('/cart')" color="#fff" text class="my-2 nav_button" width="40px" >
-            <v-icon >mdi-cart-outline</v-icon>
-          </v-btn>
-
-          <v-menu  v-model="menu" :close-on-content-click="false" :nudge-width="200" offset-y bottom >
-            <template v-slot:activator="{ on }">
-              <v-btn color="#fff" text class="my-2 nav_button" v-on="on" >
-                <v-icon >mdi-account-outline</v-icon>
-              </v-btn>
-            </template>
-          </v-menu>
-        </v-list-item-content>
-        <v-list-item-content class="mobile-icons" style="padding: 16px; padding-top: 0">
-          <v-btn v-for="(item, key) in languages" :key="key" :to="switchLocalePath(item.to)" fab color="#01235E" class="my-2 nav_button" small >
-            <v-img :src="item.icon" max-width="40"></v-img>
-          </v-btn>
-        </v-list-item-content>
-      </v-list>
-    </v-navigation-drawer> -->
     <v-system-bar height="auto" style="z-index: 5;" color="#01B8BE" fixed app dark id="create" >
       <v-col lg="1" md="1" class="text-center" style="padding: 0;">
         <nuxt-link :to="localePath('/')" style="text-decoration: none;">
           <img src="http://127.0.0.1:8000/images/Kiddok_logo_02-1.PNG" width="100%">
         </nuxt-link>
       </v-col>
-      <v-col lg="7" md="7">
+      <v-col class="hidden-sm-and-down" lg="7" md="7">
         <v-row class="hidden-sm-and-down" no-gutters >
           <v-menu :open-on-hover="true" bottom offset-y v-for="(item, i) in leftSide" dark :key="i">
             <template v-slot:activator="{on}">
-              <div v-if="item.to==='/sections'" style="position: relative">
+              <div v-if="item.to==='/sections'" class="sections-menu-block-title" style="position: relative">
                 <v-btn  exact color="#fff" text class="my-2 nav_button" v-on="on" bottom @click="openSectionsMenu" style="border: none;">
                   <div>{{ item.title }}</div>
                 </v-btn>
@@ -172,6 +58,82 @@
         </v-row>
       </v-col>
       <v-row justify="start">
+        <div class="mobile-menu" style="display: none; margin-right: 20px;">
+          <main id="foo" style="position: relative">
+            <button v-show="!navVisible" id="hamburger" @click="showMenu">
+            <svg width="50px" height="50px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+              <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                  <circle id="Oval" stroke="#FFFFFF" cx="50" cy="50" r="49.5"></circle>
+                  <rect id="Rectangle" fill="#FFFFFF" x="25" y="33" width="50" height="2"></rect>
+                  <rect id="Rectangle-Copy" fill="#FFFFFF" x="25" y="49" width="50" height="2"></rect>
+                  <rect id="Rectangle-Copy-2" fill="#FFFFFF" x="25" y="66" width="50" height="2"></rect>
+              </g>
+            </svg>
+            </button>
+              <nav v-show="navVisible">
+                <button class="close" @click="hideMenu">
+                <svg width="50px" height="50px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <g id="close" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                        <circle id="Oval" stroke="#FFFFFF" cx="50" cy="50" r="49.5"></circle>
+                        <rect id="Rectangle" fill="#FFFFFF" transform="translate(50.000000, 50.000000) rotate(45.000000) translate(-50.000000, -50.000000) " x="25" y="49" width="50" height="2"></rect>
+                        <rect id="Rectangle-Copy-2" fill="#FFFFFF" transform="translate(50.000000, 50.000000) rotate(-45.000000) translate(-50.000000, -50.000000) " x="25" y="49" width="50" height="2"></rect>
+                    </g>
+                </svg>
+                </button>
+
+                <div class="mobile-menu-items">
+                  <v-menu :open-on-hover="true" bottom offset-y v-for="(item, i) in leftSide" dark :key="i">
+                    <template v-slot:activator="{on}">
+                      <div v-if="item.to==='/sections'" class="sections-menu-block-title" style="position: relative">
+                        <v-btn  exact color="#fff" text class="my-2 nav_button" v-on="on" bottom @click="openSectionsMenu" style="border: none;">
+                          <div>{{ item.title }}</div>
+                        </v-btn>
+
+                        <div class="sections-menu-block" style="display: none;">
+                          <div>
+                            <div class="section-block" style="display: flex; align-items: center;">
+                              <img src="http://127.0.0.1:8000/images/Kiddok_logo_04-1.PNG" width="60px">
+                              <nuxt-link :to="`/brand/2?page=1`">
+                                <span>Բրենդ</span>
+                              </nuxt-link>
+                            </div>
+                            <div v-for="(item, i) in categoriesBlock" :key="i">
+                              <div v-if="parentCategoryID !== item.id"  class="section-block">
+                                <nuxt-link :to="item.to">
+                                  {{item.title}}
+                                </nuxt-link>
+                              </div>
+                              <div v-else class="section-block">
+                                <nuxt-link :to="`#`">
+                                  {{item.title}}
+                                </nuxt-link>
+                                <v-icon v-text="'mdi-chevron-down'" size="30" style="color: #B22180; cursor: pointer;" @click="openAgeMenu"></v-icon>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="age-menu-block" style="display: none;">
+                              <div v-for="(item, i) in subcategoriesBlock" :key="i">
+                                <div class="section-block">
+                                  <nuxt-link :to="item.to">
+                                    {{item.title}}
+                                  </nuxt-link>
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div v-else>
+                        <v-btn  exact :to="localePath(item.to)" router color="#fff" text class="my-2 nav_button" v-on="on" bottom >
+                          <div>{{ item.title }}</div>
+                        </v-btn>
+                      </div>
+                    </template>
+                  </v-menu>
+                </div>
+              </nav>
+          </main>
+        </div>
+
         <div style="padding: 0; margin: 5px 10px 5px 0; position: relative;">
             <input class="search-input" placeholder="ՈՐՈՆԵԼ" v-model="search_product_name">
 
@@ -211,6 +173,9 @@
                     <v-form @submit.prevent="false" ref="form" v-model="valid" :lazy-validation="true" >
                       <v-alert v-if="errors.email" text type="error">
                         {{errors.email[0]}}
+                      </v-alert>
+                      <v-alert v-if="loginError" text type="error">
+                        {{loginError}}
                       </v-alert>
                       
                       <v-card-actions style="display: block; padding: 0;">
@@ -447,6 +412,7 @@
             message: '',
           },
           search_product_name: '',
+          navVisible: false
         }
       },
       computed: {
@@ -468,6 +434,12 @@
       },
       async mounted () {
         window.addEventListener('click', function(e){
+          if(document.querySelector('.sections-menu-block-title') !== null) {
+            if (document.querySelector('.sections-menu-block-title').contains(e.target)){
+            } else{
+              document.querySelector('.sections-menu-block').style.display = "none";
+            }
+          }
           if(document.querySelector('.search-block') !== null) {
             if (document.querySelector('.search-block').contains(e.target)){
             } else{
@@ -624,7 +596,11 @@
           });
         },
         async loginAction() {
-          await this.$auth.login({data: this.loginForm}).then(response => {
+          await this.$auth.login({data: this.loginForm}).then(async(response) => {
+            if(response.data.data.approved !== "1") {
+              await this.$auth.logout().then(response => {}).catch(e => {});
+              this.loginError = "Ձեր հաշիվը դեռ չի հաստատվել";
+            }
             this.menu = false;
           }).catch(e => {
             this.loginError = e.response;
@@ -729,6 +705,16 @@
         closeSearch: function() {
           document.querySelector('.search-block').style.display = "none";
         },
+        showMenu: function() {
+          console.log('show');
+          this.navVisible = true;
+          console.log(this.navVisible);
+        },
+        hideMenu: function() {
+          console.log('hide');
+          this.navVisible = false;
+          console.log(this.navVisible);
+        }
       },
       watch: {
         search_product_name: function() {
@@ -778,7 +764,7 @@
       padding: 0;
     }
     .v-system-bar{
-      height: 140px !important;
+      height: auto !important;
     }
 
     .category-block {
@@ -789,6 +775,37 @@
     .mobile-category-menu {
       height: 100vh;
       overflow-y: scroll;
+    }
+
+    .mobile-menu {
+      display: block !important;
+    }
+
+    .mobile-menu .mobile-menu-items {
+      position: absolute;
+      width: max-content;
+      background: white;
+      padding: 10px 20px;
+      z-index: 100;
+    }
+
+    .mobile-menu .mobile-menu-items a, .mobile-menu .mobile-menu-items span {
+      color: #352249 !important;
+    }
+
+    .v-application .justify-start {
+      justify-content: center !important;
+      padding: 10px 0;
+    }
+
+    .v-system-bar img {
+      width: 40%;
+    }
+
+    .sections-menu-block {
+      top: 0 !important;
+      width: 200px !important;
+      left: 100% !important;
     }
   }
 

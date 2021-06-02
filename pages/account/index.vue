@@ -12,9 +12,9 @@
           <v-btn class="white--text add-to-cart-btn" @click="openChangePhotoModal()" rounded>
             Փոխել նկարը <v-icon left style="margin-left: 10px;">mdi-plus</v-icon>
           </v-btn>
-          <v-btn class="white--text add-to-cart-btn" rounded>
+          <!-- <v-btn class="white--text add-to-cart-btn" rounded>
             Իմ դիտածները <v-icon left style="margin-left: 10px;">mdi-update</v-icon>
-          </v-btn>
+          </v-btn> -->
           <v-btn class="white--text add-to-cart-btn" :to="localePath('/cart')" rounded>
             Իմ զամբյուղը <v-icon left style="margin-left: 10px;">mdi-cart</v-icon>
           </v-btn>
@@ -165,12 +165,12 @@
               Իմ պատվերները
             </div>
             <div style="display: flex; justify-content: space-between;">
-              <div style="text-align: center;">
+              <!-- <div style="text-align: center;">
                 <div>
                   <v-icon color="#01B8BE">mdi-undo-variant</v-icon>
                 </div>
                 <div>Վերադարձի հարցումներ</div>
-              </div>
+              </div> -->
               <div style="text-align: center;">
                 <a href="/account/orders" style="color: rgba(0, 0, 0, 0.87);">
                   <div>

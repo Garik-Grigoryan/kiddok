@@ -91,14 +91,14 @@ export const actions = {
     const filterAsTypeProduct = await this.$axios.$get(`http://127.0.0.1:8000/api/product/fiterAsSalesType`);
     commit('setAllSalesProducts', filterAsTypeProduct)
   },
-  async updateProduct({commit}, [id, name_en, name_ru, name_am, category, price, selectedImages, selectedColors,  selectedSizes, selectedBrand, sex, isNew, discountType, discount, description_en, description_ru, description_am]){
-    await this.$axios.$put(`http://127.0.0.1:8000/api/product/update/${id}`, {'name_en': name_en, 'name_ru': name_ru, 'name_am': name_am, 'category': category, 'price': price, 'selectedImages': selectedImages, 'selectedColors': selectedColors, 'sizes': selectedSizes, 'selectedBrand': selectedBrand, 'sex': sex, 'isNew': isNew, 'discountType': discountType, 'discount': discount, 'description_en': description_en, 'description_ru': description_ru, 'description_am': description_am});
+  async updateProduct({commit}, [id, name_en, name_ru, name_am, category, price, selectedImages, selectedColors, size, code, selectedBrand, sex, isNew, discountType, discount, description_en, description_ru, description_am, selectedAge]){
+    await this.$axios.$put(`http://127.0.0.1:8000/api/product/update/${id}`, {'name_en': name_en, 'name_ru': name_ru, 'name_am': name_am, 'category': category, 'price': price, 'selectedImages': selectedImages, 'selectedColors': selectedColors, 'size': size, 'code': code, 'selectedBrand': selectedBrand, 'sex': sex, 'isNew': isNew, 'discountType': discountType, 'discount': discount, 'description_en': description_en, 'description_ru': description_ru, 'description_am': description_am, 'selectedAge': selectedAge});
   },
   async delete({commit}, [id]){
     await this.$axios.$delete(`http://127.0.0.1:8000/api/product/delete/${id}`);
   },
-  async addProduct(ctx, [name_en, name_ru, name_am, category, price, selectedImages, selectedColors,  selectedSizes, selectedBrand, sex, isNew, discountType, discount, description_en, description_ru, description_am])  {
-    await this.$axios.$post('http://127.0.0.1:8000/api/product/add', {'name_en': name_en, 'name_ru': name_ru, 'name_am': name_am, 'category': category, 'price': price, 'selectedImages': selectedImages, 'selectedColors': selectedColors, 'sizes': selectedSizes, 'selectedBrand': selectedBrand, 'sex': sex, 'isNew': isNew, 'discountType': discountType, 'discount': discount, 'description_en': description_en, 'description_ru': description_ru, 'description_am': description_am});
+  async addProduct(ctx, [name_en, name_ru, name_am, category, price, selectedImages, selectedColors, size, code, selectedBrand, sex, isNew, discountType, discount, description_en, description_ru, description_am, selectedAge])  {
+    await this.$axios.$post('http://127.0.0.1:8000/api/product/add', {'name_en': name_en, 'name_ru': name_ru, 'name_am': name_am, 'category': category, 'price': price, 'selectedImages': selectedImages, 'selectedColors': selectedColors, 'size': size, 'code': code, 'selectedBrand': selectedBrand, 'sex': sex, 'isNew': isNew, 'discountType': discountType, 'discount': discount, 'description_en': description_en, 'description_ru': description_ru, 'description_am': description_am, 'selectedAge': selectedAge});
   }
 }
 

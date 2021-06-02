@@ -45,10 +45,10 @@
                   <p class="price" style="color: #352249;">Կոդ {{product.code}}</p>
                   <p class="price" style="color: #352249;">
                     <span>Գին</span>
-                    <!-- <span v-if="product.discountType == 'percent'"><span class="discount">{{product.price}}</span> {{product.price - (product.price * product.discount)/100}} դրամ</span>
+                    <span v-if="product.discountType == 'percent'"><span class="discount">{{product.price}}</span> {{product.price - (product.price * product.discount)/100}} դրամ</span>
                     <span v-else-if="product.discountType == 'price'">{{product.price - product.discount}} դրամ</span>
-                    <span v-else>{{product.price}} դրամ</span> -->
-                    <span>{{product.price}} դրամ</span>
+                    <span v-else>{{product.price}} դրամ</span>
+                    <!-- <span>{{product.price}} դրամ</span> -->
                   </p>
                   <div style="display: flex; justify-content: space-between;">
                     <v-btn style="background: #B22180; padding: 12px; border-radius: 16px; color: white; width: 130px; text-transform: none;" @click="openBuyNowModal(product.id)">Գնել հիմա</v-btn>
@@ -252,7 +252,13 @@
         document.getElementById('buyNowSalesModal').style.display = 'block';
         document.querySelector('#buyNowSalesModal .modal').id = 'product_'+id;
         let product_info = await this.$axios.$get(`http://127.0.0.1:8000/api/product/get/${id}`);
-        this.totalPrice = product_info.price;
+        if(product_info.discountType === 'percent') {
+          this.totalPrice = product_info.price - (product_info.price * product_info.discount)/100;
+        } else if(product_info.discountType === 'price') {
+          this.totalPrice = product_info.price - product_info.discount;
+        } else {
+          this.totalPrice = product_info.price;
+        }
       },
       buy() {
         this.delivery_type = (document.querySelector('.delivery-block .selected') !== null) ? document.querySelector('.delivery-block .selected').innerText : "";

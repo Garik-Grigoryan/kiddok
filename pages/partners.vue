@@ -8,30 +8,30 @@
         </div>
         <div class="our-partners-block">
           <div class="partner-block">
-            <img src="http://127.0.0.1:8000/images/kd1.png" width="100%">
+            <img src="http://127.0.0.1:8000/images/NoPath.png" width="100%">
           </div>
           <div class="partner-block">
-            <img src="http://127.0.0.1:8000/images/kd1.png" width="100%">
+            <img src="http://127.0.0.1:8000/images/NoPath.png" width="100%">
           </div>
           <div class="partner-block">
-            <img src="http://127.0.0.1:8000/images/kd1.png" width="100%">
+            <img src="http://127.0.0.1:8000/images/NoPath.png" width="100%">
           </div>
           <div class="partner-block">
-            <img src="http://127.0.0.1:8000/images/kd1.png" width="100%">
+            <img src="http://127.0.0.1:8000/images/NoPath.png" width="100%">
           </div>
         </div>
         <div class="our-partners-block">
           <div class="partner-block">
-            <img src="http://127.0.0.1:8000/images/kd1.png" width="100%">
+            <img src="http://127.0.0.1:8000/images/NoPath.png" width="100%">
           </div>
           <div class="partner-block">
-            <img src="http://127.0.0.1:8000/images/kd1.png" width="100%">
+            <img src="http://127.0.0.1:8000/images/NoPath.png" width="100%">
           </div>
           <div class="partner-block">
-            <img src="http://127.0.0.1:8000/images/kd1.png" width="100%">
+            <img src="http://127.0.0.1:8000/images/NoPath.png" width="100%">
           </div>
           <div class="partner-block">
-            <img src="http://127.0.0.1:8000/images/kd1.png" width="100%">
+            <img src="http://127.0.0.1:8000/images/NoPath.png" width="100%">
           </div>
         </div>
       </div>

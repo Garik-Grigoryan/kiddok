@@ -3,7 +3,7 @@
     <v-row justify="center">
       <v-col cols="6">
         <v-toolbar-title style="display: flex; justify-content: space-between;">
-          Edit new Product
+          Edit Product
         </v-toolbar-title>
         <v-form ref="form" v-model="valid" >
           <v-text-field v-model="name_en" :rules="nameRules" label="Name (eng)" required ></v-text-field>
@@ -29,7 +29,8 @@
               </v-autocomplete>
             </v-col>
             <v-col cols="6" >
-              <v-autocomplete v-model="category" :items="categories.filter(c => c.brand == selectedBrand)" label="Category" item-text="name" item-value="id">
+              <!-- <v-autocomplete v-model="category" :items="categories.filter(c => c.brand == selectedBrand)" label="Category" item-text="name" item-value="id"> -->
+              <v-autocomplete v-model="category" :items="categories" label="Category" item-text="name" item-value="id">
                 <template v-slot:selection="category">
                   <v-list-item-content>
                     <v-list-item-title>
@@ -47,6 +48,12 @@
           </v-row>
           <v-col cols="5" class="pl-0">
             <v-text-field type="number" v-model="price" :rules="nameRules" label="Price" required ></v-text-field>
+          </v-col>
+          <v-col cols="5" class="pl-0">
+            <v-text-field type="text" v-model="code" label="Code" required ></v-text-field>
+          </v-col>
+          <v-col cols="5" class="pl-0">
+            <v-text-field type="text" v-model="size" label="Size" required ></v-text-field>
           </v-col>
 
 
@@ -72,7 +79,7 @@
               </v-card>
             </v-col>
           </v-row>
-          <v-row>
+          <!-- <v-row>
             <v-col cols="12" sm="6">
               <v-select
                 v-model="selectedSizes"
@@ -92,6 +99,31 @@
                   <v-list-item-content>
                     <v-list-item-title>
                       {{size.item.name}}
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </template>
+              </v-select>
+            </v-col>
+          </v-row> -->
+          <v-row>
+            <v-col cols="12" sm="6">
+              <v-select
+                v-model="selectedAge"
+                :items="ages"
+                attach
+                chips
+                label="Age"
+                item-value="name"
+              >
+                <template v-slot:selection="age">
+                  <v-chip>
+                    <span>{{ age.item.name }}</span>
+                  </v-chip>
+                </template>
+                <template v-slot:item="age">
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      {{age.item.name}}
                     </v-list-item-title>
                   </v-list-item-content>
                 </template>
@@ -268,6 +300,7 @@ export default {
     await store.dispatch('color/fetch');
     await store.dispatch('sizes/fetch');
     await store.dispatch('products/getProduct', [route.params.id]);
+    await store.dispatch('age/fetch');
   },
   components: {
     Editor
@@ -284,11 +317,15 @@ export default {
       dialog: false,
       uploadDialog: false,
       selectedImages: [],
-      selectedSizes: [],
+      // selectedSizes: [],
+      selectedAge: '',
       color: '',
       selectedBrand: '',
       colorName: '',
       price: '',
+      code: '',
+      size: '',
+      ages: [],
       description_en: '',
       description_ru: '',
       description_am: '',
@@ -309,6 +346,34 @@ export default {
       discountType: 'none',
       discount: '',
     }
+  },
+  async mounted() {
+    this.ages = await this.$axios.$get('http://127.0.0.1:8000/api/age/get');
+    this.selectedAge = this.product.age;
+
+    this.name_en = this.product.name_en;
+    this.name_ru = this.product.name_ru;
+    this.name_am = this.product.name_am;
+    this.category = this.product.category;
+    this.price = this.product.price;
+    this.code = this.product.code;
+    this.size = this.product.size;
+    this.selectedImages = JSON.parse(this.product.images);
+    this.product.product_color.forEach(elem => {
+      this.selectedColors.push(elem.color)
+    });
+    // this.product.product_size.forEach(elem => {
+    //   this.selectedSizes.push(elem.id)
+    // });
+    this.selectedBrand = this.product.brand;
+    this.sex = this.product.sex;
+    this.isNew = this.product.isNew;
+    this.discountType = this.product.discountType;
+    this.hasDiscount = this.product.discountType != 'none' ? true : false,
+    this.discount = this.product.discount;
+    this.description_en = this.product.description_en;
+    this.description_ru = this.product.description_ru;
+    this.description_am = this.product.description_am;
   },
   methods: {
     removeImage(event, i) {
@@ -354,34 +419,36 @@ export default {
       })
     },
     updateProduct() {
-      this.$store.dispatch('products/updateProduct', [this.$route.params.id, this.name_en, this.name_ru, this.name_am, this.category, this.price, this.selectedImages, this.selectedColors, this.selectedSizes, this.selectedBrand, this.sex, this.isNew, this.discountType, this.discount, this.description_en, this.description_ru, this.description_am]).then(r => {
+      this.$store.dispatch('products/updateProduct', [this.$route.params.id, this.name_en, this.name_ru, this.name_am, this.category, this.price, this.selectedImages, this.selectedColors, this.size, this.code, this.selectedBrand, this.sex, this.isNew, this.discountType, this.discount, this.description_en, this.description_ru, this.description_am, this.selectedAge]).then(r => {
         this.$router.push('/dashboard/products')
       })
     }
   },
-  mounted() {
-    this.name_en = this.product.name_en;
-    this.name_ru = this.product.name_ru;
-    this.name_am = this.product.name_am;
-    this.category = this.product.category;
-    this.price = this.product.price;
-    this.selectedImages = JSON.parse(this.product.images);
-    this.product.product_color.forEach(elem => {
-      this.selectedColors.push(elem.color)
-    });
-    this.product.product_size.forEach(elem => {
-      this.selectedSizes.push(elem.id)
-    });
-    this.selectedBrand = this.product.brand;
-    this.sex = this.product.sex;
-    this.isNew = this.product.isNew;
-    this.discountType = this.product.discountType;
-    this.hasDiscount = this.product.discountType != 'none' ? true : false,
-      this.discount = this.product.discount;
-    this.description_en = this.product.description_en;
-    this.description_ru = this.product.description_ru;
-    this.description_am = this.product.description_am;
-  },
+  // mounted() {
+  //   this.name_en = this.product.name_en;
+  //   this.name_ru = this.product.name_ru;
+  //   this.name_am = this.product.name_am;
+  //   this.category = this.product.category;
+  //   this.price = this.product.price;
+  //   this.code = this.product.code;
+  //   this.size = this.product.size;
+  //   this.selectedImages = JSON.parse(this.product.images);
+  //   this.product.product_color.forEach(elem => {
+  //     this.selectedColors.push(elem.color)
+  //   });
+  //   // this.product.product_size.forEach(elem => {
+  //   //   this.selectedSizes.push(elem.id)
+  //   // });
+  //   this.selectedBrand = this.product.brand;
+  //   this.sex = this.product.sex;
+  //   this.isNew = this.product.isNew;
+  //   this.discountType = this.product.discountType;
+  //   this.hasDiscount = this.product.discountType != 'none' ? true : false,
+  //   this.discount = this.product.discount;
+  //   this.description_en = this.product.description_en;
+  //   this.description_ru = this.product.description_ru;
+  //   this.description_am = this.product.description_am;
+  // },
   computed: {
     images() {
       return this.$store.getters['multimedia/images'];

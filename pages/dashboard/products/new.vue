@@ -9,7 +9,7 @@
           <v-text-field v-model="name_en" :rules="nameRules" label="Name (eng)" required ></v-text-field>
           <v-text-field v-model="name_ru" :rules="nameRules" label="Name (rus)" required ></v-text-field>
           <v-text-field v-model="name_am" :rules="nameRules" label="Name (am)" required ></v-text-field>
-          <v-row >
+          <v-row>
             <v-col cols="6" >
               <v-autocomplete v-model="selectedBrand" :items="brands" label="Brand" item-text="name" item-value="brand.id">
                 <template v-slot:selection="brand">
@@ -28,8 +28,9 @@
                 </template>
               </v-autocomplete>
             </v-col>
-            <v-col cols="6" >
-              <v-autocomplete v-model="category" :items="categories.filter(c => c.brand == selectedBrand)" label="Category" item-text="name" item-value="id">
+            <v-col cols="6">
+              <!-- <v-autocomplete v-model="category" :items="categories.filter(c => c.brand == selectedBrand)" label="Category" item-text="name" item-value="id"> -->
+              <v-autocomplete v-model="category" :items="categories" label="Category" item-text="name" item-value="id">
                 <template v-slot:selection="category">
                   <v-list-item-content>
                     <v-list-item-title>
@@ -48,6 +49,12 @@
           </v-row>
           <v-col cols="5" class="pl-0">
             <v-text-field type="number" v-model="price" :rules="nameRules" label="Price" required ></v-text-field>
+          </v-col>
+          <v-col cols="5" class="pl-0">
+            <v-text-field type="text" v-model="code" label="Code" required ></v-text-field>
+          </v-col>
+          <v-col cols="5" class="pl-0">
+            <v-text-field type="text" v-model="size" label="Size" required ></v-text-field>
           </v-col>
 
 
@@ -73,7 +80,7 @@
             </v-card>
           </v-col>
           </v-row>
-          <v-row>
+          <!-- <v-row>
             <v-col cols="12" sm="6">
               <v-select
                 v-model="selectedSizes"
@@ -93,6 +100,31 @@
                   <v-list-item-content>
                     <v-list-item-title>
                       {{size.item.name}}
+                    </v-list-item-title>
+                  </v-list-item-content>
+                </template>
+              </v-select>
+            </v-col>
+          </v-row> -->
+          <v-row>
+            <v-col cols="12" sm="6">
+              <v-select
+                v-model="selectedAge"
+                :items="ages"
+                attach
+                chips
+                label="Age"
+                item-value="name"
+              >
+                <template v-slot:selection="age">
+                  <v-chip>
+                    <span>{{ age.item.name }}</span>
+                  </v-chip>
+                </template>
+                <template v-slot:item="age">
+                  <v-list-item-content>
+                    <v-list-item-title>
+                      {{age.item.name}}
                     </v-list-item-title>
                   </v-list-item-content>
                 </template>
@@ -268,6 +300,7 @@ import Editor from "~/components/Editor.vue";
         await store.dispatch('brands/fetch');
         await store.dispatch('color/fetch');
         await store.dispatch('sizes/fetch');
+        await store.dispatch('age/fetch');
     },
     components: {
       Editor
@@ -284,11 +317,15 @@ import Editor from "~/components/Editor.vue";
         dialog: false,
         uploadDialog: false,
         selectedImages: [],
-        selectedSizes: [],
+        // selectedSizes: [],
+        selectedAge: '',
         color: '',
         selectedBrand: '',
         colorName: '',
         price: '',
+        code: '',
+        size: '',
+        ages: [],
         description_en: '',
         description_ru: '',
         description_am: '',
@@ -310,7 +347,8 @@ import Editor from "~/components/Editor.vue";
         discount: '',
       }
     },
-    mounted() {
+    async mounted() {
+      this.ages = await this.$axios.$get('http://127.0.0.1:8000/api/age/get');
     },
     methods: {
       removeImage(event, i) {
@@ -356,7 +394,7 @@ import Editor from "~/components/Editor.vue";
         })
       },
       addProduct() {
-        this.$store.dispatch('products/addProduct', [this.name_en, this.name_ru, this.name_am, this.category, this.price, this.selectedImages, this.selectedColors, this.selectedSizes, this.selectedBrand, this.sex, this.isNew, this.discountType, this.discount, this.description_en, this.description_ru, this.description_am]).then(r => {
+        this.$store.dispatch('products/addProduct', [this.name_en, this.name_ru, this.name_am, this.category, this.price, this.selectedImages, this.selectedColors, this.size, this.code, this.selectedBrand, this.sex, this.isNew, this.discountType, this.discount, this.description_en, this.description_ru, this.description_am, this.selectedAge]).then(r => {
           this.$router.push('/dashboard/products')
         })
       }
@@ -376,7 +414,10 @@ import Editor from "~/components/Editor.vue";
       },
       sizes() {
         return this.$store.getters['sizes/sizes'];
-      }
+      },
+      // ages() {
+      //   return this.$store.getters['ages/ages'];
+      // }
     },
   }
 </script>

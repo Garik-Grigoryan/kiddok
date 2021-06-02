@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col lg="8" md="12">
+      <v-col lg="10" md="12">
         <v-data-table
           :headers="headers"
           :items="getUserOrders"
@@ -70,6 +70,7 @@
             { text: 'Address', value: 'address' },
             { text: 'Buy date', value: 'created_at' },
             { text: 'Payment Type', value: 'payment_type' },
+            { text: 'Delivery Type', value: 'delivery_type'},
             { text: 'Total price', value: 'totalPrice' },
             { text: 'Status', value: 'statusName' },
             { text: '', value: 'data-table-expand' },
@@ -95,7 +96,18 @@
       async mounted() {
         await this.$store.dispatch('wishListAndCart/fetch');
         for(let el in this.getUserOrders){
-          this.getUserOrders[el].mainProducts = []
+          this.getUserOrders[el].mainProducts = [];
+          if(this.getUserOrders[el].product_id !== null && this.getUserOrders[el].product_id !== 0) {
+            let product_info = await this.$axios.$get(`http://127.0.0.1:8000/api/product/get/${this.getUserOrders[el].product_id}`);
+            this.getUserOrders[el].mainProducts.push({
+              image: JSON.parse(product_info.images)[0],
+              name: product_info.name_en,
+              size: product_info.size,
+              color: '',
+              count: 1,
+              price: product_info.price,
+            });
+          } else {
             for(let elem in this.getUserOrders[el].productItem.data){
               if(this.getUserOrders[el].productItem.data[elem].product != null){
                 if (this.$i18n.locale == 'ru') {
@@ -127,6 +139,7 @@
                   })
                 }
               }
+            }
           }
         }
         if(this.user){

@@ -3,7 +3,7 @@
     <v-row justify="center">
       <v-col cols="6">
         <v-toolbar-title style="display: flex; justify-content: space-between;">
-          Add new brands
+          Edit brand
         </v-toolbar-title>
         <v-form ref="form" v-model="valid" >
           <v-text-field v-model="name" :counter="10" :rules="nameRules" label="Name" required ></v-text-field>
@@ -11,7 +11,7 @@
             <v-text-field type="number" v-model="order" :counter="10" :rules="nameRules" label="Order" required ></v-text-field>
           </v-col>
           <v-row>
-            <v-col v-if="selectedImages !== ''" class=" d-flex child-flex" cols="3" >
+            <v-col v-if="selectedImages !== '' && selectedImages !== null" class=" d-flex child-flex" cols="3" >
               <v-hover v-slot:default="{ hover }">
                 <v-card class="d-flex">
                   <v-img :src="selectedImages"  aspect-ratio="1" class="grey lighten-2" >
