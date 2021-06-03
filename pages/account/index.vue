@@ -406,7 +406,7 @@
       },
       methods: {
         async save() {
-          await this.$axios.post('http://127.0.0.1:8000/api/user/checkPassword', {id: this.user.id, password: this.oldPassword}).then(response => {
+          await this.$axios.post(this.$axios.defaults.baseURL+'/user/checkPassword', {id: this.user.id, password: this.oldPassword}).then(response => {
            if(response.data.success){
              this.passwordErrors = false;
              this.$store.dispatch('user/update', [this.user.id, this.name, this.email, this.password, this.phone, this.address]);
@@ -422,7 +422,7 @@
             if(this.user){
               this.questionnaireForm.user_id = this.user.id;
             }
-            await this.$axios.post('http://127.0.0.1:8000/api/questionnaire/store', this.questionnaireForm).then(response => {
+            await this.$axios.post(this.$axios.defaults.baseURL+'/questionnaire/store', this.questionnaireForm).then(response => {
               window.location.href = '/account';
             }).catch(e => {
               this.questionnaireError = e.response;
@@ -458,7 +458,7 @@
         },
         async changePassword() {
           if(this.changePasswordForm.old_password !== '' && this.changePasswordForm.new_password !== '') {
-            await this.$axios.post('http://127.0.0.1:8000/api/user/checkPassword', {id: this.user.id, password: this.changePasswordForm.old_password}).then(response => {
+            await this.$axios.post(this.$axios.defaults.baseURL+'/user/checkPassword', {id: this.user.id, password: this.changePasswordForm.old_password}).then(response => {
               if(response.data.success) {
                 this.passwordErrors = false;
                 this.$store.dispatch('user/updatePassword', [this.user.id, this.changePasswordForm.old_password, this.changePasswordForm.new_password]).then(response => {

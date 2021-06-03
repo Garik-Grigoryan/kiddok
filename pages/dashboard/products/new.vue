@@ -348,7 +348,7 @@ import Editor from "~/components/Editor.vue";
       }
     },
     async mounted() {
-      this.ages = await this.$axios.$get('http://127.0.0.1:8000/api/age/get');
+      this.ages = await this.$axios.$get(this.$axios.defaults.baseURL+'/age/get');
     },
     methods: {
       removeImage(event, i) {
@@ -370,7 +370,7 @@ import Editor from "~/components/Editor.vue";
         let data = new FormData();
         data.append('name', this.imageName);
         data.append('image', this.files);
-        this.$axios.$post('http://127.0.0.1:8000/api/multimedia/upload', data).then(
+        this.$axios.$post(this.$axios.defaults.baseURL+'/multimedia/upload', data).then(
           response => {
             this.files = []
             this.$store.dispatch('multimedia/fetch')
@@ -384,7 +384,7 @@ import Editor from "~/components/Editor.vue";
         let data = new FormData();
         data.append('name', this.colorName);
         data.append('color', this.color);
-        this.$axios.$post('http://127.0.0.1:8000/api/color/add', data).then(
+        this.$axios.$post(this.$axios.defaults.baseURL+'/color/add', data).then(
           response => {
             this.files = []
             this.$store.dispatch('color/fetch')

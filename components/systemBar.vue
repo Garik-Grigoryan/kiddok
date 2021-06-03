@@ -448,7 +448,7 @@
           }
         });
 
-        let all_categories = await this.$axios.$get('http://127.0.0.1:8000/api/category/get');
+        let all_categories = await this.$axios.$get(this.$axios.defaults.baseURL+'/category/get');
         // console.log(all_categories);
 
         if(window.innerWidth >= 960){
@@ -588,7 +588,7 @@
         },
         async registerAction() {
 
-          await this.$axios.post('http://127.0.0.1:8000/api/auth/register', this.registerForm).then(response => {
+          await this.$axios.post(this.$axios.defaults.baseURL+'/auth/register', this.registerForm).then(response => {
             this.menu = false;
             this.$auth.login({data: this.registerForm});
           }).catch(e => {
@@ -671,7 +671,7 @@
             if(this.user){
               this.callbackForm.user_id = this.user.id;
             }
-            await this.$axios.post('http://127.0.0.1:8000/api/callback/store', this.callbackForm).then(response => {
+            await this.$axios.post(this.$axios.defaults.baseURL+'/callback/store', this.callbackForm).then(response => {
               alert("Ձեր նամակը հաջողությամբ ուղարկվել է!");
               document.getElementById('helperModal').style.display = 'none';
               this.callbackForm.phone = "";
@@ -686,7 +686,7 @@
         },
         async searchProduct() {
           document.querySelector('.search-block').style.display = "block";
-          let all_products = await this.$axios.$get('http://127.0.0.1:8000/api/product/get');
+          let all_products = await this.$axios.$get(this.$axios.defaults.baseURL+'/product/get');
           let result = [];
 
           all_products.forEach(elem => {

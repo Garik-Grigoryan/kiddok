@@ -96,7 +96,7 @@
           stars[i].style.padding = "0";
           stars[i].disabled = true;
         }
-        await this.$axios.get('http://127.0.0.1:8000/api/rating/get/'+this.id).then(response => {
+        await this.$axios.get(this.$axios.defaults.baseURL+'/rating/get/'+this.id).then(response => {
           let rating_count = 0;
           let rating_val = 0;
           response.data.forEach(elem => {

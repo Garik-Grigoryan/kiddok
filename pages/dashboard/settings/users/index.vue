@@ -57,11 +57,11 @@ export default {
   },
   methods: {
     async approveUser(id, approved) {
-      await this.$axios.$post('http://127.0.0.1:8000/api/user/approveUserAccount', {id, approved});
+      await this.$axios.$post(this.$axios.defaults.baseURL+'/user/approveUserAccount', {id, approved});
     }
   },
   async mounted() {
-    this.users = await this.$axios.$get('http://127.0.0.1:8000/api/user/getJuridicalUsers');
+    this.users = await this.$axios.$get(this.$axios.defaults.baseURL+'/user/getJuridicalUsers');
   },
 }
 </script>

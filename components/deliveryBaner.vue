@@ -193,7 +193,7 @@
           if(this.user){
             this.questionnaireForm.user_id = this.user.id;
           }
-          await this.$axios.post('http://127.0.0.1:8000/api/questionnaire/store', this.questionnaireForm).then(response => {
+          await this.$axios.post(this.$axios.defaults.baseURL+'/questionnaire/store', this.questionnaireForm).then(response => {
             window.location.href = '/';
           }).catch(e => {
             this.questionnaireError = e.response;

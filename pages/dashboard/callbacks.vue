@@ -58,7 +58,7 @@
           // }
         },
        async  mounted() {
-          this.getCallbacks = await this.$axios.$get('http://127.0.0.1:8000/api/callback/get');
+          this.getCallbacks = await this.$axios.$get(this.$axios.defaults.baseURL+'/callback/get');
         }
     }
 </script>

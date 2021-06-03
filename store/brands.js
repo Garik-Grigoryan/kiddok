@@ -18,27 +18,27 @@ export const mutations = {
 
 export const actions = {
   async fetch({commit}) {
-      const brands = await this.$axios.$get('http://127.0.0.1:8000/api/brand/get');
+      const brands = await this.$axios.$get(this.$axios.defaults.baseURL+'/brand/get');
     commit('setBrands', brands);
   },
   async getBrand({commit}, [id]){
-    const brand = await this.$axios.$get(`http://127.0.0.1:8000/api/brand/get/${id}`);
+    const brand = await this.$axios.$get(this.$axios.defaults.baseURL+`/brand/get/${id}`);
     commit('setBrand', brand)
   },
   async getBrandFilters({commit}, [id]){
-    const brandFilters = await this.$axios.$get(`http://127.0.0.1:8000/api/product/getFilters/${id}`);
+    const brandFilters = await this.$axios.$get(this.$axios.defaults.baseURL+`/product/getFilters/${id}`);
     commit('setBrandFilters', brandFilters)
   },
 
   async updateBrand({commit}, [id, name, order, image, color]){
     // this.$axios.defaults.baseURL
-    const brand = await this.$axios.$put(`http://127.0.0.1:8000/api/brand/update/${id}`, {'name': name, 'order': order, 'image': image, 'color': color});
+    const brand = await this.$axios.$put(this.$axios.defaults.baseURL+`/brand/update/${id}`, {'name': name, 'order': order, 'image': image, 'color': color});
   },
   async delete({commit}, [id]){
-    const brand = await this.$axios.$delete(`http://127.0.0.1:8000/api/brand/delete/${id}`);
+    const brand = await this.$axios.$delete(this.$axios.defaults.baseURL+`/brand/delete/${id}`);
   },
   async addBrand(ctx, [name, order, image, color]){
-   await this.$axios.$post('http://127.0.0.1:8000/api/brand/add', {'name': name, 'order': order, 'image': image, 'color': color});
+   await this.$axios.$post(this.$axios.defaults.baseURL+'/brand/add', {'name': name, 'order': order, 'image': image, 'color': color});
   }
 }
 

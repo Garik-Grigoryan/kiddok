@@ -254,14 +254,14 @@ import BestProducts from './BestProducts.vue';
         this.max = this.filters.maxPrice == null ? 0 : this.filters.maxPrice;
         this.range = [this.min, this.max];
       } else {
-        let categoryFilters = await this.$axios.$get('http://127.0.0.1:8000/api/product/getCategoryFilters/'+this.$route.params.id);
+        let categoryFilters = await this.$axios.$get(this.$axios.defaults.baseURL+'/product/getCategoryFilters/'+this.$route.params.id);
 
         this.min = categoryFilters.minPrice == null ? 0 : categoryFilters.minPrice;
         this.max = categoryFilters.maxPrice == null ? 0 : categoryFilters.maxPrice;
         this.range = [this.min, this.max];
       }
 
-      let all_categories = await this.$axios.$get('http://127.0.0.1:8000/api/category/get');
+      let all_categories = await this.$axios.$get(this.$axios.defaults.baseURL+'/category/get');
 
       all_categories.forEach(elem => {
         if(elem.parent === 0) {
@@ -300,7 +300,7 @@ import BestProducts from './BestProducts.vue';
       document.querySelector('.product_filter .v-navigation-drawer__border').style.display = "none";
 
       this.products.forEach(async (prod) => {
-        await this.$axios.get('http://127.0.0.1:8000/api/rating/get/'+prod.id).then(response => {
+        await this.$axios.get(this.$axios.defaults.baseURL+'/rating/get/'+prod.id).then(response => {
           let rating_count = 0;
           let rating_val = 0;
           response.data.forEach(elem => {

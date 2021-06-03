@@ -283,7 +283,7 @@
       }
       this.imagesCount = Math.ceil(JSON.parse(this.product.images).length/3);
       if(this.user){
-        await this.$axios.get('http://127.0.0.1:8000/api/rating/get/'+this.product.id).then(response => {
+        await this.$axios.get(this.$axios.defaults.baseURL+'/rating/get/'+this.product.id).then(response => {
           response.data.forEach(elem => {
             if(this.user.id === elem.user_id) {
               this.rating = elem.rating;
@@ -372,7 +372,7 @@
           this.ratingData.product_id = this.product.id;
           this.ratingData.rating = this.rating;
 
-          await this.$axios.post('http://127.0.0.1:8000/api/rating/store', this.ratingData).then(response => {
+          await this.$axios.post(this.$axios.defaults.baseURL+'/rating/store', this.ratingData).then(response => {
             let stars = document.querySelectorAll('.product-detail-rating .v-rating button');
             for(let i = 0; i < stars.length; i++) {
               stars[i].disabled = true;

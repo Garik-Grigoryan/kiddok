@@ -144,7 +144,7 @@
             let data = new FormData();
             data.append('name', this.imageName);
             data.append('image', this.files);
-            this.$axios.$post('http://127.0.0.1:8000/api/multimedia/upload', data).then(
+            this.$axios.$post(this.$axios.defaults.baseURL+'/multimedia/upload', data).then(
               response => {
                 this.files = []
                 this.$store.dispatch('multimedia/fetch')

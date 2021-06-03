@@ -138,7 +138,7 @@
         for (let el in this.getUserOrders) {
           this.getUserOrders[el].mainProducts = [];
           if(this.getUserOrders[el].product_id !== null && this.getUserOrders[el].product_id !== 0) {
-            let product_info = await this.$axios.$get(`http://127.0.0.1:8000/api/product/get/${this.getUserOrders[el].product_id}`);
+            let product_info = await this.$axios.$get(this.$axios.defaults.baseURL+`/product/get/${this.getUserOrders[el].product_id}`);
             this.getUserOrders[el].mainProducts.push({
               image: JSON.parse(product_info.images)[0],
               name: product_info.name_en,

@@ -64,7 +64,7 @@
           // }
         },
        async  mounted() {
-          this.getQuestionnairies = await this.$axios.$get('http://127.0.0.1:8000/api/questionnaire/get');
+          this.getQuestionnairies = await this.$axios.$get(this.$axios.defaults.baseURL+'/questionnaire/get');
         }
     }
 </script>

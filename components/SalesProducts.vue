@@ -251,7 +251,7 @@
         this.cartError = false;
         document.getElementById('buyNowSalesModal').style.display = 'block';
         document.querySelector('#buyNowSalesModal .modal').id = 'product_'+id;
-        let product_info = await this.$axios.$get(`http://127.0.0.1:8000/api/product/get/${id}`);
+        let product_info = await this.$axios.$get(this.$axios.defaults.baseURL+`/product/get/${id}`);
         if(product_info.discountType === 'percent') {
           this.totalPrice = product_info.price - (product_info.price * product_info.discount)/100;
         } else if(product_info.discountType === 'price') {

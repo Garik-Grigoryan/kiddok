@@ -287,7 +287,7 @@
           }
         },
         async registerPhysicalAction() {
-          await this.$axios.post('http://127.0.0.1:8000/api/auth/register', this.registerPhysicalPerson).then(response => {
+          await this.$axios.post(this.$axios.defaults.baseURL+'/auth/register', this.registerPhysicalPerson).then(response => {
             this.menu = false;
             this.$auth.login({data: this.registerPhysicalPerson});
             window.location.href = '/account';
@@ -298,7 +298,7 @@
         async registerJuridicalAction() {
           if(this.registerJuridicalPerson.company_name !== "") {
             this.registrationError2 = false;
-            await this.$axios.post('http://127.0.0.1:8000/api/auth/register', this.registerJuridicalPerson).then(response => {
+            await this.$axios.post(this.$axios.defaults.baseURL+'/auth/register', this.registerJuridicalPerson).then(response => {
               this.menu = false;
               // this.$auth.login({data: this.registerJuridicalPerson});
               this.openSuccessModal();

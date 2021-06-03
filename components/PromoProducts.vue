@@ -237,7 +237,7 @@
         this.cartError = false;
         document.getElementById('buyNowModal').style.display = 'block';
         document.querySelector('#buyNowModal .modal').id = 'product_'+id;
-        let product_info = await this.$axios.$get(`http://127.0.0.1:8000/api/product/get/${id}`);
+        let product_info = await this.$axios.$get(this.$axios.defaults.baseURL+`/product/get/${id}`);
         this.totalPrice = product_info.price;
       },
       buy() {

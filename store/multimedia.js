@@ -10,7 +10,7 @@ export const mutations = {
 
 export const actions = {
   async fetch({commit}) {
-    const images = await this.$axios.$get('http://127.0.0.1:8000/api/multimedia/get');
+    const images = await this.$axios.$get(this.$axios.defaults.baseURL+'/multimedia/get');
     commit('setImages', images);
   }
 }
