@@ -137,4 +137,10 @@
   .brand-page-block .container {
     max-width: 1300px !important;
   }
+
+  @media (max-width: 959px) {
+    .brand-page-block .top-block {
+      margin-top: 170px;
+    }
+  }
 </style>

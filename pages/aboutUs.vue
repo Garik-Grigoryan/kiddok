@@ -1,5 +1,5 @@
 <template>
-  <v-container class="mt-5">
+  <v-container class="mt-5 about-us-block">
     <v-row>
       <div class="text-caption" style="display: contents;">
         <div style="display: flex; justify-content: center; width: 100%; margin-bottom: 30px;">
@@ -133,5 +133,11 @@
     color: white !important;
     margin-bottom: 15px;
     text-transform: none;
+  }
+
+  @media (max-width: 959px) {
+    .about-us-block {
+      margin-top: 170px !important;
+    }
   }
 </style>

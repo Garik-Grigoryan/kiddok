@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="account-page-block">
     <div v-if="authenticated">
       <v-row justify="space-between">
         <v-col cols="12" md="3">
@@ -159,7 +159,7 @@
               </v-card>
             </v-menu>
         </v-col>
-        <v-col cols="12" md="9" style="display: flex; margin-top: 60px;">
+        <v-col cols="12" md="9" style="display: flex; margin-top: 60px; flex-wrap: wrap;">
           <v-col cols="12" md="6">
             <div class="block-title">
               Իմ պատվերները
@@ -653,6 +653,28 @@
     background-size: cover;
     border-radius: 50%;
   }
+
+  @media (max-width: 959px) {
+    .account-page-block {
+      margin-top: 170px;
+    }
+
+    .modal {
+      min-width: 90%;
+      max-width: 90%;
+      top: 25%;
+      left: 5%;
+    }
+  }
+
+  @media (min-width: 959px) {
+    .modal {
+      min-width: 600px;
+      max-width: 600px;
+      top: 25%;
+      left: 31%;
+    }
+  }
 </style>
 
 <style scoped
@@ -670,11 +692,7 @@
     .modal {
         background: white;
         border-radius: 0;
-        min-width: 600px;
-        max-width: 600px;
         position: absolute;
-        top: 25%;
-        left: 31%;
         display: block;
         height: fit-content;
  

@@ -1,7 +1,7 @@
 <template>
-  <v-container class="mt-5">
+  <v-container class="mt-5 address-page-block">
     <v-row>
-      <div class="text-caption" style="display: flex; justify-content: space-between; width: 100%; margin: 20px 0 80px 0;">
+      <div class="text-caption" style="display: flex; flex-wrap: wrap; justify-content: space-between; width: 100%; margin: 20px 0 80px 0;">
         <div class="address-block">
           <div class="address-block-title">
             Սուրմալու առևտրի կենտրոն 51Ա տաղավար
@@ -92,5 +92,9 @@
     font-size: 18px;
   }
 
-
+  @media (max-width: 959px) {
+    .address-page-block {
+      margin-top: 170px !important;
+    }
+  }
 </style>

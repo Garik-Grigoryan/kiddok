@@ -57,8 +57,8 @@
           </v-menu>
         </v-row>
       </v-col>
-      <v-row justify="start">
-        <div class="mobile-menu" style="display: none; margin-right: 20px;">
+      <v-row justify="center">
+        <div class="mobile-menu" style="display: none; margin: 0 20px;">
           <main id="foo" style="position: relative">
             <button v-show="!navVisible" id="hamburger" @click="showMenu">
             <svg width="50px" height="50px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -134,7 +134,7 @@
           </main>
         </div>
 
-        <div style="padding: 0; margin: 5px 10px 5px 0; position: relative;">
+        <div style="padding: 0; margin: 5px 0 5px 10px; position: relative;">
             <input class="search-input" placeholder="ՈՐՈՆԵԼ" v-model="search_product_name">
 
             <div class="search-block" style="display: none;"></div>
@@ -697,7 +697,7 @@
 
           let search_result = "";
           result.forEach(elem => {
-            search_result += "<div><a href='/product/"+elem.id+"'>"+elem.name_am+"</a></div>";
+            search_result += "<div style='display: flex; align-items: center;'><img src='"+JSON.parse(elem.images)[0]+"' style='width: 70px;margin-right: 10px;'><a href='/product/"+elem.id+"'>"+elem.name_am+"</a></div>";
           });
 
           document.querySelector('.search-block').innerHTML = search_result;
@@ -793,8 +793,7 @@
       color: #352249 !important;
     }
 
-    .v-application .justify-start {
-      justify-content: center !important;
+    .v-application .justify-center {
       padding: 10px 0;
     }
 
@@ -806,6 +805,41 @@
       top: 0 !important;
       width: 200px !important;
       left: 100% !important;
+    }
+
+    .v-menu__content {
+        min-width: 90% !important;
+        max-width: 90% !important;
+        top: 5% !important;
+        left: 5% !important;
+    }
+
+    .v-menu__content .v-item-group .v-window-item .v-card {
+      padding: 20px !important;
+    }
+
+    .modal {
+      min-width: 90%;
+      max-width: 90%;
+      top: 25%;
+      left: 5%;
+    }
+  }
+
+  @media (min-width: 959px) {
+    .v-menu__content {
+      min-width: 600px !important;
+      max-width: 600px !important;
+      top: 5% !important;
+      left: 31% !important;
+      overflow: auto;
+      max-height: 650px;
+    }
+    .modal {
+      min-width: 600px;
+      max-width: 600px;
+      top: 25%;
+      left: 31%;
     }
   }
 
@@ -842,15 +876,6 @@
 
   .my-2.nav_button.v-btn:not(:last-child) {
     border-right: 1px solid #fff;
-  }
-
-  .v-menu__content {
-    min-width: 600px !important;
-    max-width: 600px !important;
-    top: 5% !important;
-    left: 31% !important;
-    overflow: auto;
-    max-height: 650px;
   }
 
   .login-form {
@@ -983,11 +1008,7 @@
     .modal {
         background: white;
         border-radius: 0;
-        min-width: 600px;
-        max-width: 600px;
         position: absolute;
-        top: 25%;
-        left: 31%;
         display: block;
         height: fit-content;
  

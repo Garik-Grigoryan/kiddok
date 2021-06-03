@@ -387,6 +387,24 @@
     margin-bottom: 20px;
   }
 
+  @media (max-width: 959px) {
+    .modal {
+      min-width: 90%;
+      max-width: 90%;
+      top: 25%;
+      left: 5%;
+    }
+  }
+
+  @media (min-width: 959px) {
+    .modal {
+      min-width: 700px;
+      max-width: 700px;
+      top: 25%;
+      left: 28%;
+    }
+  }
+
 </style>
 
 <style scoped lang="scss">
@@ -403,11 +421,7 @@
         background: #EBE7E7;
         border-radius: 0;
         /* padding: 15px; */
-        min-width: 700px;
-        max-width: 700px;
         position: absolute;
-        top: 25%;
-        left: 28%;
         // transform: translate(-50%, -50%);
         display: block;
         height: fit-content;

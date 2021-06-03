@@ -128,4 +128,10 @@
   .our-partners-block .partner-block:not(:last-child) {
     margin-right: 5%;
   }
+
+  @media (max-width: 959px) {
+    .partners-title {
+      margin-top: 170px;
+    }
+  }
 </style>

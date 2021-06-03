@@ -8,7 +8,7 @@
     >
       <span class="m-auto"> Davmar.am &copy; {{ new Date().getFullYear() }} All rights reserved</span>
     </v-footer> -->
-    <v-footer style="justify-content: space-between; background: #01B8BE; align-items: center; padding: 90px; flex-wrap: wrap;">
+    <v-footer class="footer-block">
       <div class="col-lg-8 col-md-8 col-sm-12" style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
         <div>
           <div>
@@ -18,22 +18,22 @@
             </v-btn>
           </div>
           <div>
-            <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button">
-              <v-icon style="margin-right: 10px; font-size: 20px;">mdi-phone</v-icon>
+            <a href="tel:+37496998996" class="my-2 nav_button" style="display: block; color: white; font-size: 12px; padding: 4px 16px;">
+              <v-icon style="margin-right: 10px; font-size: 20px; color: white;">mdi-phone</v-icon>
               <span>+374 96 998996</span>
-            </v-btn>
+            </a>
           </div>
           <div>
-            <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button">
-              <v-icon style="margin-right: 10px; font-size: 20px;">mdi-whatsapp</v-icon>
+            <a title="Viber" href="viber://chat?number=+37496998996" class="my-2 nav_button" style="display: block; color: white; font-size: 12px; padding: 4px 16px;">
+              <v-icon style="margin-right: 10px; font-size: 20px; color: white;">mdi-whatsapp</v-icon>
               <span>+374 96 998996</span>
-            </v-btn>
+            </a>
           </div>
           <div>
-            <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button">
-              <v-icon style="margin-right: 10px; font-size: 20px;">mdi-whatsapp</v-icon>
+            <a title="WhatsApp" href="whatsapp://send?phone=+37496998996" class="my-2 nav_button" style="display: block; color: white; font-size: 12px; padding: 4px 16px;">
+              <v-icon style="margin-right: 10px; font-size: 20px; color: white;">mdi-whatsapp</v-icon>
               <span>+374 96 998996</span>
-            </v-btn>
+            </a>
           </div>
         </div>
         <div>
@@ -102,5 +102,25 @@
 <style scoped>
   .v-footer .theme--light.v-btn--active::before {
       opacity: 0 !important;
+  }
+  .theme--light.v-footer.footer-block {
+    justify-content: space-between;
+    align-items: center;
+    padding: 340px 90px 90px 90px;
+    flex-wrap: wrap;
+    background-image: url(http://127.0.0.1:8000/images/footer_background.png);
+    min-height: 590px;
+    height: auto;
+    background-color: white;
+    background-size: cover;
+  }
+
+  @media (max-width: 959px) {
+    .theme--light.v-footer.footer-block {
+      height: max-content;
+      background-color: rgb(1, 184, 190);
+      background-image: none;
+      padding: 90px;
+    }
   }
 </style>

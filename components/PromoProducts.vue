@@ -394,6 +394,24 @@
     width: 20px;
     height: 20px;
   }
+
+  @media (max-width: 959px) {
+    .modal {
+      min-width: 90%;
+      max-width: 90%;
+      top: 25%;
+      left: 5%;
+    }
+  }
+
+  @media (min-width: 959px) {
+    .modal {
+      min-width: 600px;
+      max-width: 600px;
+      top: 25%;
+      left: 31%;
+    }
+  }
 </style>
 
 <style scoped
@@ -411,11 +429,7 @@
     .modal {
         background: white;
         border-radius: 0;
-        min-width: 600px;
-        max-width: 600px;
         position: absolute;
-        top: 25%;
-        left: 31%;
         display: block;
         height: fit-content;
  

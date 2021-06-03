@@ -102,4 +102,10 @@
     color: #352249;
   }
 
+  @media (max-width: 959px) {
+    .delivery-block {
+      margin-top: 170px;
+    }
+  }
+
 </style>
