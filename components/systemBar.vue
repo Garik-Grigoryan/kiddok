@@ -3,7 +3,7 @@
     <v-system-bar height="auto" style="z-index: 5;" color="#01B8BE" fixed app dark id="create" >
       <v-col lg="1" md="1" class="text-center" style="padding: 0;">
         <nuxt-link :to="localePath('/')" style="text-decoration: none;">
-          <img src="http://127.0.0.1:8000/images/Kiddok_logo_02-1.PNG" width="100%">
+          <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_02-1.png" width="100%">
         </nuxt-link>
       </v-col>
       <v-col class="hidden-sm-and-down" lg="7" md="7">
@@ -18,7 +18,7 @@
                 <div class="sections-menu-block" style="display: none;">
                   <div>
                     <div class="section-block" style="display: flex; align-items: center;">
-                      <img src="http://127.0.0.1:8000/images/Kiddok_logo_04-1.PNG" width="60px">
+                      <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_04-1.png" width="60px">
                       <nuxt-link :to="`/brand/2?page=1`">
                         <span>Բրենդ</span>
                       </nuxt-link>
@@ -48,6 +48,11 @@
                   </div>
                 </div>
               </div>
+              <div v-else-if="item.to==='/wholesale'">
+                <v-btn v-if="user && user.role === 'juridical'" exact color="#fff" text class="my-2 nav_button" v-on="on" bottom @click="openSectionsMenu" style="border: none;">
+                  <div>{{ item.title }}</div>
+                </v-btn>
+              </div>
               <div v-else>
                 <v-btn  exact :to="localePath(item.to)" router color="#fff" text class="my-2 nav_button" v-on="on" bottom >
                   <div>{{ item.title }}</div>
@@ -57,83 +62,7 @@
           </v-menu>
         </v-row>
       </v-col>
-      <v-row justify="center">
-        <div class="mobile-menu" style="display: none; margin: 0 20px;">
-          <main id="foo" style="position: relative">
-            <button v-show="!navVisible" id="hamburger" @click="showMenu">
-            <svg width="50px" height="50px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-              <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                  <circle id="Oval" stroke="#FFFFFF" cx="50" cy="50" r="49.5"></circle>
-                  <rect id="Rectangle" fill="#FFFFFF" x="25" y="33" width="50" height="2"></rect>
-                  <rect id="Rectangle-Copy" fill="#FFFFFF" x="25" y="49" width="50" height="2"></rect>
-                  <rect id="Rectangle-Copy-2" fill="#FFFFFF" x="25" y="66" width="50" height="2"></rect>
-              </g>
-            </svg>
-            </button>
-              <nav v-show="navVisible">
-                <button class="close" @click="hideMenu">
-                <svg width="50px" height="50px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <g id="close" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                        <circle id="Oval" stroke="#FFFFFF" cx="50" cy="50" r="49.5"></circle>
-                        <rect id="Rectangle" fill="#FFFFFF" transform="translate(50.000000, 50.000000) rotate(45.000000) translate(-50.000000, -50.000000) " x="25" y="49" width="50" height="2"></rect>
-                        <rect id="Rectangle-Copy-2" fill="#FFFFFF" transform="translate(50.000000, 50.000000) rotate(-45.000000) translate(-50.000000, -50.000000) " x="25" y="49" width="50" height="2"></rect>
-                    </g>
-                </svg>
-                </button>
-
-                <div class="mobile-menu-items">
-                  <v-menu :open-on-hover="true" bottom offset-y v-for="(item, i) in leftSide" dark :key="i">
-                    <template v-slot:activator="{on}">
-                      <div v-if="item.to==='/sections'" class="sections-menu-block-title" style="position: relative">
-                        <v-btn  exact color="#fff" text class="my-2 nav_button" v-on="on" bottom @click="openSectionsMenu" style="border: none;">
-                          <div>{{ item.title }}</div>
-                        </v-btn>
-
-                        <div class="sections-menu-block" style="display: none;">
-                          <div>
-                            <div class="section-block" style="display: flex; align-items: center;">
-                              <img src="http://127.0.0.1:8000/images/Kiddok_logo_04-1.PNG" width="60px">
-                              <nuxt-link :to="`/brand/2?page=1`">
-                                <span>Բրենդ</span>
-                              </nuxt-link>
-                            </div>
-                            <div v-for="(item, i) in categoriesBlock" :key="i">
-                              <div v-if="parentCategoryID !== item.id"  class="section-block">
-                                <nuxt-link :to="item.to">
-                                  {{item.title}}
-                                </nuxt-link>
-                              </div>
-                              <div v-else class="section-block">
-                                <nuxt-link :to="`#`">
-                                  {{item.title}}
-                                </nuxt-link>
-                                <v-icon v-text="'mdi-chevron-down'" size="30" style="color: #B22180; cursor: pointer;" @click="openAgeMenu"></v-icon>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="age-menu-block" style="display: none;">
-                              <div v-for="(item, i) in subcategoriesBlock" :key="i">
-                                <div class="section-block">
-                                  <nuxt-link :to="item.to">
-                                    {{item.title}}
-                                  </nuxt-link>
-                                </div>
-                              </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div v-else>
-                        <v-btn  exact :to="localePath(item.to)" router color="#fff" text class="my-2 nav_button" v-on="on" bottom >
-                          <div>{{ item.title }}</div>
-                        </v-btn>
-                      </div>
-                    </template>
-                  </v-menu>
-                </div>
-              </nav>
-          </main>
-        </div>
-
+      <v-row justify="center" class="hidden-sm-and-down">
         <div style="padding: 0; margin: 5px 0 5px 10px; position: relative;">
             <input class="search-input" placeholder="ՈՐՈՆԵԼ" v-model="search_product_name">
 
@@ -150,7 +79,12 @@
           </v-list>
         </v-btn>
 
-        <v-menu v-if="!authenticated" v-model="loginMenu" :close-on-content-click="false" :nudge-width="200" offset-y bottom>
+        <v-btn v-if="!authenticated" color="#fff" text class="my-2 nav_button" v-on="on" @click="openLoginModal()">
+          <v-icon >mdi-account-outline</v-icon>
+          {{$t('myAccount')}}
+        </v-btn>
+
+        <!-- <v-menu v-if="!authenticated" v-model="loginMenu" :close-on-content-click="false" :nudge-width="200" offset-y bottom>
           <template v-slot:activator="{ on }">
             <v-btn color="#fff" text class="my-2 nav_button" v-on="on" >
               <v-icon >mdi-account-outline</v-icon>
@@ -168,7 +102,7 @@
               <v-tab-item :value="'tab-1'">
                 <v-card flat tile style="padding: 20px 100px">
                   <v-card-text>
-                    <img src="http://127.0.0.1:8000/images/Kiddok_logo_04-1.PNG" width="40%" style="margin: 0 auto 20px auto; display: flex;">
+                    <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_04-1.png" width="40%" style="margin: 0 auto 20px auto; display: flex;">
                     <h3 style="text-align: center; margin-bottom: 30px;">ՄՈՒՏՔ ԱՆՁՆԱԿԱՆ ԷՋ</h3>
                     <v-form @submit.prevent="false" ref="form" v-model="valid" :lazy-validation="true" >
                       <v-alert v-if="errors.email" text type="error">
@@ -213,7 +147,7 @@
             </v-tabs>
 
           </v-card>
-        </v-menu>
+        </v-menu> -->
 
         <div v-if="!authenticated" style="padding: 0; margin: 5px 0;">
             <v-btn :to="localePath('/register')" color="#fff" text class="my-2 nav_button" style="border: none;">
@@ -233,6 +167,125 @@
           </v-btn>
         </v-badge>
       </v-row>
+
+      <div class="mobile-menu" style="display: none; margin: 0 20px;">
+        <div style="padding: 0; margin: 10px 40px; position: relative;">
+            <input class="search-input" placeholder="ՈՐՈՆԵԼ" v-model="search_product_name2">
+            <div class="search-block2" style="display: none;"></div>
+        </div>
+
+        <main id="foo" style="margin: 10px 0;">
+          <button id="hamburger" @click="showMenu">
+          <svg width="50px" height="50px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                <circle id="Oval" stroke="#FFFFFF" cx="50" cy="50" r="49.5"></circle>
+                <rect id="Rectangle" fill="#FFFFFF" x="25" y="33" width="50" height="2"></rect>
+                <rect id="Rectangle-Copy" fill="#FFFFFF" x="25" y="49" width="50" height="2"></rect>
+                <rect id="Rectangle-Copy-2" fill="#FFFFFF" x="25" y="66" width="50" height="2"></rect>
+            </g>
+          </svg>
+          </button>
+            <nav v-show="navVisible">
+              <div class="mobile-menu-items">
+                <div style="height: 70px; width: 50px; margin: 0 auto;">
+                  <button class="close" @click="hideMenu" style="display: block;margin: 10px auto;">
+                  <svg width="50px" height="50px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                      <g id="close" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                          <circle id="Oval" stroke="#000000" cx="50" cy="50" r="49.5"></circle>
+                          <rect id="Rectangle" fill="#000000" transform="translate(50.000000, 50.000000) rotate(45.000000) translate(-50.000000, -50.000000) " x="25" y="49" width="50" height="2"></rect>
+                          <rect id="Rectangle-Copy-2" fill="#000000" transform="translate(50.000000, 50.000000) rotate(-45.000000) translate(-50.000000, -50.000000) " x="25" y="49" width="50" height="2"></rect>
+                      </g>
+                  </svg>
+                  </button>
+                </div>
+                <v-menu :open-on-hover="true" bottom offset-y v-for="(item, i) in leftSide" dark :key="i">
+                  <template v-slot:activator="{on}">
+                    <div v-if="item.to==='/sections'" class="sections-menu-block-title" style="position: relative">
+                      <v-btn  exact color="#fff" text class="my-2 nav_button" v-on="on" bottom @click="openSectionsMenu" style="border: none;">
+                        <div>{{ item.title }}</div>
+                      </v-btn>
+
+                      <div class="sections-menu-block" style="display: none;">
+                        <div>
+                          <div class="section-block" style="display: flex; align-items: center;">
+                            <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_04-1.png" width="60px">
+                            <nuxt-link :to="`/brand/2?page=1`">
+                              <span>Բրենդ</span>
+                            </nuxt-link>
+                          </div>
+                          <div v-for="(item, i) in categoriesBlock" :key="i">
+                            <div v-if="parentCategoryID !== item.id"  class="section-block">
+                              <nuxt-link :to="item.to">
+                                {{item.title}}
+                              </nuxt-link>
+                            </div>
+                            <div v-else class="section-block">
+                              <nuxt-link :to="`#`">
+                                {{item.title}}
+                              </nuxt-link>
+                              <v-icon v-text="'mdi-chevron-down'" size="30" style="color: #B22180; cursor: pointer;" @click="openAgeMenu"></v-icon>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="age-menu-block" style="display: none;">
+                            <div v-for="(item, i) in subcategoriesBlock" :key="i">
+                              <div class="section-block">
+                                <nuxt-link :to="item.to">
+                                  {{item.title}}
+                                </nuxt-link>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div v-else-if="item.to==='/wholesale'">
+                      <v-btn v-if="user && user.role === 'juridical'" exact color="#fff" text class="my-2 nav_button" v-on="on" bottom @click="openSectionsMenu" style="border: none;">
+                        <div>{{ item.title }}</div>
+                      </v-btn>
+                    </div>
+                    <div v-else>
+                      <v-btn  exact :to="localePath(item.to)" router color="#fff" text class="my-2 nav_button" v-on="on" bottom >
+                        <div>{{ item.title }}</div>
+                      </v-btn>
+                    </div>
+                  </template>
+                </v-menu>
+                <v-btn v-if="authenticated" color="#000000" text class="my-2 nav_button" v-on="on" style="border: none; position: relative;">
+                  <a href="/account" style="color: white;">{{user.name + ' ' + user.lastname}}</a>
+                  <v-icon @click="openAccountMenu" color="#000000">mdi-chevron-down</v-icon>
+
+                  <v-list v-if="authenticated" class="accountMenu" style="display: none; z-index: 10;">
+                    <v-list-item @click="openHelperModal" v-text="'իմ օգնականը'" style="color: black !important;"></v-list-item>
+                    <v-list-item @click="logout" v-text="'Դուրս գալ'" style="color: black !important;"></v-list-item>
+                  </v-list>
+                </v-btn>
+
+                <v-btn v-if="!authenticated" color="#000000" text class="my-2 nav_button" v-on="on" @click="openLoginModal()">
+                  <v-icon color="#000000">mdi-account-outline</v-icon>
+                  {{$t('myAccount')}}
+                </v-btn>
+
+                <div v-if="!authenticated" style="padding: 0; margin: 5px 0;">
+                    <v-btn :to="localePath('/register')" color="black" text class="my-2 nav_button" style="border: none;">
+                      {{$t('register')}}
+                    </v-btn>
+                </div>
+
+                <div v-if="!cartLength">
+                  <v-btn :to="localePath('/cart')" color="#000000" text class="my-2 nav_button" width="50px" style="border: none;">
+                    <v-icon color="#000000">mdi-cart-outline</v-icon>
+                  </v-btn>
+                </div>
+
+                <v-badge v-else color="error" :content="cartLength">
+                  <v-btn :to="localePath('/cart')" color="#000000" text class="my-2 nav_button" width="50px" style="border: none;">
+                    <v-icon color="#000000">mdi-cart-outline</v-icon>
+                  </v-btn>
+                </v-badge>
+              </div>
+            </nav>
+        </main>
+      </div>
     </v-system-bar>
 
     <div id="helperModal" style="display: none;" class="modal-shadow" @click.self="closeModal">
@@ -305,6 +358,58 @@
                     <button class="modal-footer__button_approve" @click="resetPassword()">
                         Հաստատել
                     </button>
+                </div>
+            </slot>
+        </div>
+    </div>
+
+    <div id="loginModal" style="display: none;" class="modal-shadow" @click.self="closeLoginModal">
+        <div class="modal">
+            <slot name="body">
+                <div class="modal-content">
+                    <v-card flat tile style="padding: 20px">
+                      <v-card-text>
+                        <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_04-1.png" width="40%" style="margin: 0 auto 20px auto; display: flex;">
+                        <h3 style="text-align: center; margin-bottom: 30px;">ՄՈՒՏՔ ԱՆՁՆԱԿԱՆ ԷՋ</h3>
+                        <v-form @submit.prevent="false" ref="form" v-model="valid" :lazy-validation="true" >
+                          <v-alert v-if="errors.email" text type="error">
+                            {{errors.email[0]}}
+                          </v-alert>
+                          <v-alert v-if="loginError" text type="error">
+                            {{loginError}}
+                          </v-alert>
+                          
+                          <v-card-actions style="display: block; padding: 0;">
+                            <label>ԷԼԵԿՏՐՈՆԱՅԻՆ ՀԱՍՑԵ</label>
+                            <div style="position: relative;">
+                              <input v-model="loginForm.email" :rules="emailRules" placeholder="Էլ հասցե կամ հեռախոսահամար" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;margin-top: 10px;" required>
+                              <v-icon style="position: absolute; top: 23%; right: 3%;">mdi-email-outline</v-icon>
+                            </div>
+                          </v-card-actions>
+                          <v-card-actions style="display: block; padding: 0;">
+                            <label>ԳԱՂՏՆԱԲԱՌ</label>
+                            <div style="position: relative;">
+                              <input v-model="loginForm.password" :rules="passwordRules" type="password" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;margin-top: 10px;" required>
+                              <v-icon style="position: absolute; top: 23%; right: 3%;">mdi-lock-outline</v-icon>
+                            </div>
+                          </v-card-actions>
+
+                          <v-card-actions style="padding: 0;">
+                            <v-spacer></v-spacer>
+                            <v-btn color="primary" text @click="loginAction" style="background: #B22180; width: 100%; padding: 12px; border-radius: 6px; color: white !important;">ՄՈԻՏՔ</v-btn>
+                          </v-card-actions>
+                        </v-form>
+                        <div style="margin-top: 40px;text-align: center;">
+                            <a href="#" @click="openPasswordModal()">Մոռացե՞լ եք Գաղտնաբառը</a>
+                        </div>
+                        <div style="margin-top: 30px;text-align: center;">
+                            <a href="/register">Գրանցվել</a>
+                        </div>
+                        <div style="margin-top: 100px;">
+                          <p>Մուտք գործելով `դուք նշում եք, որ կարդացել եք և ընդունում եք Օգտագործման պայմանները և Գաղտնիության քաղաքականությունը.</p>
+                        </div>
+                      </v-card-text>
+                    </v-card>
                 </div>
             </slot>
         </div>
@@ -412,6 +517,7 @@
             message: '',
           },
           search_product_name: '',
+          search_product_name2: '',
           navVisible: false
         }
       },
@@ -637,15 +743,26 @@
         closePasswordModal: function () {
           document.getElementById('resetPassword').style.display = 'none';
         },
-        openHelperModal(){
-          document.getElementById('helperModal').style.display = 'block';
+        closeLoginModal: function () {
+          document.getElementById('loginModal').style.display = 'none';
         },
-        openPasswordModal(){
-          let modals = document.querySelectorAll(".v-menu__content");
+        openHelperModal(){
+          let modals = document.querySelectorAll(".modal-shadow");
           for(let i = 0; i < modals.length; i++) {
             modals[i].style.display = "none";
           }
-          document.getElementById('resetPassword').style.display = 'block';
+          document.getElementById('helperModal').style.display = 'flex';
+        },
+        openPasswordModal(){
+          // let modals = document.querySelectorAll(".v-menu__content");
+          // for(let i = 0; i < modals.length; i++) {
+          //   modals[i].style.display = "none";
+          // }
+          let modals = document.querySelectorAll(".modal-shadow");
+          for(let i = 0; i < modals.length; i++) {
+            modals[i].style.display = "none";
+          }
+          document.getElementById('resetPassword').style.display = 'flex';
         },
         openAccountMenu() {
           let accountMenu = document.querySelector('.accountMenu');
@@ -654,6 +771,13 @@
           } else {
             accountMenu.style.display = 'none';
           }
+        },
+        openLoginModal(){
+          let modals = document.querySelectorAll(".modal-shadow");
+          for(let i = 0; i < modals.length; i++) {
+            modals[i].style.display = "none";
+          }
+          document.getElementById('loginModal').style.display = 'flex';
         },
         async resetPassword() {
           if(this.changePasswordForm.email !== '' && this.changePasswordForm.new_password !== '') {
@@ -702,6 +826,24 @@
 
           document.querySelector('.search-block').innerHTML = search_result;
         },
+        async searchProduct2() {
+          document.querySelector('.search-block2').style.display = "block";
+          let all_products = await this.$axios.$get(this.$axios.defaults.baseURL+'/product/get');
+          let result = [];
+
+          all_products.forEach(elem => {
+            if(elem.name_am.toLowerCase().indexOf(this.search_product_name2.toLowerCase()) !== -1) {
+              result.push(elem);
+            }
+          });
+
+          let search_result = "";
+          result.forEach(elem => {
+            search_result += "<div style='display: flex; align-items: center;'><img src='"+JSON.parse(elem.images)[0]+"' style='width: 70px;margin-right: 10px;'><a href='/product/"+elem.id+"'>"+elem.name_am+"</a></div>";
+          });
+
+          document.querySelector('.search-block2').innerHTML = search_result;
+        },
         closeSearch: function() {
           document.querySelector('.search-block').style.display = "none";
         },
@@ -719,6 +861,9 @@
       watch: {
         search_product_name: function() {
           this.searchProduct();
+        },
+        search_product_name2: function() {
+          this.searchProduct2();
         }
       },
     }
@@ -778,7 +923,9 @@
     }
 
     .mobile-menu {
-      display: block !important;
+      display: flex !important;
+      justify-content: flex-end;
+      align-items: center;
     }
 
     .mobile-menu .mobile-menu-items {
@@ -787,6 +934,9 @@
       background: white;
       padding: 10px 20px;
       z-index: 100;
+      height: 100vh;
+      right: 0;
+      top: 0;
     }
 
     .mobile-menu .mobile-menu-items a, .mobile-menu .mobile-menu-items span {
@@ -808,10 +958,13 @@
     }
 
     .v-menu__content {
+        position: fixed !important;
         min-width: 90% !important;
         max-width: 90% !important;
         top: 5% !important;
         left: 5% !important;
+        max-height: 600px;
+        z-index: 1 !important;
     }
 
     .v-menu__content .v-item-group .v-window-item .v-card {
@@ -821,25 +974,25 @@
     .modal {
       min-width: 90%;
       max-width: 90%;
-      top: 25%;
-      left: 5%;
+      top: 12%;
     }
   }
 
   @media (min-width: 959px) {
     .v-menu__content {
+      position: fixed !important;
       min-width: 600px !important;
       max-width: 600px !important;
-      top: 5% !important;
+      top: 15% !important;
       left: 31% !important;
       overflow: auto;
-      max-height: 650px;
+      max-height: 600px;
+      z-index: 1 !important;
     }
     .modal {
       min-width: 600px;
       max-width: 600px;
-      top: 25%;
-      left: 31%;
+      top: 12%;
     }
   }
 
@@ -914,7 +1067,7 @@
     left: -50%;
   }
 
-  .search-block {
+  .search-block, .search-block2 {
     position: absolute;
     background: white;
     top: 145%;
@@ -928,22 +1081,22 @@
     border: 1px solid rgb(1, 184, 190);
   }
 
-  .search-block a {
+  .search-block a, .search-block2 a {
     color: #352249 !important;
   }
 
-  .search-block > div {
+  .search-block > div, .search-block2 > div {
     padding: 10px;
     cursor: pointer;
   }
 
-  .search-block > div:hover {
+  .search-block > div:hover, .search-block2 > div:hover {
     /* background: #C6C3C3; */
     background: rgb(1, 184, 190);
     color: white;
   }
 
-  .search-block > div:hover a {
+  .search-block > div:hover a, .search-block2 > div:hover a {
     color: white !important;
   }
 
@@ -1002,15 +1155,19 @@
         min-height: 100%;
         width: 100%;
         background: rgba(0, 0, 0, 0.39);
-        z-index: 10;
+        z-index: 2;
+        display: flex;
+        justify-content: center;
     }
  
     .modal {
         background: white;
         border-radius: 0;
-        position: absolute;
+        position: fixed;
         display: block;
         height: fit-content;
+        overflow: auto;
+        max-height: 600px;
  
         &-close {
             border-radius: 50%;

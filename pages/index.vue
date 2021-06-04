@@ -131,7 +131,7 @@
           </div>
 
           <div style="width: 25%;">
-            <img src="http://127.0.0.1:8000/images/Kiddok_logo_02-1.PNG" width="100%">
+            <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_02-1.png" width="100%">
           </div>
         </v-footer> -->
 
@@ -235,7 +235,7 @@ export default {
   .block1 .img-block {
       width: 400px;
       height: 200px;
-      /* background-image: url(http://127.0.0.1:8000/images/fp_lbk_shop_by_age_0_desk_en_us_1008x330.jfif); */
+      /* background-image: url(http://kiddokback.neoteric-software.com/images/fp_lbk_shop_by_age_0_desk_en_us_1008x330.jfif); */
       background-size: cover;
       background-position: center;
   }

@@ -235,7 +235,7 @@
       },
       async openBuyNowModal(id){
         this.cartError = false;
-        document.getElementById('buyNowModal').style.display = 'block';
+        document.getElementById('buyNowModal').style.display = 'flex';
         document.querySelector('#buyNowModal .modal').id = 'product_'+id;
         let product_info = await this.$axios.$get(this.$axios.defaults.baseURL+`/product/get/${id}`);
         this.totalPrice = product_info.price;
@@ -399,8 +399,7 @@
     .modal {
       min-width: 90%;
       max-width: 90%;
-      top: 25%;
-      left: 5%;
+      top: 12%;
     }
   }
 
@@ -408,8 +407,7 @@
     .modal {
       min-width: 600px;
       max-width: 600px;
-      top: 25%;
-      left: 31%;
+      top: 12%;
     }
   }
 </style>
@@ -423,15 +421,19 @@
         min-height: 100%;
         width: 100%;
         background: rgba(0, 0, 0, 0.39);
-        z-index: 10;
+        z-index: 2;
+        display: flex;
+        justify-content: center;
     }
  
     .modal {
         background: white;
         border-radius: 0;
-        position: absolute;
+        position: fixed;
         display: block;
         height: fit-content;
+        overflow: auto;
+        max-height: 600px;
  
         &-close {
             border-radius: 50%;

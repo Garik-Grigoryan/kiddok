@@ -268,7 +268,7 @@
           this.activeItem = menuItem
         },
         openSuccessModal() {
-          document.getElementById('successModal').style.display = 'block';
+          document.getElementById('successModal').style.display = 'flex';
         },
         closeModal: function () {
           document.getElementById('successModal').style.display = 'none';
@@ -391,8 +391,7 @@
     .modal {
       min-width: 90%;
       max-width: 90%;
-      top: 25%;
-      left: 5%;
+      top: 12%;
     }
   }
 
@@ -400,8 +399,7 @@
     .modal {
       min-width: 700px;
       max-width: 700px;
-      top: 25%;
-      left: 28%;
+      top: 12%;
     }
   }
 
@@ -415,16 +413,21 @@
         min-height: 100%;
         width: 100%;
         background: rgba(0, 0, 0, 0.39);
+        z-index: 2;
+        display: flex;
+        justify-content: center;
     }
  
     .modal {
         background: #EBE7E7;
         border-radius: 0;
         /* padding: 15px; */
-        position: absolute;
+        position: fixed;
         // transform: translate(-50%, -50%);
         display: block;
         height: fit-content;
+        overflow: auto;
+        max-height: 600px;
  
         &-close {
             border-radius: 50%;

@@ -53,12 +53,12 @@
 
 <script>
     export default {
-        name: "orders",
-        middleware: 'userLogined',
+      name: "orders",
+      middleware: 'userLogined',
       async asyncData({store}){
         await store.dispatch('brands/fetch');
         await store.dispatch('menus/fetch');
-        await store.dispatch('user/getOrders', [store.state.auth.user.id]);
+        // await store.dispatch('user/getOrders', [store.state.auth.user.id]);
       },
       data () {
         return {
@@ -86,14 +86,22 @@
           desserts: [
 
           ],
+          getUserOrders: []
         }
       },
       computed: {
-           getUserOrders() {
-            return this.$store.getters['user/orders'];
-          }
+        // getUserOrders() {
+        //   return this.$store.getters['user/orders'];
+        // }
       },
       async mounted() {
+        let userId = this.$store.state.auth.user.id;
+        if(userId == 'All'){
+          this.getUserOrders = await this.$axios.$get(this.$axios.defaults.baseURL+'/order/get/');
+        }else{
+          this.getUserOrders = await this.$axios.$get(this.$axios.defaults.baseURL+'/order/get/'+userId);
+        }
+
         await this.$store.dispatch('wishListAndCart/fetch');
         for(let el in this.getUserOrders){
           this.getUserOrders[el].mainProducts = [];
