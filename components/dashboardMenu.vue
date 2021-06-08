@@ -57,7 +57,7 @@
           {text: 'Categories', icon: 'mdi-view-module', url: '/dashboard/categories'},
           // {text: 'Menu', icon: 'mdi-wrap', url: '/dashboard/menu'},
           {text: 'Products', icon: 'mdi-webpack', url: '/dashboard/products'},
-          // {text: 'Pages', icon: 'mdi-arrange-send-backward', url: '/dashboard/pages'},
+          {text: 'Pages', icon: 'mdi-arrange-send-backward', url: '/dashboard/pages'},
           {text: 'Orders', icon: 'mdi-cart', url: '/dashboard/orders'},
           {text: 'Components', icon: 'mdi-shape-plus', url: '/dashboard/components'},
           // {text: 'Regions', icon: 'mdi-google-maps', url: '/dashboard/regions'},

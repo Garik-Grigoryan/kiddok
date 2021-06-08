@@ -41,6 +41,20 @@
                 <!-- <nuxt-link :to="`/product/${product.id}`"> -->
                   <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
                     <div class="best-product-rating" style="display: flex; align-items: center;">
+                      <!-- <v-rating
+                        empty-icon="mdi-star-outline"
+                        full-icon="mdi-star"
+                        half-icon="mdi-star-half-full"
+                        hover
+                        length="5"
+                        size="20"
+                        half-increments
+                        v-model="rating[product.id].rating"
+                        background-color="grey lighten-1"
+                        color="orange"
+                      ></v-rating>
+                      <div style="color: rgb(112, 112, 112); font-weight: 500; font-size: 14px; margin-left: 8px;"> ({{rating[product.id].count}})</div> -->
+                      
                       <v-rating v-if="rating[product.id] !== undefined"
                         empty-icon="mdi-star-outline"
                         full-icon="mdi-star"
@@ -99,9 +113,12 @@
     name: 'bestProductComponent',
     data: () => ({
       model: null,
-      rating: {},
+      rating: '',
       ratingCount: 0
     }),
+    async fetch({route, store}) {
+      await store.dispatch('products/filterAsType', ['best']);
+    },
     methods: {
       addToWishlist(e, id) {
         let user_id = 0;
@@ -131,21 +148,32 @@
       }
       this.products.forEach(async (prod) => {
         await this.$axios.get(this.$axios.defaults.baseURL+'/rating/get/'+prod.id).then(response => {
-          let rating_count = 0;
-          let rating_val = 0;
-          response.data.forEach(elem => {
-            rating_count++;
-            rating_val += elem.rating;
-          });
+          if(response.data.length !== 0) {
+            let rating_count = 0;
+            let rating_val = 0;
+            response.data.forEach(elem => {
+              rating_count++;
+              rating_val += elem.rating;
+            });
 
-          var obj = {};
-          var name = "id";
-          var value = "rating";
-          var count = "count";
-          obj[name] = prod.id;
-          obj[value] = rating_val/rating_count;
-          obj[count] = rating_count;
-          this.rating[prod.id] = obj;
+            var obj = {};
+            var name = "id";
+            var value = "rating";
+            var count = "count";
+            obj[name] = prod.id;
+            obj[value] = rating_val/rating_count;
+            obj[count] = rating_count;
+            this.rating[prod.id] = obj;
+          } else {
+            var obj = {};
+            var name = "id";
+            var value = "rating";
+            var count = "count";
+            obj[name] = prod.id;
+            obj[value] = 0;
+            obj[count] = 0;
+            this.rating[prod.id] = obj;
+          }
         }).catch(e => {});
       });
     }

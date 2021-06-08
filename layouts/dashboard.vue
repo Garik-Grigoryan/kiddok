@@ -8,7 +8,8 @@
     >
       <span class="m-auto"> Davmar.am &copy; {{ new Date().getFullYear() }} All rights reserved</span>
     </v-footer> -->
-    <v-footer class="footer-block">
+    
+    <!-- <v-footer class="footer-block">
       <div class="col-lg-8 col-md-8 col-sm-12" style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap;">
         <div>
           <div>
@@ -69,7 +70,7 @@
             </v-btn>
           </div>
           <div>
-            <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button" style="text-transform: none;">
+            <v-btn :to="localePath('/condition')" color="#fff" text class="my-2 nav_button" style="text-transform: none;">
               <span>Պայմաններ և կանոններ</span>
             </v-btn>
           </div>
@@ -84,7 +85,7 @@
       <div class="col-lg-3 col-md-3 col-sm-12">
         <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_02-1.png" width="100%">
       </div>
-    </v-footer>
+    </v-footer> -->
   </v-app>
 </template>
 

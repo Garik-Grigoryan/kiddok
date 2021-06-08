@@ -118,7 +118,7 @@
                 </v-btn>
               </div>
               <div>
-                <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button" style="text-transform: none;">
+                <v-btn :to="localePath('/condition')" color="#fff" text class="my-2 nav_button" style="text-transform: none;">
                   <span>Պայմաններ և կանոններ</span>
                 </v-btn>
               </div>

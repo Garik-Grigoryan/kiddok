@@ -3,11 +3,7 @@
     <v-system-bar height="auto" style="z-index: 5;" color="#01B8BE" fixed app dark id="create" >
       <v-col lg="1" md="1" class="text-center" style="padding: 0;">
         <nuxt-link :to="localePath('/')" style="text-decoration: none;">
-<<<<<<< HEAD
-          <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_02-1.PNG" width="100%">
-=======
           <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_02-1.png" width="100%">
->>>>>>> dd38279f8230625aeb0510408d196305b5273953
         </nuxt-link>
       </v-col>
       <v-col class="hidden-sm-and-down" lg="7" md="7">
@@ -22,11 +18,7 @@
                 <div class="sections-menu-block" style="display: none;">
                   <div>
                     <div class="section-block" style="display: flex; align-items: center;">
-<<<<<<< HEAD
-                      <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_04-1.PNG" width="60px">
-=======
                       <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_04-1.png" width="60px">
->>>>>>> dd38279f8230625aeb0510408d196305b5273953
                       <nuxt-link :to="`/brand/2?page=1`">
                         <span>Բրենդ</span>
                       </nuxt-link>
@@ -70,87 +62,8 @@
           </v-menu>
         </v-row>
       </v-col>
-<<<<<<< HEAD
-      <v-row justify="center">
-        <div class="mobile-menu" style="display: none; margin: 0 20px;">
-          <main id="foo" style="position: relative">
-            <button v-show="!navVisible" id="hamburger" @click="showMenu">
-            <svg width="50px" height="50px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-              <g id="Artboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                  <circle id="Oval" stroke="#FFFFFF" cx="50" cy="50" r="49.5"></circle>
-                  <rect id="Rectangle" fill="#FFFFFF" x="25" y="33" width="50" height="2"></rect>
-                  <rect id="Rectangle-Copy" fill="#FFFFFF" x="25" y="49" width="50" height="2"></rect>
-                  <rect id="Rectangle-Copy-2" fill="#FFFFFF" x="25" y="66" width="50" height="2"></rect>
-              </g>
-            </svg>
-            </button>
-              <nav v-show="navVisible">
-                <button class="close" @click="hideMenu">
-                <svg width="50px" height="50px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                    <g id="close" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                        <circle id="Oval" stroke="#FFFFFF" cx="50" cy="50" r="49.5"></circle>
-                        <rect id="Rectangle" fill="#FFFFFF" transform="translate(50.000000, 50.000000) rotate(45.000000) translate(-50.000000, -50.000000) " x="25" y="49" width="50" height="2"></rect>
-                        <rect id="Rectangle-Copy-2" fill="#FFFFFF" transform="translate(50.000000, 50.000000) rotate(-45.000000) translate(-50.000000, -50.000000) " x="25" y="49" width="50" height="2"></rect>
-                    </g>
-                </svg>
-                </button>
 
-                <div class="mobile-menu-items">
-                  <v-menu :open-on-hover="true" bottom offset-y v-for="(item, i) in leftSide" dark :key="i">
-                    <template v-slot:activator="{on}">
-                      <div v-if="item.to==='/sections'" class="sections-menu-block-title" style="position: relative">
-                        <v-btn  exact color="#fff" text class="my-2 nav_button" v-on="on" bottom @click="openSectionsMenu" style="border: none;">
-                          <div>{{ item.title }}</div>
-                        </v-btn>
-
-                        <div class="sections-menu-block" style="display: none;">
-                          <div>
-                            <div class="section-block" style="display: flex; align-items: center;">
-                              <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_04-1.PNG" width="60px">
-                              <nuxt-link :to="`/brand/2?page=1`">
-                                <span>Բրենդ</span>
-                              </nuxt-link>
-                            </div>
-                            <div v-for="(item, i) in categoriesBlock" :key="i">
-                              <div v-if="parentCategoryID !== item.id"  class="section-block">
-                                <nuxt-link :to="item.to">
-                                  {{item.title}}
-                                </nuxt-link>
-                              </div>
-                              <div v-else class="section-block">
-                                <nuxt-link :to="`#`">
-                                  {{item.title}}
-                                </nuxt-link>
-                                <v-icon v-text="'mdi-chevron-down'" size="30" style="color: #B22180; cursor: pointer;" @click="openAgeMenu"></v-icon>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="age-menu-block" style="display: none;">
-                              <div v-for="(item, i) in subcategoriesBlock" :key="i">
-                                <div class="section-block">
-                                  <nuxt-link :to="item.to">
-                                    {{item.title}}
-                                  </nuxt-link>
-                                </div>
-                              </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div v-else>
-                        <v-btn  exact :to="localePath(item.to)" router color="#fff" text class="my-2 nav_button" v-on="on" bottom >
-                          <div>{{ item.title }}</div>
-                        </v-btn>
-                      </div>
-                    </template>
-                  </v-menu>
-                </div>
-              </nav>
-          </main>
-        </div>
-
-=======
       <v-row justify="center" class="hidden-sm-and-down">
->>>>>>> dd38279f8230625aeb0510408d196305b5273953
         <div style="padding: 0; margin: 5px 0 5px 10px; position: relative;">
             <input class="search-input" placeholder="ՈՐՈՆԵԼ" v-model="search_product_name">
 
@@ -190,11 +103,7 @@
               <v-tab-item :value="'tab-1'">
                 <v-card flat tile style="padding: 20px 100px">
                   <v-card-text>
-<<<<<<< HEAD
-                    <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_04-1.PNG" width="40%" style="margin: 0 auto 20px auto; display: flex;">
-=======
                     <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_04-1.png" width="40%" style="margin: 0 auto 20px auto; display: flex;">
->>>>>>> dd38279f8230625aeb0510408d196305b5273953
                     <h3 style="text-align: center; margin-bottom: 30px;">ՄՈՒՏՔ ԱՆՁՆԱԿԱՆ ԷՋ</h3>
                     <v-form @submit.prevent="false" ref="form" v-model="valid" :lazy-validation="true" >
                       <v-alert v-if="errors.email" text type="error">
