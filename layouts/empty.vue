@@ -83,7 +83,7 @@
       </div>
 
       <div class="col-lg-3 col-md-3 col-sm-12">
-        <img src="http://127.0.0.1:8000/images/Kiddok_logo_02-1.PNG" width="100%">
+        <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_02-1.PNG" width="100%">
       </div>
     </v-footer>
   </v-app>
@@ -104,7 +104,7 @@
     align-items: center;
     padding: 340px 90px 90px 90px;
     flex-wrap: wrap;
-    background-image: url(http://127.0.0.1:8000/images/footer_background.png);
+    background-image: url(http://kiddokback.neoteric-software.com/images/footer_background.png);
     min-height: 590px;
     height: auto;
     background-color: white;

@@ -3,7 +3,7 @@
     <v-system-bar height="auto" style="z-index: 5;" color="#01B8BE" fixed app dark id="create" >
       <v-col lg="1" md="1" class="text-center" style="padding: 0;">
         <nuxt-link :to="localePath('/')" style="text-decoration: none;">
-          <img src="http://127.0.0.1:8000/images/Kiddok_logo_02-1.PNG" width="100%">
+          <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_02-1.PNG" width="100%">
         </nuxt-link>
       </v-col>
       <v-col class="hidden-sm-and-down" lg="7" md="7">
@@ -18,7 +18,7 @@
                 <div class="sections-menu-block" style="display: none;">
                   <div>
                     <div class="section-block" style="display: flex; align-items: center;">
-                      <img src="http://127.0.0.1:8000/images/Kiddok_logo_04-1.PNG" width="60px">
+                      <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_04-1.PNG" width="60px">
                       <nuxt-link :to="`/brand/2?page=1`">
                         <span>Բրենդ</span>
                       </nuxt-link>
@@ -92,7 +92,7 @@
                         <div class="sections-menu-block" style="display: none;">
                           <div>
                             <div class="section-block" style="display: flex; align-items: center;">
-                              <img src="http://127.0.0.1:8000/images/Kiddok_logo_04-1.PNG" width="60px">
+                              <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_04-1.PNG" width="60px">
                               <nuxt-link :to="`/brand/2?page=1`">
                                 <span>Բրենդ</span>
                               </nuxt-link>
@@ -168,7 +168,7 @@
               <v-tab-item :value="'tab-1'">
                 <v-card flat tile style="padding: 20px 100px">
                   <v-card-text>
-                    <img src="http://127.0.0.1:8000/images/Kiddok_logo_04-1.PNG" width="40%" style="margin: 0 auto 20px auto; display: flex;">
+                    <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_04-1.PNG" width="40%" style="margin: 0 auto 20px auto; display: flex;">
                     <h3 style="text-align: center; margin-bottom: 30px;">ՄՈՒՏՔ ԱՆՁՆԱԿԱՆ ԷՋ</h3>
                     <v-form @submit.prevent="false" ref="form" v-model="valid" :lazy-validation="true" >
                       <v-alert v-if="errors.email" text type="error">
