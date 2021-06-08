@@ -5,13 +5,13 @@
         <div style="display: flex; justify-content: center; width: 100%; margin-bottom: 30px;">
           <h2 class="text-center" style="font-weight: 400;">Kidd’OK – ի հիմքը մեր ԹԻՄՆ է, իսկ ուղեցույցը՝ մեր ՀԱՃԱԽՈՐԴՆԵՐԸ։</h2>
         </div>
-        <!-- <div v-html="text"></div> -->
-        <div style="display: flex; justify-content: space-between;">
+        <div style="display: flex; justify-content: space-between; width: 100%;">
           <div style="width: 50%">
             <img src="http://kiddokback.neoteric-software.com/images/kd1.png" width="100%">
           </div>
           <div style="width: 45%">
-            <p>
+            <div v-html="text"></div>
+            <!-- <p>
               Kidd’OK ապրանքային բրենդը հիմնադրվել է 2019 թվականին տնօրեն Հենրի Խաչատրյանի կողմից, ընկերությունը զբաղվում է խաղալիքների արտադրանքով ինչպես նաև մանրածախ և մեծածախ վաճառքով, գործունեությունը հայաստանում սկսվել է 2001 թվականից 
             </p>
             <p>
@@ -22,7 +22,7 @@
             </p>
             <p>
               Տարիների ընթացքում ապրանքների տեսականին շատ ավելի լայն է դարձել, ընկերությունը շարունակում է անընդհատ զարգացնել և ստեղծել նոր ապրանքախմբեր:
-            </p>
+            </p> -->
 
             <hr style="margin: 30px 0;">
 
@@ -43,7 +43,7 @@
                     <input v-model="phone" type="text" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;margin-top: 10px;" required>
                   </div>
 
-                  <v-btn color="primary" text @click="subscribe()" class="mailing_btn" style="text-transform: uppercase;">ՈՒղարկել</v-btn>
+                  <v-btn color="primary" text @click="subscribe()" class="mailing_btn" style="text-transform: uppercase; color: white!important;">ՈՒղարկել</v-btn>
                 </div>
             </v-form>
 
@@ -78,7 +78,7 @@
           await store.dispatch('brands/fetch');
           // await store.dispatch('wishListAndCart/fetch');
           await store.dispatch('menus/fetch');
-          await store.dispatch('pages/getById', [2]);
+          await store.dispatch('pages/getById', [3]);
 
         },
       async mounted() {
@@ -88,15 +88,7 @@
         }else{
           await this.$store.dispatch('wishListAndCart/getWishListAndCartData', [0]);
         }
-        if(this.$i18n.locale === 'am'){
-          this.text = this.page.html_am
-        }
-        else if(this.$i18n.locale === 'en'){
-          this.text = this.page.html
-        }
-        else if(this.$i18n.locale === 'ru'){
-          this.text = this.page.html_ru
-        }
+        this.text = this.page.html_am;
       },
       computed: {
         page() {

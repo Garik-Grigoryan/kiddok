@@ -11,10 +11,9 @@
       <v-carousel-item
         v-for="(slide, i) in slides"
         :key="i"
-        :src="slide.src"
         :to="slide.url"
       >
-
+          <div class="v-image__image v-image__image--contain" :style="slide.style"></div>
           <v-row
             class="fill-height px-5 py-5"
             align="center"
@@ -46,10 +45,11 @@
           // document.querySelector('.head-slider-block .v-carousel .v-carousel__controls .v-icon').style.color = "#01B8BE";
         }
       });
+
       this.onResize();
       if(this.slides.length == 0){
         this.component.componentElements.forEach((el) => {
-          this.slides.push({text: el.name, src: el.image, url: el.url});
+          this.slides.push({text: el.name, src: el.image, url: el.url, style: 'background-image: url("'+el.image+'"); background-position: center center; background-size: contain;'});
         })
       }
     },

@@ -21,8 +21,8 @@ export const actions = {
     const page = await this.$axios.$get(this.$axios.defaults.baseURL+'/pages/get/'+id);
     commit('setPage', page)
   },
-  async update(ctx, [id, name, html, html_am, html_ru]){
-    await this.$axios.$put(this.$axios.defaults.baseURL+'/pages/update/'+id, {name, html, html_am, html_ru});
+  async update(ctx, [id, name, html_am]){
+    await this.$axios.$put(this.$axios.defaults.baseURL+'/pages/update/'+id, {name, html_am});
   }
 }
 

@@ -41,15 +41,8 @@
       }else{
         await this.$store.dispatch('wishListAndCart/getWishListAndCartData', [0]);
       }
-      if(this.$i18n.locale === 'am'){
-        this.text = this.page.html_am
-      }
-      else if(this.$i18n.locale === 'en'){
-        this.text = this.page.html
-      }
-      else if(this.$i18n.locale === 'ru'){
-        this.text = this.page.html_ru
-      }
+      
+      this.text = this.page.html_am
     },
     computed: {
       page() {

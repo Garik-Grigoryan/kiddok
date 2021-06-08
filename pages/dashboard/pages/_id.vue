@@ -7,22 +7,9 @@
           <v-form ref="form">
             <v-text-field  v-model="name"  label="Name"  required  ></v-text-field>
             <client-only>
-              <p class="mb-0 mt-5">Text in English</p>
-              <quill-editor
-                ref="editor"
-                v-model="html"
-                :options="editorOption"
-              />
-              <p class="mb-0 mt-5">Text in Russian</p>
               <quill-editor
                 ref="editor"
                 v-model="html_am"
-                :options="editorOption"
-              />
-              <p class="mb-0 mt-5">Text in Armenian</p>
-              <quill-editor
-                ref="editor"
-                v-model="html_ru"
                 :options="editorOption"
               />
             </client-only>
@@ -87,14 +74,14 @@
         },
       methods: {
         async update() {
-          await this.$store.dispatch('pages/update', [this.$route.params.id, this.name, this.html, this.html_am, this.html_ru])
+          await this.$store.dispatch('pages/update', [this.$route.params.id, this.name, this.html_am])
         }
       },
       mounted() {
           this.name = this.page.name;
-          this.html = this.page.html;
+          // this.html = this.page.html;
           this.html_am = this.page.html_am;
-          this.html_ru = this.page.html_ru;
+          // this.html_ru = this.page.html_ru;
 
       }
     }
