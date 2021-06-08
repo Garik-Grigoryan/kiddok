@@ -83,7 +83,11 @@
       </div>
 
       <div class="col-lg-3 col-md-3 col-sm-12">
+<<<<<<< HEAD
         <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_02-1.PNG" width="100%">
+=======
+        <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_02-1.png" width="100%">
+>>>>>>> dd38279f8230625aeb0510408d196305b5273953
       </div>
     </v-footer>
   </v-app>

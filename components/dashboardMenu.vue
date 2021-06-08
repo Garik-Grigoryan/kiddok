@@ -9,7 +9,7 @@
       <v-list-item class="px-2 mt-3">
 
         <v-list-item-title class="display-1 font-weight-bold">
-          <img src="http://127.0.0.1:8000/images/Kiddok_logo_04-1.PNG" width="100%">
+          <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_04-1.png" width="100%">
         </v-list-item-title>
         <v-btn icon @click.stop="mini = !mini" >
           <v-icon>mdi-chevron-left</v-icon>

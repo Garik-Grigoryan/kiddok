@@ -314,7 +314,7 @@
         this.show = true;
         document.querySelector('.modal-count-val').innerText = "x " + document.getElementById('product-count-val').value;
         document.querySelector('.modal-price-val').innerText = parseInt(document.getElementById('product-count-val').value)*parseInt(document.querySelector('.product-price span').innerText) + 'դրամ';
-        document.getElementById('addToCartModal').style.display = 'block';
+        document.getElementById('addToCartModal').style.display = 'flex';
       },
       selectColor(e) {
         if(e.target !== undefined){
@@ -502,8 +502,7 @@
     .modal {
       min-width: 90%;
       max-width: 90%;
-      top: 25%;
-      left: 5%;
+      top: 12%;
     }
   }
 
@@ -511,8 +510,7 @@
     .modal {
       min-width: 700px;
       max-width: 700px;
-      top: 25%;
-      left: 50%;
+      top: 12%;
     }
   }
 </style>
@@ -526,14 +524,19 @@
         min-height: 100%;
         width: 100%;
         background: rgba(0, 0, 0, 0.39);
+        z-index: 2;
+        display: flex;
+        justify-content: center;
     }
  
     .modal {
         background: #EBE7E7;
         border-radius: 0;
         /* padding: 15px; */
-        position: absolute;
+        position: fixed;
         transform: translate(-50%, -50%);
+        overflow: auto;
+        max-height: 600px;
  
         &-close {
             border-radius: 50%;

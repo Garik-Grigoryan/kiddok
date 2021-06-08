@@ -8,7 +8,7 @@
         <!-- <div v-html="text"></div> -->
         <div style="display: flex; justify-content: space-between;">
           <div style="width: 50%">
-            <img src="http://127.0.0.1:8000/images/kd1.png" width="100%">
+            <img src="http://kiddokback.neoteric-software.com/images/kd1.png" width="100%">
           </div>
           <div style="width: 45%">
             <p>

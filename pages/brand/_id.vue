@@ -6,7 +6,7 @@
       <div class="top-block">
         <div class="left-block"></div>
         <div class="center-block">
-          <img src="http://127.0.0.1:8000/images/Kiddok_logo_04-1.PNG" width="100px">
+          <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_04-1.png" width="100px">
           <span>{{this.brand[0].name}}</span>
         </div>
         <div class="right-block"></div>
