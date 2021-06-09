@@ -6,7 +6,7 @@
       :hide-delimiters="false"
       :show-arrows="false"
       v-resize="onResize"
-      style="width: 720px; margin: 100px auto;"
+      style="width: 100%; margin: 100px auto;"
     >
       <v-carousel-item
         v-for="(slide, i) in slides"
@@ -34,7 +34,7 @@
       return {
         slides: [
         ],
-        sliderMaxWidth:  600,
+        sliderMaxWidth:  550,
       }
     },
     mounted () {
@@ -46,10 +46,28 @@
         }
       });
 
+      setTimeout(() => {
+        let all_icons = document.querySelectorAll('.head-slider-block .v-carousel .v-carousel__controls .v-icon');
+        for(let i = 0; i < all_icons.length; i++) {
+          all_icons[i].style.color = "#01B8BE";
+        }
+        document.querySelector('.head-slider-block .v-carousel .v-carousel__controls').style.background = "transparent";
+        // document.querySelector('.head-slider-block .v-carousel .v-carousel__controls').style.bottom = "-25px";
+      }, 100);
+
+      setInterval(() => {
+        let all_icons = document.querySelectorAll('.head-slider-block .v-carousel .v-carousel__controls .v-icon');
+        for(let i = 0; i < all_icons.length; i++) {
+          all_icons[i].style.opacity = '0.8';
+        }
+        let active_icon = document.querySelector('.head-slider-block .v-carousel .v-carousel__controls .v-item--active .v-icon');
+        active_icon.style.opacity = '1';
+      }, 100);
+
       this.onResize();
       if(this.slides.length == 0){
         this.component.componentElements.forEach((el) => {
-          this.slides.push({text: el.name, src: el.image, url: el.url, style: 'background-image: url("'+el.image+'"); background-position: center center; background-size: contain;'});
+          this.slides.push({text: el.name, src: el.image, url: el.url, style: 'background-image: url("'+el.image+'"); background-position: center center; background-size: contain; height: 500px;'});
         })
       }
     },
@@ -63,7 +81,7 @@
         if(window.innerWidth <= 960){
           this.sliderMaxWidth = 400;
         }else{
-          this.sliderMaxWidth = 600;
+          this.sliderMaxWidth = 550;
         }
         this.windowSize = { x: window.innerWidth, y: window.innerHeight }
       },
