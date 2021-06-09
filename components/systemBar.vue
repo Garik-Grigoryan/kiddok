@@ -49,7 +49,7 @@
                 </div>
               </div>
               <div v-else-if="item.to==='/wholesale'">
-                <v-btn v-if="user && user.role === 'juridical'" exact color="#fff" text class="my-2 nav_button" v-on="on" bottom @click="openSectionsMenu" style="border: none;">
+                <v-btn v-if="user && user.role === 'juridical'" exact color="#fff" text class="my-2 nav_button" v-on="on" bottom style="border: none;">
                   <div>{{ item.title }}</div>
                 </v-btn>
               </div>
@@ -170,7 +170,7 @@
       </v-row>
 
       <div class="mobile-menu" style="display: none; margin: 0 20px;">
-        <div style="padding: 0; margin: 10px 40px; position: relative;">
+        <div style="padding: 0; margin: 10px 40px 10px 0; position: relative;">
             <input class="search-input" placeholder="ՈՐՈՆԵԼ" v-model="search_product_name2">
             <div class="search-block2" style="display: none;"></div>
         </div>
@@ -201,12 +201,12 @@
                 </div>
                 <v-menu :open-on-hover="true" bottom offset-y v-for="(item, i) in leftSide" dark :key="i">
                   <template v-slot:activator="{on}">
-                    <div v-if="item.to==='/sections'" class="sections-menu-block-title" style="position: relative">
-                      <v-btn  exact color="#fff" text class="my-2 nav_button" v-on="on" bottom @click="openSectionsMenu" style="border: none;">
+                    <div v-if="item.to==='/sections'" class="sections-menu-block-title-mobile" style="position: relative">
+                      <v-btn  exact color="#fff" text class="my-2 nav_button" v-on="on" bottom @click="openSectionsMenuMobile" style="border: none;">
                         <div>{{ item.title }}</div>
                       </v-btn>
 
-                      <div class="sections-menu-block" style="display: none;">
+                      <div class="sections-menu-block-mobile">
                         <div>
                           <div class="section-block" style="display: flex; align-items: center;">
                             <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_04-1.png" width="60px">
@@ -220,27 +220,29 @@
                                 {{item.title}}
                               </nuxt-link>
                             </div>
-                            <div v-else class="section-block">
-                              <nuxt-link :to="`#`">
-                                {{item.title}}
-                              </nuxt-link>
-                              <v-icon v-text="'mdi-chevron-down'" size="30" style="color: #B22180; cursor: pointer;" @click="openAgeMenu"></v-icon>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="age-menu-block" style="display: none;">
-                            <div v-for="(item, i) in subcategoriesBlock" :key="i">
+                            <div v-else class="age-menu-block-title-mobile">
                               <div class="section-block">
-                                <nuxt-link :to="item.to">
+                                <nuxt-link :to="`#`">
                                   {{item.title}}
                                 </nuxt-link>
+                                <v-icon v-text="'mdi-chevron-down'" size="30" style="color: #B22180; cursor: pointer;" @click="openAgeMenuMobile"></v-icon>
+                              </div>
+                              <div class="age-menu-block-mobile">
+                                  <div v-for="(item, i) in subcategoriesBlock" :key="i">
+                                    <div class="section-block">
+                                      <nuxt-link :to="item.to">
+                                        {{item.title}}
+                                      </nuxt-link>
+                                    </div>
+                                  </div>
                               </div>
                             </div>
+                          </div>
                         </div>
                       </div>
                     </div>
                     <div v-else-if="item.to==='/wholesale'">
-                      <v-btn v-if="user && user.role === 'juridical'" exact color="#fff" text class="my-2 nav_button" v-on="on" bottom @click="openSectionsMenu" style="border: none;">
+                      <v-btn v-if="user && user.role === 'juridical'" exact color="#fff" text class="my-2 nav_button" v-on="on" bottom style="border: none;">
                         <div>{{ item.title }}</div>
                       </v-btn>
                     </div>
@@ -494,9 +496,9 @@
             { title: this.$t('wholesale'),
               to: '/wholesale'
             },
-            { title: this.$t('news'),
-              to: '/news'
-            },
+            // { title: this.$t('news'),
+            //   to: '/news'
+            // },
             { title: this.$t('partners'),
               to: '/partners'
             },
@@ -547,10 +549,28 @@
               document.querySelector('.sections-menu-block').style.display = "none";
             }
           }
+          if(document.querySelector('.sections-menu-block-title-mobile') !== null) {
+            if (document.querySelector('.sections-menu-block-title-mobile').contains(e.target)){
+            } else{
+              document.querySelector('.sections-menu-block-mobile').style.display = "none";
+            }
+          }
           if(document.querySelector('.search-block') !== null) {
             if (document.querySelector('.search-block').contains(e.target)){
             } else{
               document.querySelector('.search-block').style.display = "none";
+            }
+          }
+          if(document.querySelector('.search-block2') !== null) {
+            if (document.querySelector('.search-block2').contains(e.target)){
+            } else{
+              document.querySelector('.search-block2').style.display = "none";
+            }
+          }
+          if(document.querySelector('.age-menu-block-title-mobile') !== null) {
+            if (document.querySelector('.age-menu-block-title-mobile').contains(e.target)){
+            } else{
+              document.querySelector('.age-menu-block-mobile').style.display = "none";
             }
           }
         });
@@ -730,6 +750,14 @@
             block.style.display = 'none';
           }
         },
+        openAgeMenuMobile() {
+          let block = document.querySelector('.age-menu-block-mobile');
+          // if(block.style.display === 'none') {
+            block.style.display = 'block';
+          // } else if(block.style.display === 'block') {
+          //   block.style.display = 'none';
+          // }
+        },
         openSectionsMenu() {
           let block = document.querySelector('.sections-menu-block');
           if(block.style.display === 'none') {
@@ -737,6 +765,16 @@
           } else {
             block.style.display = 'none';
           }
+        },
+        openSectionsMenuMobile() {
+          let block = document.querySelector('.sections-menu-block-mobile');
+          console.log(block);
+          document.querySelector('.sections-menu-block-mobile').style.display = 'block';
+          // if(block.style.display == 'none') {
+            block.style.display = 'flex';
+          // } else {
+          //   block.style.display = 'none';
+          // }
         },
         closeModal: function () {
           document.getElementById('helperModal').style.display = 'none';
@@ -849,14 +887,10 @@
           document.querySelector('.search-block').style.display = "none";
         },
         showMenu: function() {
-          console.log('show');
           this.navVisible = true;
-          console.log(this.navVisible);
         },
         hideMenu: function() {
-          console.log('hide');
           this.navVisible = false;
-          console.log(this.navVisible);
         }
       },
       watch: {
@@ -950,12 +984,26 @@
 
     .v-system-bar img {
       width: 40%;
+      min-width: 85px;
+    }
+    
+    .search-block2 {
+      min-width: auto !important;
+      width: min-content !important;
     }
 
-    .sections-menu-block {
-      top: 0 !important;
+    .sections-menu-block-mobile {
+      /* top: 0 !important;
       width: 200px !important;
-      left: 100% !important;
+      left: 100% !important; */
+      display: none;
+      top: 100% !important;
+      width: 200px !important;
+      left: 0% !important;
+      z-index: 5;
+      overflow: auto;
+      height: 250px;
+      padding: 8px 16px !important;
     }
 
     .v-menu__content {
@@ -970,6 +1018,14 @@
 
     .v-menu__content .v-item-group .v-window-item .v-card {
       padding: 20px !important;
+    }
+
+    .v-footer.footer-block {
+      padding: 20px !important;
+    }
+
+    .v-footer.footer-block > div > div {
+      overflow: scroll;
     }
 
     .modal {
@@ -1057,8 +1113,12 @@
     padding-left: 15px;
     margin: 50px 0 25px 30px !important;
   }
+  .age-menu-block-mobile {
+    display: none;
+    padding-left: 15px;
+  }
 
-  .sections-menu-block {
+  .sections-menu-block, .sections-menu-block-mobile {
     /* display: none; */
     position: absolute;
     background: white;

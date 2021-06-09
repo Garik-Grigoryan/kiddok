@@ -35,11 +35,24 @@
                   <template v-slot:item.image="{ item }">
                     <v-img :src="item.image" :contain="true" width="100" height="100" ></v-img>
                   </template>
+                  <template v-slot:item.price="{ item }">
+                    <div v-if="!user || (user && user.role !== 'juridical')">
+                      {{item.price}}
+                    </div>
+                    <div v-else-if="user && user.role === 'juridical'">
+                      {{item.price_wholesale}}
+                    </div>
+                  </template>
                   <template v-slot:item.count="{ item }">
-                    <div class="product-count">
-                      <div class="minus" @click="countMinus($event, item)"><v-icon color="black" left style="margin-left: 10px;">mdi-minus-thick</v-icon></div>
+                    <div v-if="!user || (user && user.role !== 'juridical')" class="product-count">
+                        <div class="minus" @click="countMinus()"><v-icon color="black" left style="margin-left: 10px;">mdi-minus-thick</v-icon></div>
+                        <input id="product-count-val" placeholder="0" type="text" v-model="count" disabled>
+                        <div class="plus" @click="countPlus()"><v-icon color="black" left style="margin-left: 10px;">mdi-plus</v-icon></div>
+                    </div>
+                    <div v-else-if="user && user.role === 'juridical'" class="product-count">
+                      <div class="minus" @click="countMinusJuridical($event, item)"><v-icon color="black" left style="margin-left: 10px;">mdi-minus-thick</v-icon></div>
                       <input class="product-count-val" placeholder="0" @input="summCount()" @change="changeCount(item)" type="text" v-model="item.count" disabled>
-                      <div class="plus" @click="countPlus($event, item)"><v-icon color="black" left style="margin-left: 10px;">mdi-plus</v-icon></div>
+                      <div class="plus" @click="countPlusJuridical($event, item)"><v-icon color="black" left style="margin-left: 10px;">mdi-plus</v-icon></div>
                     </div>
                     <!-- <v-text-field type="number" @input="summCount()" @change="changeCount(item)" placeholder="0" v-model="item.count" style="max-width: 60px; margin: 0 auto !important; text-align: center" min="1" ></v-text-field> -->
                   </template>
@@ -51,8 +64,11 @@
                     <v-icon  @click="deleteItem(item)">mdi-close-circle</v-icon>
                   </template>
                   <template v-slot:item.total_price="{ item }">
-                    <div>
+                    <div v-if="!user || (user && user.role !== 'juridical')">
                       <span class="product-total-price">{{item.total_price}}</span>
+                    </div>
+                    <div v-else-if="user && user.role === 'juridical'">
+                      <span class="product-total-price">{{item.count*item.price_wholesale}}</span>
                     </div>
                   </template>
                 </v-data-table>
@@ -216,8 +232,11 @@
                         <div>
                           <span>{{dessert.name}}</span>
                         </div>
-                        <div>
+                        <div v-if="!user || (user && user.role !== 'juridical')">
                           <span>{{dessert.total_price}} դրամ</span>
+                        </div>
+                        <div v-else-if="user && user.role === 'juridical'">
+                          <span>{{dessert.count * dessert.price_wholesale}} դրամ</span>
                         </div>
                     </div>
                     <v-divider style="margin: 20px 0 0 0;"></v-divider>
@@ -416,6 +435,8 @@
               color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
               count: elem.count,
               price: elem.product.price,
+              price_wholesale: elem.product.price_wholesale,
+              quantity_wholesale: elem.product.quantity_wholesale,
               remove: key,
               total_price: elem.product.price*elem.count,
               code: elem.product.code
@@ -428,6 +449,8 @@
               color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
               count: elem.count,
               price: elem.product.price,
+              price_wholesale: elem.product.price_wholesale,
+              quantity_wholesale: elem.product.quantity_wholesale,
               remove: key,
               total_price: elem.product.price*elem.count,
               code: elem.product.code
@@ -440,6 +463,8 @@
               color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
               count: elem.count,
               price: elem.product.price,
+              price_wholesale: elem.product.price_wholesale,
+              quantity_wholesale: elem.product.quantity_wholesale,
               remove: key,
               total_price: elem.product.price*elem.count,
               code: elem.product.code
@@ -524,6 +549,8 @@
                 color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
                 count: elem.count,
                 price: elem.product.price,
+                price_wholesale: elem.product.price_wholesale,
+                quantity_wholesale: elem.product.quantity_wholesale,
                 remove: key,
                 total_price: elem.product.price*elem.count,
                 code: elem.product.code
@@ -536,6 +563,8 @@
                 color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
                 count: elem.count,
                 price: elem.product.price,
+                price_wholesale: elem.product.price_wholesale,
+                quantity_wholesale: elem.product.quantity_wholesale,
                 remove: key,
                 total_price: elem.product.price*elem.count,
                 code: elem.product.code
@@ -548,6 +577,8 @@
                 color: elem.color && elem.color.length > 0 ? elem.color : '#000000',
                 count: elem.count,
                 price: elem.product.price,
+                price_wholesale: elem.product.price_wholesale,
+                quantity_wholesale: elem.product.quantity_wholesale,
                 remove: key,
                 total_price: elem.product.price*elem.count,
                 code: elem.product.code
@@ -594,7 +625,11 @@
         this.totalPrice = 0;
         this.desserts.forEach(elem => {
           this.count += parseInt(elem.count);
-          this.totalPrice += elem.price * elem.count;
+          if(!this.user || (this.user && this.user.role !== "juridical")) {
+            this.totalPrice += elem.price * elem.count;
+          } else if(this.user && this.user.role === "juridical") {
+            this.totalPrice += elem.price_wholesale * elem.count;
+          }
         })
       },
       onChangeSelectedRegion() {
@@ -695,6 +730,46 @@
         //   this.init();
         //   this.summCount();
         // });
+      },
+      countMinusJuridical(e, item) {
+        let count = 0;
+        if(e.path[0].classList.contains('minus')){
+          let old_val = parseInt(e.path[1].querySelector('.product-count-val').value);
+          count = old_val;
+          if(old_val >= 1) {
+            e.path[1].querySelector('.product-count-val').value = old_val - parseInt(item.quantity_wholesale);
+            count = old_val - parseInt(item.quantity_wholesale);
+            e.path[3].querySelector('.product-total-price').innerText = item.price*count;
+          }
+        } else {
+          let old_val = parseInt(e.path[2].querySelector('.product-count-val').value);
+          count = old_val;
+          if(old_val >= parseInt(item.quantity_wholesale)) {
+            e.path[2].querySelector('.product-count-val').value = old_val - parseInt(item.quantity_wholesale);
+            count = old_val - parseInt(item.quantity_wholesale);
+            e.path[4].querySelector('.product-total-price').innerText = item.price_wholesale*count;
+          }
+        }
+        item.count = count;
+
+        this.changeCount(item);
+      },
+      countPlusJuridical(e, item) {
+        let count = 0;
+        if(e.path[0].classList.contains('plus')){
+          count = parseInt(e.path[1].querySelector('.product-count-val').value);
+          e.path[1].querySelector('.product-count-val').value = parseInt(e.path[1].querySelector('.product-count-val').value) + parseInt(item.quantity_wholesale);
+          count += parseInt(item.quantity_wholesale);
+          e.path[3].querySelector('.product-total-price').innerText = item.price_wholesale*count;
+        } else {
+          count = parseInt(e.path[2].querySelector('.product-count-val').value);
+          e.path[2].querySelector('.product-count-val').value = parseInt(e.path[2].querySelector('.product-count-val').value) + parseInt(item.quantity_wholesale);
+          count += parseInt(item.quantity_wholesale);
+          e.path[4].querySelector('.product-total-price').innerText = item.price_wholesale*count;
+        }
+        item.count = count;
+
+        this.changeCount(item);
       },
       chooseDelivery(e) {
         console.log(e);

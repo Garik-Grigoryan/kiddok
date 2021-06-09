@@ -6,7 +6,7 @@
           <div class="partners-title">Մեր գործընկերները</div>
           <!-- <h2 class="text-center" style="font-weight: 400;">Kidd’OK – ի հիմքը մեր ԹԻՄՆ է, իսկ ուղեցույցը՝ մեր ՀԱՃԱԽՈՐԴՆԵՐԸ։</h2> -->
         </div>
-        <div class="our-partners-block">
+        <div class="our-partners-block" style="width: 100%;">
           <div class="partner-block">
             <img src="http://kiddokback.neoteric-software.com/images/NoPath.png" width="100%">
           </div>
@@ -20,7 +20,7 @@
             <img src="http://kiddokback.neoteric-software.com/images/NoPath.png" width="100%">
           </div>
         </div>
-        <div class="our-partners-block">
+        <div class="our-partners-block" style="width: 100%;">
           <div class="partner-block">
             <img src="http://kiddokback.neoteric-software.com/images/NoPath.png" width="100%">
           </div>

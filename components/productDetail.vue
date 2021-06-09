@@ -19,8 +19,8 @@
               >
                 <v-img v-if="j <= 2"
                   :src="JSON.parse(product.images)[j]"
-                  height="100%"
-                  style="border-radius: 50%; transform: scale(-1, 1); cursor: pointer; opacity: 0.5;"
+                  height="110px"
+                  style="border-radius: 50%; transform: scale(-1, 1); cursor: pointer; opacity: 0.5; width: 110px;"
                   cover
                   :class="'productImage_'+j"
                   @click="showImage(JSON.parse(product.images)[j], 'productImage_'+j)"
@@ -36,8 +36,8 @@
               >
                 <v-img v-if="j > 2 && j <= 5"
                   :src="JSON.parse(product.images)[j]"
-                  height="100%"
-                  style="border-radius: 50%; transform: scale(-1, 1); cursor: pointer; opacity: 0.5;"
+                  height="100px"
+                  style="border-radius: 50%; transform: scale(-1, 1); cursor: pointer; opacity: 0.5; width: 110px;"
                   cover
                   :class="'productImage_'+j"
                   @click="showImage(JSON.parse(product.images)[j], 'productImage_'+j)"
@@ -53,8 +53,8 @@
               >
                 <v-img v-if="j > 5 && j <= 8"
                   :src="JSON.parse(product.images)[j]"
-                  height="100%"
-                  style="border-radius: 50%; transform: scale(-1, 1); cursor: pointer; opacity: 0.5;"
+                  height="110px"
+                  style="border-radius: 50%; transform: scale(-1, 1); cursor: pointer; opacity: 0.5; width: 110px;"
                   cover
                   :class="'productImage_'+j"
                   @click="showImage(JSON.parse(product.images)[j], 'productImage_'+j)"
@@ -78,21 +78,32 @@
       <v-col md="4" sm="12" class="about-product-block">
         <v-col md="12" lg="12">
           <div class="pl-0">
-            <p class="mb-5 product-price">
+            <p v-if="!user || (user && user.role !== 'juridical')" class="mb-5 product-price">
               <span v-if="product.discountType == 'percent'"><span class="discount">{{product.price}}</span> {{product.price - (product.price * product.discount)/100}} դրամ</span>
               <span v-else-if="product.discountType == 'price'">{{product.price - product.discount}} դրամ</span>
               <span v-else>{{product.price}} դրամ</span>
             </p>
+            <p v-else-if="user && user.role === 'juridical'" class="mb-5 product-price">
+              <span>{{total_price_wholesale}} դրամ</span>
+            </p>
+          </div>
+          <div v-if="user && user.role === 'juridical'" class="mt-5">
+            <span>Մեկ ապրանքի գինը՝ {{product.price_wholesale}} դրամ</span>
           </div>
           <div class="mt-5">
             <span>Ապրանքի կոդը՝ {{product.code}}</span>
           </div>
           <div class="mt-5 pl-0" style="display: flex; align-items: center;">
             <p class="mr-5" style="margin-bottom: 0;"><span>{{ $t('count') }}</span></p>
-            <div class="product-count">
+            <div v-if="!user || (user && user.role !== 'juridical')" class="product-count">
                 <div class="minus" @click="countMinus()"><v-icon color="black" left style="margin-left: 10px;">mdi-minus-thick</v-icon></div>
                 <input id="product-count-val" placeholder="0" type="text" v-model="count" disabled>
                 <div class="plus" @click="countPlus()"><v-icon color="black" left style="margin-left: 10px;">mdi-plus</v-icon></div>
+            </div>
+            <div v-else-if="user && user.role === 'juridical'" class="product-count">
+                <div class="minus" @click="countMinusJuridical(product.quantity_wholesale)"><v-icon color="black" left style="margin-left: 10px;">mdi-minus-thick</v-icon></div>
+                <input id="product-count-val" placeholder="0" type="text" v-model="count" disabled>
+                <div class="plus" @click="countPlusJuridical(product.quantity_wholesale)"><v-icon color="black" left style="margin-left: 10px;">mdi-plus</v-icon></div>
             </div>
             <!-- <v-col cols="2" class="pa-0">
               <v-text-field type="number" placeholder="0" v-model="count" style="padding-top: 0;"/>
@@ -138,9 +149,16 @@
             </v-item-group>
           </div>
           
-          <div class="mt-5 pl-0">
+          <div v-if="!user || (user && user.role !== 'juridical')" class="mt-5 pl-0">
             <div class="text-left">
               <v-btn class="white--text add-to-cart-btn" rounded @click="addToCart($event, product.id)" >
+                Ավելացնել զամբյուղ <v-icon left style="margin-left: 10px;">mdi-cart</v-icon>
+              </v-btn>
+            </div>
+          </div>
+          <div v-else-if="user && user.role === 'juridical'" class="mt-5 pl-0">
+            <div class="text-left">
+              <v-btn class="white--text add-to-cart-btn" rounded @click="addToCartJuridical($event, product.id)" >
                 Ավելացնել զամբյուղ <v-icon left style="margin-left: 10px;">mdi-cart</v-icon>
               </v-btn>
             </div>
@@ -233,6 +251,7 @@
         selectedSize: '',
         cycle: false,
         count: 1,
+        total_price_wholesale: 0,
         imagesCount: 1,
         show: false,
         rating: 0,
@@ -261,6 +280,13 @@
       }
     },
     async mounted() {
+      if(this.user){
+        if(this.user.role === "juridical") {
+          this.count = this.product.quantity_wholesale;
+          this.total_price_wholesale = this.product.quantity_wholesale * this.product.price_wholesale;
+        }
+      }
+
       this.$nextTick(function () {
         if(document.querySelector('.product-images-slider .v-carousel .v-window__container .v-window__next') !== null) {
           document.querySelector('.product-images-slider .v-carousel .v-window__container .v-window__next').style.bottom = "0";
@@ -316,6 +342,17 @@
         document.querySelector('.modal-price-val').innerText = parseInt(document.getElementById('product-count-val').value)*parseInt(document.querySelector('.product-price span').innerText) + 'դրամ';
         document.getElementById('addToCartModal').style.display = 'flex';
       },
+      addToCartJuridical(e, id) {
+        let user_id = 0;
+        if(this.user){
+          user_id = this.user.id
+        }
+        this.$store.dispatch('wishListAndCart/setCArt', [id, user_id, this.selectedColor, this.selectedSize, this.count])
+        this.show = true;
+        document.querySelector('.modal-count-val').innerText = "x " + document.getElementById('product-count-val').value;
+        document.querySelector('.modal-price-val').innerText = this.total_price_wholesale + ' դրամ';
+        document.getElementById('addToCartModal').style.display = 'flex';
+      },
       selectColor(e) {
         if(e.target !== undefined){
           if(e.target.tagName === 'DIV' || e.target.tagName === 'I'){
@@ -362,6 +399,19 @@
       countPlus() {
         document.getElementById('product-count-val').value = parseInt(document.getElementById('product-count-val').value) + 1;
         this.count = document.getElementById('product-count-val').value;
+      },
+      countMinusJuridical(count) {
+        let old_val = parseInt(document.getElementById('product-count-val').value);
+        if(old_val >= 1) {
+          document.getElementById('product-count-val').value = old_val - parseInt(count);
+          this.count = old_val - parseInt(count);
+          this.total_price_wholesale = this.count * this.product.price_wholesale;
+        }
+      },
+      countPlusJuridical(count) {
+        document.getElementById('product-count-val').value = parseInt(document.getElementById('product-count-val').value) + parseInt(count);
+        this.count = document.getElementById('product-count-val').value;
+        this.total_price_wholesale = this.count * this.product.price_wholesale;
       },
       async setRating() {
         if(!this.userRating) {
@@ -530,11 +580,17 @@
     }
  
     .modal {
-        background: #EBE7E7;
+        /* background: #EBE7E7;
         border-radius: 0;
-        /* padding: 15px; */
         position: fixed;
         transform: translate(-50%, -50%);
+        overflow: auto;
+        max-height: 600px; */
+        background: white;
+        border-radius: 0;
+        position: fixed;
+        display: block;
+        height: fit-content;
         overflow: auto;
         max-height: 600px;
  

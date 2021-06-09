@@ -56,6 +56,12 @@
           <v-col cols="5" class="pl-0">
             <v-text-field type="text" v-model="size" label="Size" required ></v-text-field>
           </v-col>
+          <v-col cols="5" class="pl-0">
+            <v-text-field type="number" min="0" v-model="quantity_wholesale" label="Quantity wholesale" required ></v-text-field>
+          </v-col>
+          <v-col cols="5" class="pl-0">
+            <v-text-field type="number" min="0" v-model="price_wholesale" label="The price of one product in wholesale" required ></v-text-field>
+          </v-col>
 
 
           <v-row>
@@ -147,7 +153,7 @@
               ></v-checkbox>
             </v-col>
           </v-row>
-          <v-row>
+          <!-- <v-row>
             <v-col cols="12">
               <Editor v-model="description_en"/>
             </v-col>
@@ -156,7 +162,7 @@
             <v-col cols="12">
               <Editor v-model="description_ru"/>
             </v-col>
-          </v-row>
+          </v-row> -->
           <v-row>
             <v-col cols="12">
               <Editor v-model="description_am"/>
@@ -325,9 +331,11 @@ import Editor from "~/components/Editor.vue";
         price: '',
         code: '',
         size: '',
+        quantity_wholesale: 0,
+        price_wholesale: 0,
         ages: [],
-        description_en: '',
-        description_ru: '',
+        // description_en: '',
+        // description_ru: '',
         description_am: '',
         selectedColors: [],
         sex: 'men',
@@ -394,7 +402,7 @@ import Editor from "~/components/Editor.vue";
         })
       },
       addProduct() {
-        this.$store.dispatch('products/addProduct', [this.name_en, this.name_ru, this.name_am, this.category, this.price, this.selectedImages, this.selectedColors, this.size, this.code, this.selectedBrand, this.sex, this.isNew, this.discountType, this.discount, this.description_en, this.description_ru, this.description_am, this.selectedAge]).then(r => {
+        this.$store.dispatch('products/addProduct', [this.name_en, this.name_ru, this.name_am, this.category, this.price, this.selectedImages, this.selectedColors, this.size, this.code, this.selectedBrand, this.sex, this.isNew, this.discountType, this.discount, this.description_am, this.selectedAge, this.quantity_wholesale, this.price_wholesale]).then(r => {
           this.$router.push('/dashboard/products')
         })
       }

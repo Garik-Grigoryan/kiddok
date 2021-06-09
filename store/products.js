@@ -91,14 +91,14 @@ export const actions = {
     const filterAsTypeProduct = await this.$axios.$get(this.$axios.defaults.baseURL+`/product/fiterAsSalesType`);
     commit('setAllSalesProducts', filterAsTypeProduct)
   },
-  async updateProduct({commit}, [id, name_en, name_ru, name_am, category, price, selectedImages, selectedColors, size, code, selectedBrand, sex, isNew, discountType, discount, description_en, description_ru, description_am, selectedAge]){
-    await this.$axios.$put(this.$axios.defaults.baseURL+`/product/update/${id}`, {'name_en': name_en, 'name_ru': name_ru, 'name_am': name_am, 'category': category, 'price': price, 'selectedImages': selectedImages, 'selectedColors': selectedColors, 'size': size, 'code': code, 'selectedBrand': selectedBrand, 'sex': sex, 'isNew': isNew, 'discountType': discountType, 'discount': discount, 'description_en': description_en, 'description_ru': description_ru, 'description_am': description_am, 'selectedAge': selectedAge});
+  async updateProduct({commit}, [id, name_en, name_ru, name_am, category, price, selectedImages, selectedColors, size, code, selectedBrand, sex, isNew, discountType, discount, description_am, selectedAge, quantity_wholesale, price_wholesale]){
+    await this.$axios.$put(this.$axios.defaults.baseURL+`/product/update/${id}`, {'name_en': name_en, 'name_ru': name_ru, 'name_am': name_am, 'category': category, 'price': price, 'selectedImages': selectedImages, 'selectedColors': selectedColors, 'size': size, 'code': code, 'selectedBrand': selectedBrand, 'sex': sex, 'isNew': isNew, 'discountType': discountType, 'discount': discount, 'description_am': description_am, 'selectedAge': selectedAge, 'quantity_wholesale': quantity_wholesale, 'price_wholesale': price_wholesale});
   },
   async delete({commit}, [id]){
     await this.$axios.$delete(this.$axios.defaults.baseURL+`/product/delete/${id}`);
   },
-  async addProduct(ctx, [name_en, name_ru, name_am, category, price, selectedImages, selectedColors, size, code, selectedBrand, sex, isNew, discountType, discount, description_en, description_ru, description_am, selectedAge])  {
-    await this.$axios.$post(this.$axios.defaults.baseURL+'/product/add', {'name_en': name_en, 'name_ru': name_ru, 'name_am': name_am, 'category': category, 'price': price, 'selectedImages': selectedImages, 'selectedColors': selectedColors, 'size': size, 'code': code, 'selectedBrand': selectedBrand, 'sex': sex, 'isNew': isNew, 'discountType': discountType, 'discount': discount, 'description_en': description_en, 'description_ru': description_ru, 'description_am': description_am, 'selectedAge': selectedAge});
+  async addProduct(ctx, [name_en, name_ru, name_am, category, price, selectedImages, selectedColors, size, code, selectedBrand, sex, isNew, discountType, discount, description_am, selectedAge, quantity_wholesale, price_wholesale])  {
+    await this.$axios.$post(this.$axios.defaults.baseURL+'/product/add', {'name_en': name_en, 'name_ru': name_ru, 'name_am': name_am, 'category': category, 'price': price, 'selectedImages': selectedImages, 'selectedColors': selectedColors, 'size': size, 'code': code, 'selectedBrand': selectedBrand, 'sex': sex, 'isNew': isNew, 'discountType': discountType, 'discount': discount, 'description_am': description_am, 'selectedAge': selectedAge, 'quantity_wholesale': quantity_wholesale, 'price_wholesale': price_wholesale});
   }
 }
 

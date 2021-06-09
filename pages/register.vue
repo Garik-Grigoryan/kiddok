@@ -149,7 +149,7 @@
                   <input type="text" v-model="registerJuridicalPerson.company_hvhh" class="register-input" required>
                 </v-card-actions>
                 <v-card-actions style="display: block; padding: 0;">
-                  <label style="color: #C6C3C3;">ԿԱԶՄԱԿԵՐՊՈՒԹՅԱՆ ՀԵՌԱՂՈՍԱՀԱՄԱՐ*</label>
+                  <label style="color: #C6C3C3;">ԿԱԶՄԱԿԵՐՊՈՒԹՅԱՆ ՀԵՌԱԽՈՍԱՀԱՄԱՐ*</label>
                   <input type="text" v-model="registerJuridicalPerson.company_phone" :rules="phoneRules" class="register-input" required>
                 </v-card-actions>
                 <v-card-actions style="display: block; padding: 0;">
