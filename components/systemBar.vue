@@ -255,9 +255,9 @@
                 </v-menu>
                 <v-btn v-if="authenticated" color="#000000" text class="my-2 nav_button" v-on="on" style="border: none; position: relative;">
                   <a href="/account" style="color: white;">{{user.name + ' ' + user.lastname}}</a>
-                  <v-icon @click="openAccountMenu" color="#000000">mdi-chevron-down</v-icon>
+                  <v-icon @click="openAccountMenuMobile" color="#000000">mdi-chevron-down</v-icon>
 
-                  <v-list v-if="authenticated" class="accountMenu" style="display: none; z-index: 10;">
+                  <v-list v-if="authenticated" class="accountMenuMobile" style="display: none; z-index: 10;">
                     <v-list-item @click="openHelperModal" v-text="'իմ օգնականը'" style="color: black !important;"></v-list-item>
                     <v-list-item @click="logout" v-text="'Դուրս գալ'" style="color: black !important;"></v-list-item>
                   </v-list>
@@ -342,6 +342,9 @@
                     <h2 style="color: #B22180;">Վերականգնել գաղտնաբառը</h2>
                   </div>
                   <v-form @submit.prevent="false" ref="form" :lazy-validation="true" style="width: 100%; margin-top: 30px;">
+                    <v-alert v-if="errors.email" text type="error">
+                      {{errors.email[0]}}
+                    </v-alert>
                     <v-alert v-if="passwordErrors" text type="error">
                       {{passwordErrors}}
                     </v-alert>
@@ -413,6 +416,21 @@
                         </div>
                       </v-card-text>
                     </v-card>
+                </div>
+            </slot>
+        </div>
+    </div>
+
+    <div id="successModal" style="display: none;" class="modal-shadow" @click.self="closeRegisterSuccessModal">
+        <div class="modal">
+            <slot name="body">
+                <div class="modal-content">
+                    <div class="register-modal-block-title">
+                      Իրավաբանական անձ
+                    </div>
+                    <div style="margin-bottom: 30px;">
+                      <p style="color: #352249; font-size: 20px;">Հաստատումը տեղի կունենա 24 ժամվա ընդհացքում</p>
+                    </div>
                 </div>
             </slot>
         </div>
@@ -727,10 +745,14 @@
             if(response.data.data.approved !== "1") {
               await this.$auth.logout().then(response => {}).catch(e => {});
               this.loginError = "Ձեր հաշիվը դեռ չի հաստատվել";
+            } else {
+              document.getElementById('loginModal').style.display = 'none';
             }
             this.menu = false;
+            window.location.href = '/account';
           }).catch(e => {
-            this.loginError = e.response;
+            // this.loginError = e.response;
+            this.loginError = false;
           });
         },
         async logout(){
@@ -785,6 +807,9 @@
         closeLoginModal: function () {
           document.getElementById('loginModal').style.display = 'none';
         },
+        closeRegisterSuccessModal: function () {
+          document.getElementById('successModal').style.display = 'none';
+        },
         openHelperModal(){
           let modals = document.querySelectorAll(".modal-shadow");
           for(let i = 0; i < modals.length; i++) {
@@ -811,6 +836,14 @@
             accountMenu.style.display = 'none';
           }
         },
+        openAccountMenuMobile() {
+          let accountMenu = document.querySelector('.accountMenuMobile');
+          if(accountMenu.style.display === 'none') {
+            accountMenu.style.display = 'block';
+          } else {
+            accountMenu.style.display = 'none';
+          }
+        },
         openLoginModal(){
           let modals = document.querySelectorAll(".modal-shadow");
           for(let i = 0; i < modals.length; i++) {
@@ -824,6 +857,9 @@
             this.$store.dispatch('user/resetPassword', [this.changePasswordForm.email, this.changePasswordForm.new_password]).then(response => {
               document.getElementById('resetPassword').style.display = 'none';
               alert("Գաղտնաբառը հաջողությամբ փոխվել է");
+            }).catch(e => {
+              // this.passwordErrors = e.response;
+              this.passwordErrors = false;
             });
           } else {
             this.passwordErrors = "Ոչ բոլոր դաշտերն են լրացվաց";
@@ -1031,7 +1067,8 @@
     .modal {
       min-width: 90%;
       max-width: 90%;
-      top: 12%;
+      top: 20% !important;
+      left: unset !important;
     }
   }
 
@@ -1049,7 +1086,8 @@
     .modal {
       min-width: 600px;
       max-width: 600px;
-      top: 12%;
+      top: 12% !important;
+      left: unset !important;
     }
   }
 
@@ -1171,7 +1209,7 @@
     margin-top: 10px;
   }
 
-  .accountMenu {
+  .accountMenu, .accountMenuMobile {
     position: absolute !important;
     top: 110% !important;
     background: white !important;
@@ -1203,6 +1241,19 @@
     background-position: 50% 50%;
     background-size: cover;
     border-radius: 50%;
+  }
+
+  .register-modal-block-title {
+    color: #B22180;
+    border-bottom: 2px solid #C6C3C3;
+    width: max-content;
+    padding: 10px 50px 5px 0;
+    margin-bottom: 30px;
+    font-size: 20px;
+  }
+
+  #successModal .modal-content {
+    padding: 30px;
   }
 
 </style>

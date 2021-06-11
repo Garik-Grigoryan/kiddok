@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="cart-page-block">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 
     <div id="app">
@@ -45,14 +45,14 @@
                   </template>
                   <template v-slot:item.count="{ item }">
                     <div v-if="!user || (user && user.role !== 'juridical')" class="product-count">
-                        <div class="minus" @click="countMinus()"><v-icon color="black" left style="margin-left: 10px;">mdi-minus-thick</v-icon></div>
-                        <input id="product-count-val" placeholder="0" type="text" v-model="count" disabled>
-                        <div class="plus" @click="countPlus()"><v-icon color="black" left style="margin-left: 10px;">mdi-plus</v-icon></div>
+                        <div class="minus" @click="countMinus($event, item)"><v-icon color="black" left style="margin-left: 10px;">mdi-minus-thick</v-icon></div>
+                        <input class="product-count-val" placeholder="0" @input="summCount()" @change="changeCount(item)" type="text" v-model="item.count" disabled>
+                        <div class="plus" @click="countPlus($event, item)"><v-icon color="black" left style="margin-left: 10px;">mdi-plus</v-icon></div>
                     </div>
                     <div v-else-if="user && user.role === 'juridical'" class="product-count">
-                      <div class="minus" @click="countMinusJuridical($event, item)"><v-icon color="black" left style="margin-left: 10px;">mdi-minus-thick</v-icon></div>
-                      <input class="product-count-val" placeholder="0" @input="summCount()" @change="changeCount(item)" type="text" v-model="item.count" disabled>
-                      <div class="plus" @click="countPlusJuridical($event, item)"><v-icon color="black" left style="margin-left: 10px;">mdi-plus</v-icon></div>
+                        <div class="minus" @click="countMinusJuridical($event, item)"><v-icon color="black" left style="margin-left: 10px;">mdi-minus-thick</v-icon></div>
+                        <input class="product-count-val" placeholder="0" @input="summCount()" @change="changeCount(item)" type="text" v-model="item.count" disabled>
+                        <div class="plus" @click="countPlusJuridical($event, item)"><v-icon color="black" left style="margin-left: 10px;">mdi-plus</v-icon></div>
                     </div>
                     <!-- <v-text-field type="number" @input="summCount()" @change="changeCount(item)" placeholder="0" v-model="item.count" style="max-width: 60px; margin: 0 auto !important; text-align: center" min="1" ></v-text-field> -->
                   </template>
@@ -89,7 +89,7 @@
           </div>
           <div class="tab-pane fade" :class="{ 'active show': isActive('step2') }" id="step2">
             <v-row>
-              <v-col lg="8" md="12">
+              <v-col lg="8" md="12" sm="12">
                 <v-card style="box-shadow: none;">
                   <v-form style="background: #EBE7E7;">
                     <v-alert v-if="cartError" text type="error">
@@ -107,7 +107,7 @@
                           </select>
                         </div>
                     </div>
-                    <div style="display: flex; justify-content: space-between;">
+                    <div class="flex-block">
                       <div class="step2_block">
                           <div style="margin-bottom: 10px;"><span>Ամբողջական անուն *</span></div>
                           <div style="margin-bottom: 15px;">
@@ -121,7 +121,7 @@
                           </div>
                       </div>
                     </div>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="flex-block">
                       <div class="step2_block">
                           <div style="margin-bottom: 10px;"><span>Հասցե *</span></div>
                           <div style="margin-bottom: 15px;">
@@ -135,7 +135,7 @@
                           </div>
                       </div>
                     </div>
-                    <div style="display: flex; justify-content: space-between;">
+                    <div class="flex-block">
                       <div class="step2_block">
                           <div style="margin-bottom: 10px;"><span>Քաղաք *</span></div>
                           <div style="margin-bottom: 15px;">
@@ -149,7 +149,7 @@
                           </div>
                       </div>
                     </div>
-                    <div style="display: flex; justify-content: space-between;">
+                    <div class="flex-block">
                       <div class="step2_block">
                           <div style="margin-bottom: 10px;"><span>Փոստային Ինդեքս *</span></div>
                           <div style="margin-bottom: 15px;">
@@ -218,7 +218,7 @@
                   </v-form>
                 </v-card>
               </v-col>
-              <v-col lg="4" md="12">
+              <v-col lg="4" md="12" sm="12">
                 <v-card style="box-shadow: none; background: #EBE7E7; padding: 15px;">
                     <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
                       <div>
@@ -256,14 +256,14 @@
                 <!-- <v-btn class="white--text approve-btn" style="text-transform: none; margin-top: 10px; padding: 5px 30px !important;" @click="">Կտրոն</v-btn> -->
               </div>
               <div style="display: flex; margin-top: 20px;">
-                  <div style="width: 20%;"><span>Պատվիրատու՝</span></div>
-                  <div style="width: 30%;">
+                  <div class="step3-input-label" style="width: 20%;"><span>Պատվիրատու՝</span></div>
+                  <div class="step3-input" style="width: 30%;">
                     <input class="step2_input" :rules="requiredField" type="text" name="name" v-model="nameLastName" disabled>
                   </div>
               </div>
               <div style="display: flex; margin-top: 20px;">
-                  <div style="width: 20%;"><span>Վճարման տարբերակ</span></div>
-                  <div style="width: 30%;">
+                  <div class="step3-input-label" style="width: 20%;"><span>Վճարման տարբերակ</span></div>
+                  <div class="step3-input" style="width: 30%;">
                     <input class="step2_input" :rules="requiredField" type="text" name="payment" v-model="payment" disabled>
                   </div>
               </div>
@@ -488,7 +488,6 @@
     methods: {
       buy() {
         this.delivery_type = (document.querySelector('.delivery-block .selected') !== null) ? document.querySelector('.delivery-block .selected').innerText : "";
-        console.log(this.delivery_type);
         if(this.address !== "" && this.payment !== "" && this.nameLastName !== "" && this.email !== "" && this.phone !== "" && this.country !== "Երկիր" && this.city !== "" && this.selected_region !== "" && this.zip !== "" && this.delivery_type !== "") {
           if(this.payment == 'cash'){
             if(this.user){
@@ -669,13 +668,13 @@
         this.activeItem = menuItem
       },
       countMinus(e, item) {
-        // console.log(e);
+        console.log(e, item);
         let count = 0;
         // console.log(e.path[0].classList.contains('minus'));
         if(e.path[0].classList.contains('minus')){
           let old_val = parseInt(e.path[1].querySelector('.product-count-val').value);
           count = old_val;
-          if(old_val >= 1) {
+          if(old_val >= 2) {
             e.path[1].querySelector('.product-count-val').value = old_val - 1;
             count = old_val - 1;
             e.path[3].querySelector('.product-total-price').innerText = item.price*count;
@@ -683,7 +682,7 @@
         } else {
           let old_val = parseInt(e.path[2].querySelector('.product-count-val').value);
           count = old_val;
-          if(old_val >= 1) {
+          if(old_val >= 2) {
             e.path[2].querySelector('.product-count-val').value = old_val - 1;
             count = old_val - 1;
             e.path[4].querySelector('.product-total-price').innerText = item.price*count;
@@ -736,7 +735,7 @@
         if(e.path[0].classList.contains('minus')){
           let old_val = parseInt(e.path[1].querySelector('.product-count-val').value);
           count = old_val;
-          if(old_val >= 1) {
+          if((old_val - parseInt(item.quantity_wholesale)) !== 0) {
             e.path[1].querySelector('.product-count-val').value = old_val - parseInt(item.quantity_wholesale);
             count = old_val - parseInt(item.quantity_wholesale);
             e.path[3].querySelector('.product-total-price').innerText = item.price*count;
@@ -744,7 +743,7 @@
         } else {
           let old_val = parseInt(e.path[2].querySelector('.product-count-val').value);
           count = old_val;
-          if(old_val >= parseInt(item.quantity_wholesale)) {
+          if((old_val - parseInt(item.quantity_wholesale)) !== 0) {
             e.path[2].querySelector('.product-count-val').value = old_val - parseInt(item.quantity_wholesale);
             count = old_val - parseInt(item.quantity_wholesale);
             e.path[4].querySelector('.product-total-price').innerText = item.price_wholesale*count;
@@ -772,8 +771,6 @@
         this.changeCount(item);
       },
       chooseDelivery(e) {
-        console.log(e);
-
         let all = document.querySelectorAll('.delivery-block .radio-input');
         for(let i = 0; i < all.length; i++) {
           all[i].classList.remove("selected");
@@ -929,5 +926,29 @@
 
   .mytable .v-data-table tbody tr td {
     border-bottom: thin solid #B22180 !important;
+  }
+
+  .flex-block {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+  }
+
+  @media (max-width: 959px) {
+    .cart-page-block {
+      margin-top: 70px;
+    }
+
+    .flex-block {
+      display: block;
+    }
+
+    .step3-input-label {
+      width: 30% !important;
+    }
+
+    .step3-input {
+      width: 70% !important;
+    }
   }
 </style>

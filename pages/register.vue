@@ -2,7 +2,7 @@
   <v-container class="mt-5">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
     <div id="app">
-      <div class="container">
+      <div class="container register-page-block">
         <ul class="nav nav-tabs nav-justified">
           <li class="nav-item">
             <v-icon v-if="isActive('step1')" color="#B22381">mdi-check-circle</v-icon>
@@ -182,7 +182,7 @@
       </div>
     </div>
 
-    <div id="successModal" style="display: none;" class="modal-shadow" @click.self="closeModal">
+    <!-- <div id="successModal" style="display: none;" class="modal-shadow" @click.self="closeModal">
         <div class="modal">
             <slot name="body">
                 <div class="modal-content">
@@ -195,7 +195,7 @@
                 </div>
             </slot>
         </div>
-    </div>
+    </div> -->
   </v-container>
 </template>
 
@@ -391,7 +391,12 @@
     .modal {
       min-width: 90%;
       max-width: 90%;
-      top: 12%;
+      top: 20% !important;
+      left: unset !important;
+    }
+
+    .register-page-block .v-form {
+      width: 100% !important;
     }
   }
 
@@ -399,7 +404,8 @@
     .modal {
       min-width: 700px;
       max-width: 700px;
-      top: 12%;
+      top: 12% !important;
+      left: unset !important;
     }
   }
 
@@ -419,11 +425,17 @@
     }
  
     .modal {
+        // background: #EBE7E7;
+        // border-radius: 0;
+        // position: fixed;
+        // transform: translate(-50%, -50%);
+        // display: block;
+        // height: fit-content;
+        // overflow: auto;
+        // max-height: 600px;
         background: #EBE7E7;
         border-radius: 0;
-        /* padding: 15px; */
         position: fixed;
-        // transform: translate(-50%, -50%);
         display: block;
         height: fit-content;
         overflow: auto;

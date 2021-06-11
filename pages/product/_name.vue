@@ -1,11 +1,13 @@
 <template>
   <div>
-    <v-container>
-      <v-row>
-        <productDetail style="width: 100%;"></productDetail>
-        <h2 style="font-weight: 300; margin-top: 150px; margin-bottom: 60px;">ԱՌԱՋԱՐԿՎՈՂ ՏԵՍԱԿԱՆԻ</h2>
-        <BestProducts :count="7" type="best" style="width: 100%;"></BestProducts>
-      </v-row>
+    <v-container class="product-page-block">
+      <div>
+        <!-- <v-row> -->
+          <productDetail style="width: 100%;"></productDetail>
+          <h2 style="font-weight: 300; margin-top: 150px; margin-bottom: 60px;">ԱՌԱՋԱՐԿՎՈՂ ՏԵՍԱԿԱՆԻ</h2>
+          <BestProducts :count="7" type="best" style="width: 100%;"></BestProducts>
+        <!-- </v-row> -->
+      </div>
     </v-container>
   </div>
 </template>
@@ -38,6 +40,11 @@ export default {
       await this.$store.dispatch('wishListAndCart/getWishListAndCartData', [this.user.id]);
     }else{
       await this.$store.dispatch('wishListAndCart/getWishListAndCartData', [0]);
+    }
+  },
+  mounted() {
+    if(document.querySelector('.product-page-block') !== null) {
+      document.querySelector('.product-page-block').parentNode.parentNode.style.position = 'unset';
     }
   }
 }

@@ -399,7 +399,7 @@
     .modal {
       min-width: 90%;
       max-width: 90%;
-      top: 12%;
+      top: 20%;
     }
   }
 

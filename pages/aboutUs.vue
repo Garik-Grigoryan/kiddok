@@ -1,15 +1,15 @@
 <template>
   <v-container class="mt-5 about-us-block">
-    <v-row>
+    <!-- <v-row> -->
       <div class="text-caption" style="display: contents;">
         <div style="display: flex; justify-content: center; width: 100%; margin-bottom: 30px;">
           <h2 class="text-center" style="font-weight: 400;">Kidd’OK – ի հիմքը մեր ԹԻՄՆ է, իսկ ուղեցույցը՝ մեր ՀԱՃԱԽՈՐԴՆԵՐԸ։</h2>
         </div>
-        <div style="display: flex; justify-content: space-between; width: 100%;">
-          <div style="width: 50%">
+        <div class="about-us-main-block">
+          <div class="about-us-block1">
             <img src="http://kiddokback.neoteric-software.com/images/kd1.png" width="100%">
           </div>
-          <div style="width: 45%">
+          <div class="about-us-block2">
             <div v-html="text"></div>
             <!-- <p>
               Kidd’OK ապրանքային բրենդը հիմնադրվել է 2019 թվականին տնօրեն Հենրի Խաչատրյանի կողմից, ընկերությունը զբաղվում է խաղալիքների արտադրանքով ինչպես նաև մանրածախ և մեծածախ վաճառքով, գործունեությունը հայաստանում սկսվել է 2001 թվականից 
@@ -50,7 +50,7 @@
           </div>
         </div>
       </div>
-    </v-row>
+    <!-- </v-row> -->
   </v-container>
 </template>
 
@@ -127,9 +127,35 @@
     text-transform: none;
   }
 
+  .about-us-main-block {
+    display: flex; 
+    justify-content: space-between; 
+    width: 100%;
+  }
+
+  .about-us-block1 {
+    width: 50%;
+  }
+
+  .about-us-block2 {
+    width: 45%;
+  }
+
   @media (max-width: 959px) {
     .about-us-block {
       margin-top: 170px !important;
+    }
+
+    .about-us-main-block {
+      flex-direction: column;
+    }
+
+    .about-us-block1, .about-us-block2 {
+      width: 100%;
+    }
+
+    .about-us-block1 {
+      margin-bottom: 20px;
     }
   }
 </style>

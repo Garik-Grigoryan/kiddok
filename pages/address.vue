@@ -1,6 +1,6 @@
 <template>
   <v-container class="mt-5 address-page-block">
-    <v-row>
+    <!-- <v-row> -->
       <div class="text-caption" style="display: flex; flex-wrap: wrap; justify-content: space-between; width: 100%; margin: 20px 0 80px 0;">
         <div class="address-block">
           <div class="address-block-title">
@@ -19,7 +19,7 @@
           <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12196.31259205636!2d44.49865963057115!3d40.162813729115726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x406abc4335d0c721%3A0x8596defb8a02d4a9!2sSurmalu!5e0!3m2!1sru!2s!4v1621407359614!5m2!1sru!2s" width="650" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
       </div>
-    </v-row>
+    <!-- </v-row> -->
   </v-container>
 </template>
 
@@ -95,6 +95,10 @@
   @media (max-width: 959px) {
     .address-page-block {
       margin-top: 170px !important;
+    }
+
+    .map, .map iframe {
+      width: 100%;
     }
   }
 </style>

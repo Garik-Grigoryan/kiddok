@@ -1,6 +1,6 @@
 <template>
   <v-container class="mt-5">
-    <v-row>
+    <!-- <v-row> -->
       <div class="text-caption" style="display: contents;">
         <div class="delivery-block">
           <div class="delivery-block-title">
@@ -13,7 +13,7 @@
           </p>
         </div>
       </div>
-    </v-row>
+    <!-- </v-row> -->
   </v-container>
 </template>
 

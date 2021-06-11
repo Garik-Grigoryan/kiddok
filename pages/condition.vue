@@ -1,11 +1,11 @@
 <template>
   <v-container class="mt-5">
-    <v-row>
+    <!-- <v-row> -->
       <div class="text-caption">
         <h1 class="text-center">{{$t('conditions')}}</h1>
         <div v-html="text"></div>
       </div>
-    </v-row>
+    <!-- </v-row> -->
   </v-container>
 </template>
 

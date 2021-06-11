@@ -7,11 +7,11 @@
 
     <v-row>
       <v-col md="2" sm="12" class="product-images-slider" @change="setStyle()" @click="setStyle()">
-        <v-carousel :continuous="false" :cycle="false" :vertical="true" hide-delimiter-background :hide-delimiters="true" delimiter-icon="mdi-minus" next-icon="mdi-chevron-down" prev-icon="mdi-chevron-up" height="100%" style="padding: 30px 0;">
+        <v-carousel :continuous="false" :cycle="false" :vertical="true" hide-delimiter-background :hide-delimiters="true" delimiter-icon="mdi-minus" next-icon="mdi-chevron-down" prev-icon="mdi-chevron-up" height="100%" style="padding: 50px 0;">
           <!-- <v-carousel-item v-for="(slide, i) in JSON.parse(product.images)" :key="i" :src="slide" top></v-carousel-item> -->
           <!-- <v-carousel-item v-for="(slide, i) in imagesCount" :key="i" style="margin: 60px 0;"> -->
           <v-carousel-item v-for="(i) in imagesCount" :key="i">
-            <div v-if="i === 1">
+            <div class="carousel-item-block1" v-if="i === 1">
               <v-card
                 v-for="(slide2, j) in JSON.parse(product.images)"
                 :key="j"
@@ -28,7 +28,7 @@
                 </v-img>
               </v-card>
             </div>
-            <div v-if="i === 2">
+            <div class="carousel-item-block2" v-if="i === 2">
               <v-card
                 v-for="(slide2, j) in JSON.parse(product.images)"
                 :key="j"
@@ -45,7 +45,7 @@
                 </v-img>
               </v-card>
             </div>
-            <div v-if="i === 3">
+            <div class="carousel-item-block3" v-if="i === 3">
               <v-card
                 v-for="(slide2, j) in JSON.parse(product.images)"
                 :key="j"
@@ -167,7 +167,7 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col md="2" sm="12"></v-col>
+      <div class="col-md-2 col-sm-12"></div>
       <v-col md="9" sm="12" class="product-description">
         <span>Նկարագրություն</span>
         <p id="productDescription"></p>
@@ -228,7 +228,7 @@
       return {
         title: this.product.name_am,
         meta: [
-          { hid: this.product.name_am, name: this.product.name_am, content: this.product.description_am.replace(/<[^>]*>?/gm, '') },
+          { hid: this.product.name_am, name: this.product.name_am, content: (this.product.description_am !== null && this.product.description_am !== '') ? this.product.description_am.replace(/<[^>]*>?/gm, '') : '' },
           {
             hid: "og:image",
             property: "og:image",
@@ -237,7 +237,7 @@
           {
             hid: "description",
             name: "description",
-            content: this.product.description_am.replace(/<[^>]*>?/gm, ''),
+            content: (this.product.description_am !== null && this.product.description_am !== '') ? this.product.description_am.replace(/<[^>]*>?/gm, '') : '',
           },
 
         ],
@@ -282,8 +282,12 @@
     async mounted() {
       if(this.user){
         if(this.user.role === "juridical") {
-          this.count = this.product.quantity_wholesale;
-          this.total_price_wholesale = this.product.quantity_wholesale * this.product.price_wholesale;
+          this.count = (this.product.quantity_wholesale !== null && this.product.quantity_wholesale !== '') ? this.product.quantity_wholesale : 1;
+          if(this.product.quantity_wholesale !== null && this.product.quantity_wholesale !== '' && this.product.price_wholesale !== null && this.product.price_wholesale !== '') {
+            this.total_price_wholesale = this.product.quantity_wholesale * this.product.price_wholesale;
+          } else {
+            this.total_price_wholesale = 0;
+          }
         }
       }
 
@@ -391,7 +395,7 @@
       },
       countMinus() {
         let old_val = parseInt(document.getElementById('product-count-val').value);
-        if(old_val >= 1) {
+        if(old_val >= 2) {
           document.getElementById('product-count-val').value = old_val - 1;
           this.count = old_val - 1;
         }
@@ -402,7 +406,7 @@
       },
       countMinusJuridical(count) {
         let old_val = parseInt(document.getElementById('product-count-val').value);
-        if(old_val >= 1) {
+        if((old_val - parseInt(count)) !== 0) {
           document.getElementById('product-count-val').value = old_val - parseInt(count);
           this.count = old_val - parseInt(count);
           this.total_price_wholesale = this.count * this.product.price_wholesale;
@@ -552,8 +556,12 @@
     .modal {
       min-width: 90%;
       max-width: 90%;
-      top: 12%;
+      top: 20%;
     }
+
+    /* .carousel-item-block1, .carousel-item-block2, .carousel-item-block3 {
+      display: flex;
+    } */
   }
 
   @media (min-width: 959px) {

@@ -1,6 +1,6 @@
 <template>
   <v-container class="mt-5">
-    <v-row>
+    <!-- <v-row> -->
       <div class="text-caption" style="display: contents;">
         <div style="display: flex; justify-content: center; width: 100%; margin-bottom: 30px;">
           <div class="partners-title">Մեր գործընկերները</div>
@@ -35,7 +35,7 @@
           </div>
         </div>
       </div>
-    </v-row>
+    <!-- </v-row> -->
   </v-container>
 </template>
 

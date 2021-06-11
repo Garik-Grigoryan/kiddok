@@ -6,6 +6,10 @@
           Edit Product
         </v-toolbar-title>
         <v-form ref="form" v-model="valid" >
+          <v-alert v-if="productErrors" text type="error">
+            {{productErrors}}
+          </v-alert>
+
           <v-text-field v-model="name_en" :rules="nameRules" label="Name (eng)" required ></v-text-field>
           <v-text-field v-model="name_ru" :rules="nameRules" label="Name (rus)" required ></v-text-field>
           <v-text-field v-model="name_am" :rules="nameRules" label="Name (am)" required ></v-text-field>
@@ -56,10 +60,10 @@
             <v-text-field type="text" v-model="size" label="Size" required ></v-text-field>
           </v-col>
           <v-col cols="5" class="pl-0">
-            <v-text-field type="number" min="0" v-model="quantity_wholesale" label="Quantity wholesale" required ></v-text-field>
+            <v-text-field type="number" min="0" v-model="quantity_wholesale" label="Quantity wholesale *" required ></v-text-field>
           </v-col>
           <v-col cols="5" class="pl-0">
-            <v-text-field type="number" min="0" v-model="price_wholesale" label="The price of one product in wholesale" required ></v-text-field>
+            <v-text-field type="number" min="0" v-model="price_wholesale" label="The price of one product in wholesale *" required ></v-text-field>
           </v-col>
 
 
@@ -353,6 +357,7 @@ export default {
       category: 0,
       discountType: 'none',
       discount: '',
+      productErrors: false
     }
   },
   async mounted() {
@@ -429,9 +434,15 @@ export default {
       })
     },
     updateProduct() {
-      this.$store.dispatch('products/updateProduct', [this.$route.params.id, this.name_en, this.name_ru, this.name_am, this.category, this.price, this.selectedImages, this.selectedColors, this.size, this.code, this.selectedBrand, this.sex, this.isNew, this.discountType, this.discount, this.description_am, this.selectedAge, this.quantity_wholesale, this.price_wholesale]).then(r => {
-        this.$router.push('/dashboard/products')
-      })
+      console.log(this.quantity_wholesale);
+      if(this.quantity_wholesale != 0 && this.quantity_wholesale !== "" && this.price_wholesale != 0 && this.price_wholesale !== "") {
+        this.$store.dispatch('products/updateProduct', [this.$route.params.id, this.name_en, this.name_ru, this.name_am, this.category, this.price, this.selectedImages, this.selectedColors, this.size, this.code, this.selectedBrand, this.sex, this.isNew, this.discountType, this.discount, this.description_am, this.selectedAge, this.quantity_wholesale, this.price_wholesale]).then(r => {
+          this.$router.push('/dashboard/products');
+          this.productErrors = false;
+        });
+      } else {
+        this.productErrors = "Ոչ բոլոր պարտադիր դաշտերն են լրացվաց";
+      }
     }
   },
   // mounted() {
