@@ -400,7 +400,7 @@
       min-width: 90%;
       max-width: 90%;
       top: 28% !important;
-      max-height: 500px !important;
+      max-height: 450px !important;
     }
   }
 

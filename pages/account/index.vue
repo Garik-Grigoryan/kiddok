@@ -262,7 +262,7 @@
                       </div>
 
                       <div class="questionnaire_block">
-                          <div style="margin-bottom: 20px;"><span>Ի՞նչը Ձեզ չի գոհացնում ՊՈՊՈ ԳՐՈՒՊ-ի աշխատանքում</span></div>
+                          <div style="margin-bottom: 20px;"><span>Ի՞նչը Ձեզ չի գոհացնում Kidd'Ok-ի աշխատանքում</span></div>
                           <div style="margin-bottom: 15px;">
                             <input class="questionnaire_input" v-model="questionnaireForm.not_suit_in_work" type="text" name="not_suit_in_work" placeholder="Իմ պատասխանը">
                           </div>
@@ -668,7 +668,7 @@
       min-width: 90%;
       max-width: 90%;
       top: 28% !important;
-      max-height: 500px !important;
+      max-height: 450px !important;
     }
   }
 

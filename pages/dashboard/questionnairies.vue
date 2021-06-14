@@ -48,7 +48,7 @@
               {text: "Որտեղից են իմացել Kidd'Ok կազմակերպության մասին", value: 'how_find_out'},
               {text: "Արդյոք օգտվում են www.Kidd'Ok.am կայքից", value: 'use_site'},
               {text: 'ՆորարարությունՆեր կամ փոփոխությունՆեր', value: 'innovations_or_changes'},
-              {text: 'Ինչը չի գոհացնում ՊՈՊՈ ԳՐՈՒՊ-ի աշխատանքում', value: 'not_suit_in_work'},
+              {text: 'Ինչը չի գոհացնում Kidd\'Ok աշխատանքում', value: 'not_suit_in_work'},
               {text: 'Վարկանիշ', value: 'rating'},
               {text: 'Անուն,Ազգանուն(պաշտոն)', value: 'name'},
               {text: 'Կազմակերպության անվանում', value: 'company_name'},

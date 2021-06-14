@@ -4,7 +4,11 @@
       <v-col sm="6" xs="12" md="4" v-for="(item, i) in items" :key="i">
         <v-list :three-line="true" :class="item.class">
           <v-list-item>
-            <v-list-item-content v-if="item.class === 'block2' || item.class === 'block3'" style="display: block;">
+            <v-list-item-content v-if="item.class === 'block3'" style="display: block; cursor: pointer;" @click="openPaymentModal()">
+              <v-list-item-title v-text="item.title"></v-list-item-title>
+              <v-list-item-subtitle v-text="item.text"></v-list-item-subtitle>
+            </v-list-item-content>
+            <v-list-item-content v-else-if="item.class === 'block2'" style="display: block; cursor: pointer;" @click="openJobModal()">
               <v-list-item-title v-text="item.title"></v-list-item-title>
               <v-list-item-subtitle v-text="item.text"></v-list-item-subtitle>
             </v-list-item-content>
@@ -15,147 +19,6 @@
             <v-list-item-icon>
               <v-icon v-text="item.icon" size="40"></v-icon>
             </v-list-item-icon>
-
-            <!-- <v-menu v-if="item.class === 'block1'" :close-on-content-click="false" :nudge-width="200" offset-y bottom>
-              <template v-slot:activator="{ on }">
-                <v-list-item-content style="display: block; cursor: pointer;" v-on="on">
-                  <v-list-item-title v-text="item.title"></v-list-item-title>
-                  <v-list-item-subtitle v-text="item.text"></v-list-item-subtitle>
-                </v-list-item-content>
-                <v-list-item-icon>
-                  <v-icon v-text="item.icon" size="40"></v-icon>
-                </v-list-item-icon>
-              </template>
-              <v-card class="questionnaire">
-                <v-tabs background-color="#01235E" class="elevation-2" dark :centered="true" :prev-icon="'mdi-arrow-left-bold-box-outline'" :next-icon="'mdi-arrow-right-bold-box-outline'" :icons-and-text="true" >
-                  <v-tabs-slider></v-tabs-slider>
-                  <v-tab :href="`#tab-1`" >
-                    
-                  </v-tab>
-                  <v-tab-item :value="'tab-1'">
-                    <v-card flat tile style="padding: 20px;">
-                      <v-card-text>
-                        <div class="modal-header">
-                          <h4>Հարցաթերթիկ</h4>
-                          <div><span class="close-modal" @click="closeModal">x</span></div>
-                        </div>
-                        <v-form @submit.prevent="false" ref="form" :lazy-validation="true" >
-                          <v-alert v-if="questionnaireError" text type="error">
-                            {{questionnaireError}}
-                          </v-alert>
-
-                          <div class="questionnaire_block">
-                              <v-btn text class="questionnaire_btn" style="text-transform: uppercase;">Հարցաթերթիկ</v-btn>
-                              <div style="margin-bottom: 20px;"><span>Ձեր կարծիքը շատ կարևոր է մեզ համար</span></div>
-                          </div>
-
-                          <div class="questionnaire_block">
-                              <div style="margin-bottom: 20px;"><span>Որտեղի՞ց եք իմացել Kidd'Ok կազմակերպության մասին *</span></div>
-                              <div style="margin-bottom: 15px;">
-                                <input type="radio" name="how_find_out" v-model="questionnaireForm.how_find_out" value="Համացանցից">
-                                <label style="margin-left: 10px;">Համացանցից</label>
-                              </div>
-                              <div style="margin-bottom: 15px;">
-                                <input type="radio" name="how_find_out" v-model="questionnaireForm.how_find_out" value="Կազմակերպության աշխատակիցներից">
-                                <label style="margin-left: 10px;">Կազմակերպության աշխատակիցներից</label>
-                              </div>
-                              <div style="margin-bottom: 15px;">
-                                <input type="radio" name="how_find_out" v-model="questionnaireForm.how_find_out" value="Երրորդ անձից">
-                                <label style="margin-left: 10px;">Երրորդ անձից</label>
-                              </div>
-                          </div>
-
-                          <div class="questionnaire_block">
-                              <div style="margin-bottom: 20px;"><span>Արդյո՞ք Դուք օգտվում եք www.Kidd'Ok.am կայքից *</span></div>
-                              <div style="margin-bottom: 15px;">
-                                <input type="radio" name="use_site" v-model="questionnaireForm.use_site" value="Այո">
-                                <label style="margin-left: 10px;">Այո</label>
-                              </div>
-                              <div style="margin-bottom: 15px;">
-                                <input type="radio" name="use_site" v-model="questionnaireForm.use_site" value="Ոչ">
-                                <label style="margin-left: 10px;">Ոչ</label>
-                              </div>
-                              <div style="margin-bottom: 15px;">
-                                <input type="radio" name="use_site" v-model="questionnaireForm.use_site" value="Տեղյակ չեի">
-                                <label style="margin-left: 10px;">Տեղյակ չեի</label>
-                              </div>
-                          </div>
-
-                          <div class="questionnaire_block">
-                              <div style="margin-bottom: 20px;"><span>Ինչպիսի՞ նորարարություն կամ փոփոխություն կցանկանայիք տեսնել Kidd'Ok-ի աշխատանքի մեջ</span></div>
-                              <div style="margin-bottom: 15px;">
-                                <input class="questionnaire_input" v-model="questionnaireForm.innovations_or_changes" type="text" name="innovations_or_changes" placeholder="Իմ պատասխանը">
-                              </div>
-                          </div>
-
-                          <div class="questionnaire_block">
-                              <div style="margin-bottom: 20px;"><span>Ի՞նչը Ձեզ չի գոհացնում ՊՈՊՈ ԳՐՈՒՊ-ի աշխատանքում</span></div>
-                              <div style="margin-bottom: 15px;">
-                                <input class="questionnaire_input" v-model="questionnaireForm.not_suit_in_work" type="text" name="not_suit_in_work" placeholder="Իմ պատասխանը">
-                              </div>
-                          </div>
-
-                          <div class="questionnaire_block">
-                              <div style="margin-bottom: 20px;"><span>Խնդրում ենք գնահատել աշխատակիցների սպասարկումը 5 բալանի սանդղակով *</span></div>
-                              <div style="display: flex; justify-content: space-between;margin-bottom: 15px;">
-                                <div><span>Վատ</span></div>
-                                <div>
-                                  <input type="radio" name="rating" v-model="questionnaireForm.rating" value="1">
-                                  <div>1</div>
-                                </div>
-                                <div>
-                                  <input type="radio" name="rating" v-model="questionnaireForm.rating" value="2">
-                                  <div>2</div>
-                                </div>
-                                <div>
-                                  <input type="radio" name="rating" v-model="questionnaireForm.rating" value="3">
-                                  <div>3</div>
-                                </div>
-                                <div>
-                                  <input type="radio" name="rating" v-model="questionnaireForm.rating" value="4">
-                                  <div>4</div>
-                                </div>
-                                <div>
-                                  <input type="radio" name="rating" v-model="questionnaireForm.rating" value="5">
-                                  <div>5</div>
-                                </div>
-                                <div><span>Շատ լավ</span></div>
-                              </div>
-                          </div>
-
-                          <div class="questionnaire_block">
-                              <div style="margin-bottom: 20px;"><span>Անուն,Ազգանուն(պաշտոն) *</span></div>
-                              <div style="margin-bottom: 15px;">
-                                <input class="questionnaire_input" type="text" v-model="questionnaireForm.name" name="name" placeholder="Իմ պատասխանը">
-                              </div>
-                          </div>
-
-                          <div class="questionnaire_block">
-                              <div style="margin-bottom: 20px;"><span>Կազմակերպության անվանում</span></div>
-                              <div style="margin-bottom: 15px;">
-                                <input class="questionnaire_input" type="text" v-model="questionnaireForm.company_name" name="company_name" placeholder="Իմ պատասխանը">
-                              </div>
-                          </div>
-
-                          <div class="questionnaire_block">
-                              <div style="margin-bottom: 20px;"><span>Հեռախոսահամար *</span></div>
-                              <div style="margin-bottom: 15px;">
-                                <input class="questionnaire_input" type="text" v-model="questionnaireForm.phone" name="phone" placeholder="Իմ պատասխանը">
-                              </div>
-                          </div>
-
-                          <v-card-actions style="padding: 0;">
-                            <v-btn color="primary" text @click="sendQuestionnaireForm()" class="questionnaire_btn" style="margin: auto;">Հաստատել</v-btn>
-                          </v-card-actions>
-                        </v-form>
-                      </v-card-text>
-                    </v-card>
-                  </v-tab-item>
-                </v-tabs>
-
-              </v-card>
-            </v-menu> -->
-
           </v-list-item>
         </v-list>
       </v-col>
@@ -219,7 +82,7 @@
                       </div>
 
                       <div class="questionnaire_block">
-                          <div style="margin-bottom: 20px;"><span>Ի՞նչը Ձեզ չի գոհացնում ՊՈՊՈ ԳՐՈՒՊ-ի աշխատանքում</span></div>
+                          <div style="margin-bottom: 20px;"><span>Ի՞նչը Ձեզ չի գոհացնում Kidd'Ok-ի աշխատանքում</span></div>
                           <div style="margin-bottom: 15px;">
                             <input class="questionnaire_input" v-model="questionnaireForm.not_suit_in_work" type="text" name="not_suit_in_work" placeholder="Իմ պատասխանը">
                           </div>
@@ -282,6 +145,34 @@
             </slot>
         </div>
     </div>
+
+    <div id="jobModal" style="display: none;" class="modal-shadow" @click.self="closeJobModal">
+        <div class="modal">
+            <slot name="body">
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <h4>Թափուր աշխատատեղեր</h4>
+                      <div><span class="close-job-modal" @click="closeJobModal">x</span></div>
+                    </div>
+                    <div v-html="jobText" style="margin-bottom: 40px;"></div>
+                </div>
+            </slot>
+        </div>
+    </div>
+
+    <div id="paymentModal" style="display: none;" class="modal-shadow" @click.self="closePaymentModal">
+        <div class="modal">
+            <slot name="body">
+                <div class="modal-content">
+                    <div class="modal-header">
+                      <h4>Վճարման եղանակներ</h4>
+                      <div><span class="close-payment-modal" @click="closePaymentModal">x</span></div>
+                    </div>
+                    <div v-html="paymentText" style="margin-bottom: 40px;"></div>
+                </div>
+            </slot>
+        </div>
+    </div>
   </v-container>
 </template>
 
@@ -307,7 +198,15 @@
           company_name: '',
           phone: ''
         },
+        paymentText: '',
+        jobText: '',
+        paymentPage: [],
+        jobPage: []
       })
+    },
+    async fetch({route, store}) {
+      await store.dispatch('menus/fetch');
+      await store.dispatch('pages/getById', [4]);
     },
     methods: {
       closeModal() {
@@ -315,8 +214,20 @@
         // document.querySelector('.v-menu__content').style.display = 'none';
         document.getElementById('questionnaireModal').style.display = 'none';
       },
+      closeJobModal() {
+        document.getElementById('jobModal').style.display = 'none';
+      },
+      closePaymentModal() {
+        document.getElementById('paymentModal').style.display = 'none';
+      },
       openQuestionnaireModal() {
         document.getElementById('questionnaireModal').style.display = 'flex';
+      },
+      openJobModal() {
+        document.getElementById('jobModal').style.display = 'flex';
+      },
+      openPaymentModal() {
+        document.getElementById('paymentModal').style.display = 'flex';
       },
       async sendQuestionnaireForm() {
         if(this.questionnaireForm.name !== "" && this.questionnaireForm.phone !== "" && this.questionnaireForm.rating !== "" && this.questionnaireForm.use_site !== "" && this.questionnaireForm.how_find_out !== "") {
@@ -331,6 +242,18 @@
         } else {
           this.questionnaireError = "Ոչ բոլոր պարտադիր դաշտերն են լրացվաց";
         }
+      }
+    },
+    async mounted() {
+      this.paymentPage = await this.$axios.$get(this.$axios.defaults.baseURL+'/pages/get/4');
+      this.paymentText = this.paymentPage.html_am;
+
+      this.jobPage = await this.$axios.$get(this.$axios.defaults.baseURL+'/pages/get/5');
+      this.jobText = this.jobPage.html_am;
+    },
+    computed: {
+      page() {
+        return this.$store.getters['pages/page'];
       }
     }
   }
@@ -390,6 +313,7 @@
   .modal-header {
     display: flex;
     justify-content: space-between;
+    align-items: baseline;
     margin-bottom: 30px;
     border-bottom: 1px solid #C6C3C3;
     padding: 5px 35px;
@@ -401,6 +325,18 @@
   .close-modal {
     cursor: pointer;
     color: #01B8BE;
+    font-size: 20px;
+  }
+
+  .close-job-modal {
+    cursor: pointer;
+    color: #B22180;
+    font-size: 20px;
+  }
+
+  .close-payment-modal {
+    cursor: pointer;
+    color: #FDB813;
     font-size: 20px;
   }
 
@@ -416,7 +352,7 @@
       min-width: 90%;
       max-width: 90%;
       top: 28% !important;
-      max-height: 500px !important;
+      max-height: 450px !important;
     }
   }
 

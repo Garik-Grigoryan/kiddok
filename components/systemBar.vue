@@ -48,11 +48,11 @@
                   </div>
                 </div>
               </div>
-              <div v-else-if="item.to==='/wholesale'">
+              <!-- <div v-else-if="item.to==='/wholesale'">
                 <v-btn v-if="user && user.role === 'juridical'" exact color="#fff" text class="my-2 nav_button" v-on="on" bottom style="border: none;">
                   <div>{{ item.title }}</div>
                 </v-btn>
-              </div>
+              </div> -->
               <div v-else>
                 <v-btn  exact :to="localePath(item.to)" router color="#fff" text class="my-2 nav_button" v-on="on" bottom >
                   <div>{{ item.title }}</div>
@@ -241,11 +241,11 @@
                         </div>
                       </div>
                     </div>
-                    <div v-else-if="item.to==='/wholesale'">
+                    <!-- <div v-else-if="item.to==='/wholesale'">
                       <v-btn v-if="user && user.role === 'juridical'" exact color="#fff" text class="my-2 nav_button" v-on="on" bottom style="border: none;">
                         <div>{{ item.title }}</div>
                       </v-btn>
-                    </div>
+                    </div> -->
                     <div v-else>
                       <v-btn  exact :to="localePath(item.to)" router color="#fff" text class="my-2 nav_button" v-on="on" bottom >
                         <div>{{ item.title }}</div>
@@ -513,9 +513,9 @@
             { title: this.$t('sections'),
               to: '/sections',
             },
-            { title: this.$t('wholesale'),
-              to: '/wholesale'
-            },
+            // { title: this.$t('wholesale'),
+            //   to: '/wholesale'
+            // },
             // { title: this.$t('news'),
             //   to: '/news'
             // },
@@ -978,7 +978,7 @@
       min-width: 90%;
       max-width: 90%;
       top: 28% !important;
-      max-height: 500px !important;
+      max-height: 450px !important;
       left: unset !important;
     }
   }
