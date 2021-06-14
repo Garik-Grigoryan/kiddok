@@ -1,8 +1,8 @@
 <template>
   <div>
-    <!-- <v-btn class="icon_filter" v-if="!drawer" icon @click.stop="drawer = !drawer" @click = "icon_filter" style="">
+    <v-btn class="icon_filter" v-if="!drawer" icon @click.stop="drawer = !drawer" @click = "icon_filter" style="">
       <v-icon>mdi-filter-plus</v-icon>
-    </v-btn> -->
+    </v-btn>
     <v-navigation-drawer
       v-model="drawer"
       :mini-variant.sync="mini"
@@ -10,7 +10,6 @@
       app
       clipped
       class="product_filter"
-      style="width: 85% !important;"
     >
       <!-- <v-list-item class="px-2 mt-3">
         <v-img :src="brand[0].image" width="80%"  :contain="true"></v-img>
@@ -318,21 +317,34 @@ import bestProductCard from "./bestProductCard";
       top: 50%;
       left: 15px;
       z-index: 10;
-      width: 56px;
-      height: 56px;
+      width: 56px !important;
+      height: 56px !important;
       color: #ffffff !important;
-      border: 1px solid rgb(1, 35, 94);
-      background-color: rgb(1, 35, 94);
+      border: 1px solid #B22180;
+      background-color: #B22180;
     }
   /*}*/
 
-  nav.product_filter {
-    position: relative !important;
-    height: max-content !important;
-    width: 256px !important;
-    top: 0 !important;
-    transform: none !important;
-    max-height: none !important;
+  @media (min-width: 767px) and (max-width: 1266px) {
+    nav.product_filter {
+      width: 50% !important;
+    }
+  }
+
+  @media (min-width: 1266px) {
+    nav.product_filter {
+      position: relative !important;
+      height: max-content !important;
+      width: 85% !important;
+      top: 0 !important;
+      transform: none !important;
+      max-height: none !important;
+    }
+  }
+  @media (max-width: 767px) {
+    nav.product_filter {
+      width: 85% !important;
+    }
   }
 
   .checkbox-block {

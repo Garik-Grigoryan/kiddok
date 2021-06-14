@@ -280,11 +280,13 @@
                   </v-btn>
                 </div>
 
-                <v-badge v-else color="error" :content="cartLength">
-                  <v-btn :to="localePath('/cart')" color="#000000" text class="my-2 nav_button" width="50px" style="border: none;">
-                    <v-icon color="#000000">mdi-cart-outline</v-icon>
-                  </v-btn>
-                </v-badge>
+                <div v-else>
+                  <v-badge color="error" :content="cartLength">
+                    <v-btn :to="localePath('/cart')" color="#000000" text class="my-2 nav_button" width="50px" style="border: none;">
+                      <v-icon color="#000000">mdi-cart-outline</v-icon>
+                    </v-btn>
+                  </v-badge>
+                </div>
               </div>
             </nav>
         </main>
@@ -970,6 +972,26 @@
       display: none;
     }
   }
+
+  @media (max-width: 767px) {
+    .modal {
+      min-width: 90%;
+      max-width: 90%;
+      top: 28% !important;
+      max-height: 500px !important;
+      left: unset !important;
+    }
+  }
+
+  @media (min-width: 767px) and (max-width: 959px) {
+    .modal {
+      min-width: 90%;
+      max-width: 90%;
+      top: 20% !important;
+      left: unset !important;
+    }
+  }
+
   @media (max-width: 959px) {
     .show-in-lg{
       display: none;
@@ -1062,13 +1084,6 @@
 
     .v-footer.footer-block > div > div {
       overflow: scroll;
-    }
-
-    .modal {
-      min-width: 90%;
-      max-width: 90%;
-      top: 20% !important;
-      left: unset !important;
     }
   }
 

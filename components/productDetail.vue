@@ -188,7 +188,7 @@
                       cover
                     >
                     </v-img>
-                    <div style="display: flex; justify-content: space-between; width: 100%;">
+                    <div style="display: flex; justify-content: space-between; width: 100%; flex-wrap: wrap;">
                       <div>
                         <span>{{product.name_am}}</span>
                       </div>
@@ -552,7 +552,16 @@
     right: 100%;
   }
 
-  @media (max-width: 959px) {
+  @media (max-width: 767px) {
+    .modal {
+      min-width: 90%;
+      max-width: 90%;
+      top: 28%;
+      max-height: 500px !important;
+    }
+  }
+
+  @media (min-width: 767px) and (max-width: 959px) {
     .modal {
       min-width: 90%;
       max-width: 90%;
@@ -644,6 +653,7 @@
                 font-weight: 500;
                 border-radius: 8px;
                 min-width: 150px;
+                margin-bottom: 5px;
             }
             &__button_continue {
                 background-color: #C6C3C3;
@@ -655,10 +665,12 @@
                 font-weight: 500;
                 border-radius: 8px;
                 min-width: 150px;
+                margin-bottom: 5px;
             }
             padding: 30px;
             display: flex;
             justify-content: space-between;
+            flex-wrap: wrap;
         }
     }
 </style>

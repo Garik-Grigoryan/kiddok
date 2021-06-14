@@ -405,7 +405,16 @@
     height: 20px;
   }
 
-  @media (max-width: 959px) {
+  @media (max-width: 767px) {
+    .modal {
+      min-width: 90%;
+      max-width: 90%;
+      top: 28% !important;
+      max-height: 500px !important;
+    }
+  }
+
+  @media (min-width: 767px) and (max-width: 959px) {
     .modal {
       min-width: 90%;
       max-width: 90%;

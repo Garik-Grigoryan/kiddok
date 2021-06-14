@@ -223,4 +223,10 @@
     min-width: fit-content;
   }
 
+  @media (max-width: 959px) {
+    .brand-page-block .top-block {
+      margin-top: 170px;
+    }
+  }
+
 </style>
