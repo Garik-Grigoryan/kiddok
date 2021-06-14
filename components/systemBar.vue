@@ -894,6 +894,9 @@
             if(elem.name_am.toLowerCase().indexOf(this.search_product_name.toLowerCase()) !== -1) {
               result.push(elem);
             }
+            if(elem.code.toLowerCase().indexOf(this.search_product_name.toLowerCase()) !== -1) {
+              result.push(elem);
+            }
           });
 
           let search_result = "";
@@ -910,6 +913,9 @@
 
           all_products.forEach(elem => {
             if(elem.name_am.toLowerCase().indexOf(this.search_product_name2.toLowerCase()) !== -1) {
+              result.push(elem);
+            }
+            if(elem.code.toLowerCase().indexOf(this.search_product_name2.toLowerCase()) !== -1) {
               result.push(elem);
             }
           });

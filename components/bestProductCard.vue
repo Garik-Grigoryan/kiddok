@@ -15,7 +15,7 @@
             :aspect-ratio="16/9"
             :src="image"
             height="270px"
-            style="border-radius: 50%; transform: scale(-1, 1);"
+            style="border-radius: 50%;"
             cover
           >
           </v-img>

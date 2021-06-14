@@ -20,7 +20,7 @@
                 <v-img v-if="j <= 2"
                   :src="JSON.parse(product.images)[j]"
                   height="110px"
-                  style="border-radius: 50%; transform: scale(-1, 1); cursor: pointer; opacity: 0.5; width: 110px;"
+                  style="border-radius: 50%; cursor: pointer; opacity: 0.5; width: 110px;"
                   cover
                   :class="'productImage_'+j"
                   @click="showImage(JSON.parse(product.images)[j], 'productImage_'+j)"
@@ -37,7 +37,7 @@
                 <v-img v-if="j > 2 && j <= 5"
                   :src="JSON.parse(product.images)[j]"
                   height="100px"
-                  style="border-radius: 50%; transform: scale(-1, 1); cursor: pointer; opacity: 0.5; width: 110px;"
+                  style="border-radius: 50%; cursor: pointer; opacity: 0.5; width: 110px;"
                   cover
                   :class="'productImage_'+j"
                   @click="showImage(JSON.parse(product.images)[j], 'productImage_'+j)"
@@ -54,7 +54,7 @@
                 <v-img v-if="j > 5 && j <= 8"
                   :src="JSON.parse(product.images)[j]"
                   height="110px"
-                  style="border-radius: 50%; transform: scale(-1, 1); cursor: pointer; opacity: 0.5; width: 110px;"
+                  style="border-radius: 50%; cursor: pointer; opacity: 0.5; width: 110px;"
                   cover
                   :class="'productImage_'+j"
                   @click="showImage(JSON.parse(product.images)[j], 'productImage_'+j)"

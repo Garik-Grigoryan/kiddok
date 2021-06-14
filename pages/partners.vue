@@ -1,48 +1,25 @@
 <template>
   <v-container class="mt-5">
-    <!-- <v-row> -->
       <div class="text-caption" style="display: contents;">
         <div style="display: flex; justify-content: center; width: 100%; margin-bottom: 30px;">
           <div class="partners-title">Մեր գործընկերները</div>
           <!-- <h2 class="text-center" style="font-weight: 400;">Kidd’OK – ի հիմքը մեր ԹԻՄՆ է, իսկ ուղեցույցը՝ մեր ՀԱՃԱԽՈՐԴՆԵՐԸ։</h2> -->
         </div>
         <div class="our-partners-block" style="width: 100%;">
-          <div class="partner-block">
-            <img src="http://kiddokback.neoteric-software.com/images/NoPath.png" width="100%">
-          </div>
-          <div class="partner-block">
-            <img src="http://kiddokback.neoteric-software.com/images/NoPath.png" width="100%">
-          </div>
-          <div class="partner-block">
-            <img src="http://kiddokback.neoteric-software.com/images/NoPath.png" width="100%">
-          </div>
-          <div class="partner-block">
-            <img src="http://kiddokback.neoteric-software.com/images/NoPath.png" width="100%">
-          </div>
-        </div>
-        <div class="our-partners-block" style="width: 100%;">
-          <div class="partner-block">
-            <img src="http://kiddokback.neoteric-software.com/images/NoPath.png" width="100%">
-          </div>
-          <div class="partner-block">
-            <img src="http://kiddokback.neoteric-software.com/images/NoPath.png" width="100%">
-          </div>
-          <div class="partner-block">
-            <img src="http://kiddokback.neoteric-software.com/images/NoPath.png" width="100%">
-          </div>
-          <div class="partner-block">
-            <img src="http://kiddokback.neoteric-software.com/images/NoPath.png" width="100%">
+          <div v-for="item in partners" :key="item.name" class="partner-block">
+            <a :href="item.partner_link">
+              <img :src="JSON.parse(item.image)[0]" width="100%">
+            </a>
           </div>
         </div>
       </div>
-    <!-- </v-row> -->
   </v-container>
 </template>
 
 <script>
     export default {
-        name: "partners",
-        layout: 'product',
+      name: "partners",
+      layout: 'product',
       head() {
         return {
           title: 'Our Partners',
@@ -51,39 +28,19 @@
           ],
         };
       },
-        data(){
-            return {
-              text: '',
-            }
-        },
-        async fetch({route, store}) {
-          await store.dispatch('brands/fetch');
-          // await store.dispatch('wishListAndCart/fetch');
-          await store.dispatch('menus/fetch');
-          await store.dispatch('pages/getById', [2]);
-
-        },
-      async mounted() {
-        // await this.$store.dispatch('wishListAndCart/fetch');
-        // if(this.user){
-        //   await this.$store.dispatch('wishListAndCart/getWishListAndCartData', [this.user.id]);
-        // }else{
-        //   await this.$store.dispatch('wishListAndCart/getWishListAndCartData', [0]);
-        // }
-        // if(this.$i18n.locale === 'am'){
-        //   this.text = this.page.html_am
-        // }
-        // else if(this.$i18n.locale === 'en'){
-        //   this.text = this.page.html
-        // }
-        // else if(this.$i18n.locale === 'ru'){
-        //   this.text = this.page.html_ru
-        // }
+      data(){
+          return {
+            text: '',
+          }
+      },
+      async fetch({route, store}) {
+        await store.dispatch('menus/fetch');
+        await store.dispatch('partners/fetch');
       },
       computed: {
-        // page() {
-        //   return this.$store.getters['pages/page'];
-        // }
+        partners() {
+          return this.$store.getters['partners/partners'];
+        }
       }
     }
 </script>
@@ -120,13 +77,9 @@
     flex-wrap: wrap;
   }
 
-  .partner-block {
+  .our-partners-block .partner-block {
     width: 20%;
-    margin-bottom: 40px;
-  }
-
-  .our-partners-block .partner-block:not(:last-child) {
-    margin-right: 5%;
+    margin: 0 2.5% 40px 2.5%;
   }
 
   @media (max-width: 959px) {

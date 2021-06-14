@@ -57,6 +57,7 @@
           {text: 'Categories', icon: 'mdi-view-module', url: '/dashboard/categories'},
           // {text: 'Menu', icon: 'mdi-wrap', url: '/dashboard/menu'},
           {text: 'Products', icon: 'mdi-webpack', url: '/dashboard/products'},
+          {text: 'Partners', icon: 'mdi-webpack', url: '/dashboard/partners'},
           {text: 'Pages', icon: 'mdi-arrange-send-backward', url: '/dashboard/pages'},
           {text: 'Orders', icon: 'mdi-cart', url: '/dashboard/orders'},
           {text: 'Components', icon: 'mdi-shape-plus', url: '/dashboard/components'},
