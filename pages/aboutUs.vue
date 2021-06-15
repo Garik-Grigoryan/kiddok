@@ -39,7 +39,7 @@
                     <input v-model="email" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;margin-top: 10px;" required>
                   </div>
                   <div>
-                    <label>ՀԵՌԱՂՈՍԱՀԱՄԱՐ</label><br>
+                    <label>ՀԵՌԱԽՈՍԱՀԱՄԱՐ</label><br>
                     <input v-model="phone" type="text" style="width: 100%;border: 2px solid #C6C3C3;border-radius: 6px;padding: 6px 12px;margin-bottom: 20px;margin-top: 10px;" required>
                   </div>
 

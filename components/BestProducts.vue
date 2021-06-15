@@ -39,7 +39,8 @@ import bestProductCard from "./bestProductCard";
     data: () => ({
       model: null,
       rating: '',
-      ratingCount: 0
+      ratingCount: 0,
+      best_products: []
     }),
     async fetch({route, store}) {
       await store.dispatch('products/filterAsType', ['best']);
