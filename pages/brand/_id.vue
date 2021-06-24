@@ -6,7 +6,7 @@
       <div class="top-block">
         <div class="left-block"></div>
         <div class="center-block">
-          <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_04-1.png" width="100px">
+          <img src="http://back.kiddok.am/images/Kiddok_logo_04-1.png" width="100px">
           <span>{{this.brand[0].name}}</span>
         </div>
         <div class="right-block"></div>
@@ -25,19 +25,21 @@
             :title_ru="product.name_ru"
             :title_am="product.name_am"
             :price="product.price"
+            :price_wholesale="product.price_wholesale"
             :discountType="product.discountType"
             :discount="product.discount"
           ></productCard>
+
+          <div v-if="products.count > 1" class="text-center" style="margin: 10px auto;">
+            <v-pagination
+              v-model="page"
+              :length="products.count"
+              :total-visible="7"
+              @input="next"
+            ></v-pagination>
+          </div>
         </div>
       </v-row>
-      <div v-if="products.count > 1" class="text-center">
-        <v-pagination
-          v-model="page"
-          :length="products.count"
-          :total-visible="7"
-          @input="next"
-        ></v-pagination>
-      </div>
     </v-container>
   </div>
 </template>

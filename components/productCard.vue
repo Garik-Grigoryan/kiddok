@@ -47,8 +47,11 @@
             </v-rating>
           </div>
           <div style="display: flex; justify-content: space-between; align-items: baseline;">
-            <p class="price" style="color: #352249; font-size: 15px;">
+            <p v-if="!user || (user && user.role !== 'juridical')" class="price" style="color: #352249; font-size: 15px;">
               <span>{{price}} դրամ</span>
+            </p>
+            <p v-else-if="user && user.role === 'juridical'" class="price" style="color: #352249; font-size: 15px;">
+              <span>{{price_wholesale}} դրամ</span>
             </p>
             <v-btn @click="addToCart($event, id)" color="#000" text class="my-2 nav_button" width="40px" style="justify-content: flex-end; padding: 0;">
               <v-icon >mdi-cart-outline</v-icon>
@@ -73,7 +76,7 @@
 
 <script>
     export default {
-      props: ['image', 'id', 'title_en', 'title_ru', 'title_am', 'price', 'discountType', 'discount'],
+      props: ['image', 'id', 'title_en', 'title_ru', 'title_am', 'price', 'price_wholesale', 'discountType', 'discount'],
       name: "productCard",
       data: () => ({
         rating: 0

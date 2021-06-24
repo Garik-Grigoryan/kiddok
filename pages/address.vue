@@ -7,12 +7,12 @@
             Սուրմալու առևտրի կենտրոն 51Ա տաղավար
           </div>
           <div>
-            <v-btn :to="localePath('#')" text class="my-2 nav_button" style="border: none; min-width: 30px; padding: 0;">
-              <v-icon style="margin-right: 10px; font-size: 30px;">mdi-facebook</v-icon>
-            </v-btn>
-            <v-btn :to="localePath('#')" text class="my-2 nav_button" style="border: none; min-width: 30px; padding: 0;">
-              <v-icon style="margin-right: 10px; font-size: 30px;">mdi-instagram</v-icon>
-            </v-btn>
+            <a href="https://www.facebook.com/KiddOk-106820318174128" class="my-2 nav_button" style="border: none; min-width: 30px; padding: 0;">
+              <v-icon style="margin-right: 10px; font-size: 25px;">mdi-facebook</v-icon>
+            </a>
+            <a href="https://www.instagram.com/kiddok.am/" class="my-2 nav_button" style="border: none; min-width: 30px; padding: 0;">
+              <v-icon style="margin-right: 10px; font-size: 25px;">mdi-instagram</v-icon>
+            </a>
           </div>
         </div>
         <div class="map">

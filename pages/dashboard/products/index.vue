@@ -11,6 +11,7 @@
             <th class="text-left">Image</th>
             <th class="text-left">Name</th>
             <th class="text-left">Bestsellers</th>
+            <th class="text-left">In stock</th>
             <th class="text-left">Action</th>
           </tr>
         </thead>
@@ -33,6 +34,14 @@
               <v-radio label="Yes" value="1"></v-radio>
               <v-radio label="No" value="0" checked></v-radio>
             </v-radio-group> -->
+          </td>
+          <td>
+            <div v-if="item.in_stock === '1'">
+              <input type="checkbox" name="in_stock" checked @click="in_stock(item.id, $event)">
+            </div>
+            <div v-else>
+              <input type="checkbox" name="in_stock" @click="in_stock(item.id, $event)">
+            </div>
           </td>
           <td><v-btn small :to="`products/edit/${item.id}`" :elevation="0" dark fab color="primary" ><v-icon>mdi-pencil</v-icon></v-btn> <v-btn small :elevation="0" @click="deleteProducts($event, item.id )" dark fab color="error" ><v-icon>mdi-delete</v-icon></v-btn></td>
         </tr>
@@ -68,6 +77,10 @@
       async bestsellers(id, e) {
         let bestseller = (e.path[0].checked) ? '1' : '0';
         await this.$axios.$post(this.$axios.defaults.baseURL+'/product/bestsellers', {id, bestseller});
+      },
+      async in_stock(id, e) {
+        let in_stock = (e.path[0].checked) ? '1' : '0';
+        await this.$axios.$post(this.$axios.defaults.baseURL+'/product/in_stock', {id, in_stock});
       }
     }
   }

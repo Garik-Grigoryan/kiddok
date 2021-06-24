@@ -53,12 +53,12 @@
             </v-btn>
           </div>
           <div style="padding: 0 16px;">
-            <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button" style="border: none; min-width: 30px; padding: 0;">
-              <v-icon style="margin-right: 10px; font-size: 20px;">mdi-facebook</v-icon>
-            </v-btn>
-            <v-btn :to="localePath('#')" color="#fff" text class="my-2 nav_button" style="border: none; min-width: 30px; padding: 0;">
-              <v-icon style="margin-right: 10px; font-size: 20px;">mdi-instagram</v-icon>
-            </v-btn>
+            <a href="https://www.facebook.com/KiddOk-106820318174128" class="my-2 nav_button" style="border: none; min-width: 30px; padding: 0;">
+              <v-icon style="margin-right: 10px; font-size: 20px;" color="#fff">mdi-facebook</v-icon>
+            </a>
+            <a href="https://www.instagram.com/kiddok.am/" class="my-2 nav_button" style="border: none; min-width: 30px; padding: 0;">
+              <v-icon style="margin-right: 10px; font-size: 20px;" color="#fff">mdi-instagram</v-icon>
+            </a>
           </div>
         </div>
         <div>
@@ -86,7 +86,7 @@
       </div>
 
       <div class="col-lg-3 col-md-3 col-sm-12">
-        <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_02-1.png" width="100%">
+        <img src="http://back.kiddok.am/images/Kiddok_logo_02-1.png" width="100%">
       </div>
     </v-footer>
       <!-- <client-only>
@@ -204,7 +204,7 @@
       align-items: center;
       padding: 340px 90px 90px 90px;
       flex-wrap: wrap;
-      background-image: url(http://kiddokback.neoteric-software.com/images/footer_background.png);
+      background-image: url(http://back.kiddok.am/images/footer_background.png);
       min-height: 590px;
       height: auto;
       background-color: white;

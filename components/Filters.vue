@@ -67,7 +67,7 @@
           <v-list-item-content>
             <v-list-item-title class="sections-title">Բաժիններ</v-list-item-title>
             <div class="section-block" style="display: flex; align-items: center;">
-              <img src="http://kiddokback.neoteric-software.com/images/Kiddok_logo_04-1.png" width="60px">
+              <img src="http://back.kiddok.am/images/Kiddok_logo_04-1.png" width="60px">
               <nuxt-link :to="`/brand/2?page=1`">
                 <span>Բրենդ</span>
               </nuxt-link>

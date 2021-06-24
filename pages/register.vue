@@ -66,7 +66,7 @@
           <div class="tab-pane fade" :class="{ 'active show': isActive('step2') }" id="step2">
             <v-row style="display: block;">
               <div class="step2-block-title">
-                Ֆիզիկական անձ
+                Ֆիզիկական անձ (մանրածախ)
               </div>
               <div>
                 <span>Գրանցվել ՝ լրացնելով Ձեր տվյալները ստորև</span>
@@ -116,7 +116,7 @@
           <div class="tab-pane fade" :class="{ 'active show': isActive('step3') }" id="step3">
             <v-row style="display: block;">
               <div class="step2-block-title">
-                Իրավաբանական անձ
+                Իրավաբանական անձ (մեծածախ)
               </div>
               <div>
                 <span>Գրանցվել ՝ լրացնելով Ձեր տվյալները ստորև</span>

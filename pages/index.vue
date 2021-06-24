@@ -3,7 +3,9 @@
         <HeadSlider></HeadSlider>
         <deliveryBaner></deliveryBaner>
         <v-container style="max-width: 1360px;">
-          <h1  class="text-center mb-5" v-text="$t('newProducts')" style="text-transform: uppercase; color: #352249; font-weight: 100;"></h1>
+          <a href="/newProducts">
+            <h1 class="text-center mb-5" v-text="$t('newProducts')" style="text-transform: uppercase; color: #352249; font-weight: 100;"></h1>
+          </a>
           <PromoProducts :count="7" type="new"></PromoProducts>
 
           <h1  class="text-center mb-5" v-text="'ԸՍՏ ՏԱՐԻՔԻ'" style="text-transform: uppercase; color: #352249; font-weight: 100; margin-top: 120px;"></h1>

@@ -135,7 +135,7 @@
             </div>
           </div>
           <div class="mt-5">
-            <p class="ma-0"><span>{{ $t('colors') }}</span></p>
+            <p class="ma-0 mb-5"><span>{{ $t('colors') }}</span></p>
             <v-item-group :multiple="false">
               <v-row>
                 <v-item  v-for="(color, n) in productColors" :key="n" v-slot:default="{ active, toggle }">
@@ -149,14 +149,14 @@
             </v-item-group>
           </div>
           
-          <div v-if="!user || (user && user.role !== 'juridical')" class="mt-5 pl-0">
+          <div v-if="!user || (user && user.role !== 'juridical')" class="mt-10 pl-0">
             <div class="text-left">
               <v-btn class="white--text add-to-cart-btn" rounded @click="addToCart($event, product.id)" >
                 Ավելացնել զամբյուղ <v-icon left style="margin-left: 10px;">mdi-cart</v-icon>
               </v-btn>
             </div>
           </div>
-          <div v-else-if="user && user.role === 'juridical'" class="mt-5 pl-0">
+          <div v-else-if="user && user.role === 'juridical'" class="mt-10 pl-0">
             <div class="text-left">
               <v-btn class="white--text add-to-cart-btn" rounded @click="addToCartJuridical($event, product.id)" >
                 Ավելացնել զամբյուղ <v-icon left style="margin-left: 10px;">mdi-cart</v-icon>

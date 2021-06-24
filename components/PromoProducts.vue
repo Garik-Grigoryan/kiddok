@@ -19,7 +19,7 @@
             color="grey lighten-4"
             class="ma-4"
             width="280"
-            height="350"
+            height="max-content"
             style="margin: 16px 10px !important; border-color: transparent !important; background-color: transparent !important; box-shadow: none;"
           >
             <nuxt-link :to="`/product/${product.id}`">
@@ -35,7 +35,7 @@
             <v-slide-y-reverse-transition>
               <v-card-text
                 class="pt-6"
-                style="position: relative; height: 80px; text-align: center;"
+                style="position: relative; height: max-content; text-align: center;"
               >
                 <!-- <nuxt-link :to="`/product/${product.id}`"> -->
                   <h3 v-if="$i18n.locale === 'am'" class=" font-weight-light font-weight-bold white--text mb-2" v-text="product.name_am" style="color: #352249 !important; font-weight: 100 !important;"></h3>

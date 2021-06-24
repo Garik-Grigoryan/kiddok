@@ -7,7 +7,7 @@
         color="grey lighten-4"
         class="ma-4"
         width="280"
-        height="450"
+        height="max-content"
         style="margin: 16px 10px !important; border-color: transparent !important; background-color: transparent !important; box-shadow: none;"
       >
         <nuxt-link :to="localePath(`/product/${id}`)">
@@ -23,7 +23,7 @@
         <v-slide-y-reverse-transition>
           <v-card-text
             class="pt-6"
-            style="position: relative; height: 80px;"
+            style="position: relative; height: max-content;"
           >
             <div style="display: flex; justify-content: space-between; margin-bottom: 16px;">
               <div class="best-product-rating" style="display: flex; align-items: center;">
