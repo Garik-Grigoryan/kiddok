@@ -102,9 +102,15 @@
     color: #352249;
   }
 
-  @media (max-width: 959px) {
+  @media (min-width: 767px) and (max-width: 959px) {
     .delivery-block {
-      margin-top: 170px;
+      margin-top: 60px;
+    }
+  }
+
+  @media (max-width: 455px) {
+    .delivery-block {
+      margin-top: 60px;
     }
   }
 

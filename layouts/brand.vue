@@ -84,7 +84,7 @@
       </div>
 
       <div class="col-lg-3 col-md-3 col-sm-12">
-        <img src="http://back.kiddok.am/images/Kiddok_logo_02-1.png" width="100%">
+        <img src="https://back.kiddok.am/images/Kiddok_logo_02-1.png" width="100%">
       </div>
     </v-footer>
     <!-- <client-only>
@@ -184,7 +184,7 @@
     align-items: center;
     padding: 340px 90px 90px 90px;
     flex-wrap: wrap;
-    background-image: url(http://back.kiddok.am/images/footer_background.png);
+    background-image: url(https://back.kiddok.am/images/footer_background.png);
     min-height: 590px;
     height: auto;
     background-color: white;

@@ -6,7 +6,7 @@
       <div class="top-block">
         <div class="left-block"></div>
         <div class="center-block">
-          <img src="http://back.kiddok.am/images/Kiddok_logo_04-1.png" width="100px">
+          <img src="https://back.kiddok.am/images/Kiddok_logo_04-1.png" width="100px">
           <span>{{this.brand[0].name}}</span>
         </div>
         <div class="right-block"></div>
@@ -140,9 +140,15 @@
     max-width: 1300px !important;
   }
 
-  @media (max-width: 959px) {
+  @media (min-width: 767px) and (max-width: 959px) {
     .brand-page-block .top-block {
-      margin-top: 170px;
+      margin-top: 60px;
+    }
+  }
+
+  @media (max-width: 455px) {
+    .brand-page-block .top-block {
+      margin-top: 60px;
     }
   }
 </style>

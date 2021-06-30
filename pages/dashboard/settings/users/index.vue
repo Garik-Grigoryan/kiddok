@@ -29,6 +29,35 @@
           </v-data-table>
         </v-card>
       </v-col>
+
+      <v-col lg="10" md="12">
+        <v-card>
+          <v-card-title>
+            Physical users
+            <!-- <v-spacer></v-spacer>
+            <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Search"
+              single-line
+              hide-details
+            ></v-text-field> -->
+          </v-card-title>
+          <v-data-table
+            :headers="headers2"
+            :items="users2"
+            item-key="id"
+            class="elevation-1"
+          >
+            <template v-slot:item.approved="{ item }" >
+              <v-radio-group v-model="item.approved" row @change="approveUser(item.id, item.approved)">
+                <v-radio label="Yes" value="1"></v-radio>
+                <v-radio label="No" value="0"></v-radio>
+              </v-radio-group>
+            </template>
+          </v-data-table>
+        </v-card>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -53,6 +82,15 @@ export default {
         {text: 'Company phone', value: 'company_phone'},
         {text: 'Approved', value: 'approved'},
       ],
+      users2: [],
+      headers2: [
+        {text: '#', value: 'id'},
+        {text: 'Name', value: 'name'},
+        {text: 'Lastname', value: 'lastname'},
+        {text: 'E-mail', value: 'email'},
+        {text: 'Phone', value: 'phone'},
+        {text: 'Address', value: 'address'},
+      ],
     }
   },
   methods: {
@@ -62,6 +100,7 @@ export default {
   },
   async mounted() {
     this.users = await this.$axios.$get(this.$axios.defaults.baseURL+'/user/getJuridicalUsers');
+    this.users2 = await this.$axios.$get(this.$axios.defaults.baseURL+'/user/getPhysicalUsers');
   },
 }
 </script>

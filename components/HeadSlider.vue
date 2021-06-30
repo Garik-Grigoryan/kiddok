@@ -88,3 +88,11 @@
     },
   }
 </script>
+
+<style scoped>
+  @media (max-width: 959px) {
+    .head-slider-block .v-carousel {
+      margin: 0 auto !important;
+    }
+  }
+</style>

@@ -7,7 +7,7 @@
         </div>
         <div class="about-us-main-block">
           <div class="about-us-block1">
-            <img src="http://back.kiddok.am/images/kd1.png" width="100%">
+            <img src="https://back.kiddok.am/images/kd1.png" width="100%">
           </div>
           <div class="about-us-block2">
             <div v-html="text"></div>

@@ -130,7 +130,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'http://back.kiddok.am/api'
+    baseURL: 'https://back.kiddok.am/api'
   },
   /*
   ** vuetify module configuration

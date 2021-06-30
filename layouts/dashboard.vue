@@ -109,7 +109,7 @@
     align-items: center;
     padding: 340px 90px 90px 90px;
     flex-wrap: wrap;
-    background-image: url(http://back.kiddok.am/images/footer_background.png);
+    background-image: url(https://back.kiddok.am/images/footer_background.png);
     min-height: 590px;
     height: auto;
     background-color: white;

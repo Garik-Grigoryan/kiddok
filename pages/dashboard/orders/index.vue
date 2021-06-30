@@ -25,8 +25,9 @@
                 <!--              <template v-slot:item.price="{ el }">-->
                 <!--                <v-card-text>{{el.product.price}}</v-card-text>-->
                 <!--              </template>-->
+
                 <template v-slot:item.color="{ item }">
-                  <v-card :color="item.color.toLowerCase()" class="d-flex text-center align-center mx-3" dark height="30" width="30" style="margin: 0 auto !important;" >
+                  <v-card v-if="item.color !== ''" :color="item.color.toLowerCase()" class="d-flex text-center align-center mx-3" dark height="30" width="30" style="margin: 0 auto !important;" >
                   </v-card>
                 </template>
 
@@ -154,7 +155,7 @@
                   image: JSON.parse(this.getUserOrders[el].productItem.data[elem].product.images)[0],
                   name: this.getUserOrders[el].productItem.data[elem].product.name_en,
                   size: this.getUserOrders[el].productItem.data[elem].product.size,
-                  color: (this.getUserOrders[el].productItem.data[elem].color !== null && this.getUserOrders[el].productItem.data[elem].color[0] !== undefined) ? this.getUserOrders[el].productItem.data[elem].color[0] : '',
+                  color: (this.getUserOrders[el].productItem.data[elem].color !== null && this.getUserOrders[el].productItem.data[elem].color[0] !== undefined) ? this.getUserOrders[el].productItem.data[elem].color : '',
                   count: this.getUserOrders[el].productItem.data[elem].count,
                   price: this.getUserOrders[el].productItem.data[elem].product.price,
                 })

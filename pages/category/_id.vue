@@ -14,7 +14,7 @@
       <div v-else class="top-block" style="display: flex; align-items: center;">
         <div class="left-block"></div>
         <div class="center-block">
-          <img src="http://back.kiddok.am/images/Kiddok_logo_04-1.png" width="100px">
+          <img src="https://back.kiddok.am/images/Kiddok_logo_04-1.png" width="100px">
           <span>{{this.category.name_am}}</span>
         </div>
         <div class="right-block"></div>
@@ -24,11 +24,11 @@
           <Filters filter_type="category"></Filters>
         </div>
         <div style="width: 70%; height: fit-content;">
-          <div v-if="this.category.image !== '[]'">
+          <!-- <div v-if="this.category.image !== '[]'">
             <p style="margin-top: 20px;">
               Երկաթուղի «Իմ 1-ին գնացքը»: Հավաքածուն ներառում է ՝ 8 տարրերից երկաթգիծ (28սմ), լոկոմոտիվ պրոյեկտորով, մեղեդիներ և իրական ծուխ, ուղևորափոխադրման վագո
             </p>
-          </div>
+          </div> -->
           <div style="display: flex; flex-wrap: wrap; justify-content: space-between; height: fit-content;">
             <productCard
               v-for="(product, i) in products.products"
@@ -224,9 +224,15 @@
     min-width: fit-content;
   }
 
-  @media (max-width: 959px) {
+  @media (min-width: 767px) and (max-width: 959px) {
     .brand-page-block .top-block {
-      margin-top: 170px;
+      margin-top: 60px;
+    }
+  }
+
+  @media (max-width: 455px) {
+    .brand-page-block .top-block {
+      margin-top: 60px;
     }
   }
 

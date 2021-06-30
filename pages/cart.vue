@@ -304,12 +304,13 @@
       await store.dispatch('brands/fetch');
       await store.dispatch('regions/fetch');
 
-      // await store.dispatch('wishListAndCart/fetch');
-      // if(this.user){
-      //   await store.dispatch('wishListAndCart/getWishListAndCartData', [this.user.id]);
-      // }else{
-      //   await store.dispatch('wishListAndCart/getWishListAndCartData', [0]);
-      // }
+      await store.dispatch('wishListAndCart/fetch');
+      if(this.user){
+        await store.dispatch('wishListAndCart/getWishListAndCartData', [this.user.id]);
+      }else{
+        await store.dispatch('wishListAndCart/getWishListAndCartData', [0]);
+      }
+
       await store.dispatch('menus/fetch');
       await store.dispatch('pages/getById', [1]);
 
@@ -425,6 +426,7 @@
       }else{
         await this.$store.dispatch('wishListAndCart/getWishListAndCartData', [0]);
       }
+
       this.cartData.forEach((elem, key) => {
         if(elem.product !== null) {
           if(this.$i18n.locale == 'ru'){
@@ -473,6 +475,7 @@
         }
 
       });
+
       await this.summCount();
 
       this.regions.forEach((elem, key) => {
@@ -537,6 +540,7 @@
         }
       },
       init() {
+        console.log(this.cartData);
         this.desserts = [];
         this.cartData.forEach((elem, key) => {
           if(elem.product !== null) {

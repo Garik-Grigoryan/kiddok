@@ -3,7 +3,7 @@
     <v-system-bar height="auto" style="z-index: 5;" color="#01B8BE" fixed app dark id="create" >
       <v-col lg="1" md="1" class="text-center" style="padding: 0;">
         <nuxt-link :to="localePath('/')" style="text-decoration: none;">
-          <img src="http://back.kiddok.am/images/Kiddok_logo_02-1.png" width="100%">
+          <img src="https://back.kiddok.am/images/Kiddok_logo_02-1.png" width="100%">
         </nuxt-link>
       </v-col>
       <v-col class="hidden-sm-and-down" lg="7" md="7">
@@ -18,13 +18,13 @@
                 <div class="sections-menu-block" style="display: none;">
                   <div>
                     <div class="section-block" style="display: flex; align-items: center;">
-                      <img src="http://back.kiddok.am/images/Kiddok_logo_04-1.png" width="60px">
+                      <img src="https://back.kiddok.am/images/Kiddok_logo_04-1.png" width="60px">
                       <nuxt-link :to="`/brand/2?page=1`">
                         <span>Բրենդ</span>
                       </nuxt-link>
                     </div>
                     <div v-for="(item, i) in categoriesBlock" :key="i">
-                      <div v-if="parentCategoryID !== item.id"  class="section-block">
+                      <div v-if="item.subcategory.length === 0"  class="section-block">
                         <nuxt-link :to="item.to">
                           {{item.title}}
                         </nuxt-link>
@@ -33,19 +33,28 @@
                         <nuxt-link :to="`#`">
                           {{item.title}}
                         </nuxt-link>
-                        <v-icon v-text="'mdi-chevron-down'" size="30" style="color: #B22180; cursor: pointer;" @click="openAgeMenu"></v-icon>
+                        <v-icon v-text="'mdi-chevron-down'" size="30" style="color: #B22180; cursor: pointer;" @click="openAgeMenu(item.id)"></v-icon>
+                      </div>
+                      <div :id="item.id" v-if="item.subcategory.length !== 0" class="age-menu-block" style="display: none;">
+                          <div v-for="(item2, i) in item.subcategory" :key="i">
+                            <div class="section-block">
+                              <nuxt-link :to="item2.to">
+                                {{item2.title}}
+                              </nuxt-link>
+                            </div>
+                          </div>
                       </div>
                     </div>
                   </div>
-                  <div class="age-menu-block" style="display: none;">
-                      <div v-for="(item, i) in subcategoriesBlock" :key="i">
+                  <!-- <div class="age-menu-block" style="display: none;"> -->
+                      <!-- <div v-for="(item, i) in subcategoriesBlock" :key="i">
                         <div class="section-block">
                           <nuxt-link :to="item.to">
                             {{item.title}}
                           </nuxt-link>
                         </div>
-                      </div>
-                  </div>
+                      </div> -->
+                  <!-- </div> -->
                 </div>
               </div>
               <!-- <div v-else-if="item.to==='/wholesale'">
@@ -209,13 +218,13 @@
                       <div class="sections-menu-block-mobile">
                         <div>
                           <div class="section-block" style="display: flex; align-items: center;">
-                            <img src="http://back.kiddok.am/images/Kiddok_logo_04-1.png" width="60px">
+                            <img src="https://back.kiddok.am/images/Kiddok_logo_04-1.png" width="60px">
                             <nuxt-link :to="`/brand/2?page=1`">
                               <span>Բրենդ</span>
                             </nuxt-link>
                           </div>
                           <div v-for="(item, i) in categoriesBlock" :key="i">
-                            <div v-if="parentCategoryID !== item.id"  class="section-block">
+                            <div v-if="item.subcategory.length === 0"  class="section-block">
                               <nuxt-link :to="item.to">
                                 {{item.title}}
                               </nuxt-link>
@@ -225,13 +234,20 @@
                                 <nuxt-link :to="`#`">
                                   {{item.title}}
                                 </nuxt-link>
-                                <v-icon v-text="'mdi-chevron-down'" size="30" style="color: #B22180; cursor: pointer;" @click="openAgeMenuMobile"></v-icon>
+                                <v-icon v-text="'mdi-chevron-down'" size="30" style="color: #B22180; cursor: pointer;" @click="openAgeMenuMobile(item.id)"></v-icon>
                               </div>
-                              <div class="age-menu-block-mobile">
-                                  <div v-for="(item, i) in subcategoriesBlock" :key="i">
+                              <div :id="item.id" class="age-menu-block-mobile">
+                                  <!-- <div v-for="(item, i) in subcategoriesBlock" :key="i">
                                     <div class="section-block">
                                       <nuxt-link :to="item.to">
                                         {{item.title}}
+                                      </nuxt-link>
+                                    </div>
+                                  </div> -->
+                                  <div v-for="(item2, i) in item.subcategory" :key="i">
+                                    <div class="section-block">
+                                      <nuxt-link :to="item2.to">
+                                        {{item2.title}}
                                       </nuxt-link>
                                     </div>
                                   </div>
@@ -377,7 +393,7 @@
                 <div class="modal-content">
                     <v-card flat tile style="padding: 20px">
                       <v-card-text>
-                        <img src="http://back.kiddok.am/images/Kiddok_logo_04-1.png" width="40%" style="margin: 0 auto 20px auto; display: flex;">
+                        <img src="https://back.kiddok.am/images/Kiddok_logo_04-1.png" width="40%" style="margin: 0 auto 20px auto; display: flex;">
                         <h3 style="text-align: center; margin-bottom: 30px;">ՄՈՒՏՔ ԱՆՁՆԱԿԱՆ ԷՋ</h3>
                         <v-form @submit.prevent="false" ref="form" v-model="valid" :lazy-validation="true" >
                           <v-alert v-if="errors.email" text type="error">
@@ -665,16 +681,32 @@
               id: elem.id,
               title: elem.name_am,
               parentID: elem.parent,
-              to: '/category/' + elem.id + '?page=1'
+              to: '/category/' + elem.id + '?page=1',
+              subcategory: []
             });
           } else {
-            this.subcategoriesBlock.push({
-              id: elem.id,
-              title: elem.name_am,
-              parentID: elem.parent,
-              to: '/category/' + elem.id + '?page=1'
-            });
+            // this.subcategoriesBlock.push({
+            //   id: elem.id,
+            //   title: elem.name_am,
+            //   parentID: elem.parent,
+            //   to: '/category/' + elem.id + '?page=1'
+            // });
+          }
+        });
+
+        all_categories.forEach(elem => {
+          if(elem.parent !== 0) {
             this.parentCategoryID = elem.parent;
+            this.categoriesBlock.forEach(cat => {
+              if(cat.id === this.parentCategoryID) {
+                cat.subcategory.push({
+                  id: elem.id,
+                  title: elem.name_am,
+                  parentID: elem.parent,
+                  to: '/category/' + elem.id + '?page=1'
+                });
+              }
+            });
           }
         });
 
@@ -766,21 +798,31 @@
 
           });
         },
-        openAgeMenu() {
-          let block = document.querySelector('.age-menu-block');
-          if(block.style.display === 'none') {
-            block.style.display = 'block';
-          } else {
-            block.style.display = 'none';
+        openAgeMenu(id) {
+          let block = document.querySelectorAll('.age-menu-block');
+          for(let i = 0; i < block.length; i++) {
+            block[i].style.display = 'none';
+            if(block[i].getAttribute('id') == id) {
+              if(block[i].style.display === 'none') {
+                block[i].style.display = 'block';
+              } else {
+                block[i].style.display = 'none';
+              }
+            }
           }
         },
-        openAgeMenuMobile() {
-          let block = document.querySelector('.age-menu-block-mobile');
-          // if(block.style.display === 'none') {
-            block.style.display = 'block';
-          // } else if(block.style.display === 'block') {
-          //   block.style.display = 'none';
-          // }
+        openAgeMenuMobile(id) {
+          let block = document.querySelectorAll('.age-menu-block-mobile');
+          for(let i = 0; i < block.length; i++) {
+            block[i].style.display = 'none';
+            if(block[i].getAttribute('id') == id) {
+              // if(block.style.display === 'none') {
+                block[i].style.display = 'block';
+              // } else if(block.style.display === 'block') {
+              //   block.style.display = 'none';
+              // }
+            }
+          }
         },
         openSectionsMenu() {
           let block = document.querySelector('.sections-menu-block');
@@ -1170,7 +1212,7 @@
   .age-menu-block {
     /* display: none; */
     padding-left: 15px;
-    margin: 50px 0 25px 30px !important;
+    margin: 20px 0 25px 30px !important;
   }
   .age-menu-block-mobile {
     display: none;
@@ -1185,6 +1227,12 @@
     padding: 10px 40px;
     width: max-content;
     left: -50%;
+  }
+
+  .sections-menu-block {
+    max-height: 500px;
+    height: 500px;
+    overflow: auto;
   }
 
   .search-block, .search-block2 {

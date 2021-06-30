@@ -82,9 +82,15 @@
     margin: 0 2.5% 40px 2.5%;
   }
 
-  @media (max-width: 959px) {
+  @media (min-width: 767px) and (max-width: 959px) {
     .partners-title {
-      margin-top: 170px;
+      margin-top: 60px;
+    }
+  }
+
+  @media (max-width: 455px) {
+    .partners-title {
+      margin-top: 60px;
     }
   }
 </style>

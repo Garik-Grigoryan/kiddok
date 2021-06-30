@@ -1,7 +1,7 @@
 <template>
   <v-container class="mt-5">
       <div class="text-caption" style="display: contents;">
-        <h1 class="text-center mb-5" v-text="$t('newProducts')" style="text-transform: uppercase; color: #352249; font-weight: 100;"></h1>
+        <h1 class="text-center mb-5 new-products-block" v-text="$t('newProducts')" style="text-transform: uppercase; color: #352249; font-weight: 100;"></h1>
         <div style="display: flex; flex-wrap: wrap; justify-content: space-between; height: fit-content;">
           <productCard
             v-for="(product, i) in products"
@@ -68,41 +68,15 @@ import productCard from "../components/productCard";
     color: #352249;
   }
 
-  .mailing_btn {
-    background: #B22180; 
-    width: 100%; 
-    padding: 12px !important; 
-    border-radius: 6px !important; 
-    color: white !important;
-    margin-bottom: 15px;
-    text-transform: none;
+  @media (min-width: 767px) and (max-width: 959px) {
+    .new-products-block {
+      margin-top: 60px;
+    }
   }
 
-  .partners-title {
-    color: white;
-    font-size: 16px;
-    background: #B22180;
-    padding: 8px;
-    text-align: center;
-    border-radius: 6px;
-    margin-bottom: 30px !important;
-    width: 800px;
-  }
-
-  .our-partners-block {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-  }
-
-  .our-partners-block .partner-block {
-    width: 20%;
-    margin: 0 2.5% 40px 2.5%;
-  }
-
-  @media (max-width: 959px) {
-    .partners-title {
-      margin-top: 170px;
+  @media (max-width: 455px) {
+    .new-products-block {
+      margin-top: 60px;
     }
   }
 </style>

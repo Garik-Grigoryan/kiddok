@@ -57,53 +57,54 @@ export const actions = {
   },
   async getWishListAndCartData({commit}, [user_id = 0]){
 
-    let cookieResWishList = this.$cookies.get('davmar_wishlist');
-    if(user_id !== 0){
-      let wishlistData = await this.$axios.post(this.$axios.defaults.baseURL+'/wishlist/getItem/', {'user_id': user_id});
+    // let cookieResWishList = this.$cookies.get('davmar_wishlist');
+    // if(user_id !== 0){
+    //   let wishlistData = await this.$axios.post(this.$axios.defaults.baseURL+'/wishlist/getItem/', {'user_id': user_id});
 
-      // commit('setWishListData', wishlistData.data.data);
+    //   // commit('setWishListData', wishlistData.data.data);
 
-      if(wishlistData.data.data){
-        commit('setWishListData', wishlistData.data.data);
-        commit('setWishListLength', wishlistData.data.data.length);
-      }else{
-        commit('setWishListData', []);
-        commit('setWishListLength', 0);
-      }
-      commit('setWishList', wishlistData.data.id);
-    }else if(cookieResWishList !== undefined){
-      let wishlistData = await this.$axios.post(this.$axios.defaults.baseURL+'/wishlist/getItem/', {'wishlist_id': cookieResWishList});
-      // commit('setWishListData', wishlistData.data.data);
+    //   if(wishlistData.data.data){
+    //     commit('setWishListData', wishlistData.data.data);
+    //     commit('setWishListLength', wishlistData.data.data.length);
+    //   }else{
+    //     commit('setWishListData', []);
+    //     commit('setWishListLength', 0);
+    //   }
+    //   commit('setWishList', wishlistData.data.id);
+    // }else if(cookieResWishList !== undefined){
+    //   let wishlistData = await this.$axios.post(this.$axios.defaults.baseURL+'/wishlist/getItem/', {'wishlist_id': cookieResWishList});
+    //   // commit('setWishListData', wishlistData.data.data);
 
-      if(wishlistData.data.data){
-        commit('setWishListData', wishlistData.data.data);
-        commit('setWishListLength', wishlistData.data.data.length);
-      }else{
-        commit('setWishListData', []);
-        commit('setWishListLength', 0);
-      }
-      commit('setWishList', wishlistData.data.id);
-    }else{
-      commit('setWishListData', []);
-      commit('setWishList', []);
-      commit('setWishListLength', 0);
-    }
+    //   if(wishlistData.data.data){
+    //     commit('setWishListData', wishlistData.data.data);
+    //     commit('setWishListLength', wishlistData.data.data.length);
+    //   }else{
+    //     commit('setWishListData', []);
+    //     commit('setWishListLength', 0);
+    //   }
+    //   commit('setWishList', wishlistData.data.id);
+    // }else{
+    //   commit('setWishListData', []);
+    //   commit('setWishList', []);
+    //   commit('setWishListLength', 0);
+    // }
 
     let cookieRes = this.$cookies.get('davmar_cart');
-    if(user_id !== 0){
-      let cartData = await this.$axios.post(this.$axios.defaults.baseURL+'/cart/getItem/', {'user_id': user_id});
-      if(cartData.data.data){
-        commit('setCartData', cartData.data.data);
-      }else{
-        commit('setCartData', []);
-      }
-      commit('setCart', cartData.data.id);
-      if(cartData.data.data){
-        commit('setCartLength', cartData.data.data.length);
-      }else{
-        commit('setCartLength', 0);
-      }
-    }else if(cookieRes !== undefined){
+    // if(user_id !== 0){
+    //   let cartData = await this.$axios.post(this.$axios.defaults.baseURL+'/cart/getItem/', {'user_id': user_id});
+    //   if(cartData.data.data){
+    //     commit('setCartData', cartData.data.data);
+    //   }else{
+    //     commit('setCartData', []);
+    //   }
+    //   commit('setCart', cartData.data.id);
+    //   if(cartData.data.data){
+    //     commit('setCartLength', cartData.data.data.length);
+    //   }else{
+    //     commit('setCartLength', 0);
+    //   }
+    // }else 
+    if(cookieRes !== undefined){
       let cartData = await this.$axios.post(this.$axios.defaults.baseURL+'/cart/getItem/', {'cart_id': cookieRes});
       if(cartData.data.data){
         commit('setCartData', cartData.data.data);
@@ -212,6 +213,7 @@ export const actions = {
     }else{
       cartData = await this.$axios.post(this.$axios.defaults.baseURL+`/cart/delete/`, {'productIndex': id, 'cart_id': cookieRes, 'user_id': user_id});
     }
+    console.log(cartData);
 
     if(cartData.data.data){
       commit('setCartData', cartData.data.data);
