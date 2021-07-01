@@ -940,7 +940,7 @@
 
   @media (max-width: 959px) {
     .cart-page-block {
-      margin-top: 70px;
+      margin-top: 20px;
     }
 
     .flex-block {
@@ -953,6 +953,12 @@
 
     .step3-input {
       width: 70% !important;
+    }
+  }
+
+  @media (max-width: 448px) {
+    .container {
+        margin-top: 40px !important;
     }
   }
 </style>

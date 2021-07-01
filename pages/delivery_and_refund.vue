@@ -102,15 +102,21 @@
     color: #352249;
   }
 
-  @media (min-width: 767px) and (max-width: 959px) {
+  /* @media (min-width: 767px) and (max-width: 959px) {
     .delivery-block {
       margin-top: 60px;
     }
-  }
+  } */
 
-  @media (max-width: 455px) {
+  /* @media (max-width: 455px) {
     .delivery-block {
       margin-top: 60px;
+    }
+  } */
+
+  @media (max-width: 448px) {
+    .container {
+        margin-top: 120px !important;
     }
   }
 

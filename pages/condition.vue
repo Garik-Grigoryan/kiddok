@@ -53,6 +53,10 @@
 </script>
 
 <style scoped>
-
+  @media (max-width: 448px) {
+    .container {
+        margin-top: 120px !important;
+    }
+  }
 </style>
 

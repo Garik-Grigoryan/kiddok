@@ -93,12 +93,18 @@
   }
 
   @media (max-width: 959px) {
-    .address-page-block {
+    /* .address-page-block {
       margin-top: 170px !important;
-    }
+    } */
 
     .map, .map iframe {
       width: 100%;
+    }
+  }
+
+  @media (max-width: 448px) {
+    .container {
+        margin-top: 80px !important;
     }
   }
 </style>

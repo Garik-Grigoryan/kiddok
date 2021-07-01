@@ -95,4 +95,10 @@
       margin: 0 auto !important;
     }
   }
+
+  @media (min-width: 448px) and (max-width: 700px) {
+    .head-slider-block .v-image__image {
+        height: 400px !important;
+    }
+  }
 </style>

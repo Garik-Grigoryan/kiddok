@@ -1325,6 +1325,18 @@
     padding: 30px;
   }
 
+  @media (max-width: 959px) {
+    .v-content {
+        padding: 60px 0px 0px !important;
+    }
+  }
+
+  @media (max-width: 455px) {
+    .container {
+        margin-top: 60px;
+    }
+  }
+
 </style>
 
 <style scoped

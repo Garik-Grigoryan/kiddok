@@ -680,7 +680,7 @@
     }
   }
 
-  @media (min-width: 767px) and (max-width: 959px) {
+  /* @media (min-width: 767px) and (max-width: 959px) {
     .account-page-block {
       margin-top: 60px;
     }
@@ -689,6 +689,12 @@
   @media (max-width: 455px) {
     .account-page-block {
       margin-top: 60px;
+    }
+  } */
+
+  @media (max-width: 448px) {
+    .container {
+        margin-top: 120px !important;
     }
   }
 

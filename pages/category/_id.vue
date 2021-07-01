@@ -224,7 +224,7 @@
     min-width: fit-content;
   }
 
-  @media (min-width: 767px) and (max-width: 959px) {
+  /* @media (min-width: 767px) and (max-width: 959px) {
     .brand-page-block .top-block {
       margin-top: 60px;
     }
@@ -233,6 +233,12 @@
   @media (max-width: 455px) {
     .brand-page-block .top-block {
       margin-top: 60px;
+    }
+  } */
+
+  @media (max-width: 448px) {
+    .container {
+        margin-top: 80px;
     }
   }
 

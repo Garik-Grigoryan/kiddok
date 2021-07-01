@@ -219,6 +219,12 @@
         padding: 90px;
       }
     }
+
+    @media (max-width: 448px) {
+      .container {
+          margin-top: 80px;
+      }
+    }
   </style>
 
 

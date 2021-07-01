@@ -142,9 +142,9 @@
   }
 
   @media (max-width: 959px) {
-    .about-us-block {
+    /* .about-us-block {
       margin-top: 170px !important;
-    }
+    } */
 
     .about-us-main-block {
       flex-direction: column;
@@ -156,6 +156,12 @@
 
     .about-us-block1 {
       margin-bottom: 20px;
+    }
+  }
+
+  @media (max-width: 448px) {
+    .container {
+        margin-top: 120px !important;
     }
   }
 </style>
