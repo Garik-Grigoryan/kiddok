@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col lg="10" md="12">
+      <v-col lg="12" md="12">
         <v-data-table
           :headers="headers"
           :items="getUserOrders"
@@ -17,7 +17,7 @@
           <template v-slot:expanded-item="{ headers, item }">
             <td :colspan="headers.length" style="padding: 0;">
 
-              <v-data-table :headers="ProdHeaders" :items="item.mainProducts" item-key="id" hide-default-footer class="" >
+              <v-data-table :headers="ProdHeaders" :items="item.mainProducts" item-key="id" class="" >
 
                 <template v-slot:item.image="{ item }">
                   <v-img :src="item.image" :contain="true" width="100" height="100" ></v-img>
@@ -88,6 +88,7 @@
           headers: [
             {text: '#', value: 'id'},
             {text: 'Name', value: 'name'},
+            {text: 'Phone', value: 'phone'},
             {text: 'Address', value: 'address'},
             {text: 'Buy date', value: 'created_at'},
             {text: 'Payment Type', value: 'payment_type'},
