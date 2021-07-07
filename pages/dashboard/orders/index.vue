@@ -99,9 +99,10 @@
             {text: '', value: 'data-table-expand'},
           ],
           ProdHeaders: [
+            {text: 'Կոդը', value: 'code', sortable: false, align: 'start',},
             {text: this.$t('image'), value: 'image', sortable: false, align: 'start',},
             {text: this.$t('name'), value: 'name', sortable: false, align: 'center',},
-            { text: this.$t('size'), value: 'size',  sortable: false,  align: 'center', },
+            {text: this.$t('size'), value: 'size',  sortable: false,  align: 'center', },
             {text: this.$t('color'), value: 'color', sortable: false, align: 'center',},
             {text: this.$t('count'), value: 'count', sortable: false, align: 'center',},
             {text: this.$t('price'), value: 'price', sortable: false, align: 'center',},
@@ -138,27 +139,31 @@
       async mounted() {
         await this.$store.dispatch('wishListAndCart/fetch');
         for (let el in this.getUserOrders) {
+          let userRole = this.getUserOrders[el].userRole;
+
           this.getUserOrders[el].mainProducts = [];
           if(this.getUserOrders[el].product_id !== null && this.getUserOrders[el].product_id !== 0) {
             let product_info = await this.$axios.$get(this.$axios.defaults.baseURL+`/product/get/${this.getUserOrders[el].product_id}`);
             this.getUserOrders[el].mainProducts.push({
+              code: product_info.code,
               image: JSON.parse(product_info.images)[0],
               name: product_info.name_en,
               size: product_info.size,
               color: '',
               count: 1,
-              price: product_info.price,
+              price: (userRole === 'juridical') ? product_info.price_wholesale : product_info.price,
             });
           } else {
             for (let elem in this.getUserOrders[el].productItem.data) {
               if(this.getUserOrders[el].productItem.data[elem].product != null){
                 this.getUserOrders[el].mainProducts.push({
+                  code: this.getUserOrders[el].productItem.data[elem].product.code,
                   image: JSON.parse(this.getUserOrders[el].productItem.data[elem].product.images)[0],
                   name: this.getUserOrders[el].productItem.data[elem].product.name_en,
                   size: this.getUserOrders[el].productItem.data[elem].product.size,
                   color: (this.getUserOrders[el].productItem.data[elem].color !== null && this.getUserOrders[el].productItem.data[elem].color[0] !== undefined) ? this.getUserOrders[el].productItem.data[elem].color : '',
                   count: this.getUserOrders[el].productItem.data[elem].count,
-                  price: this.getUserOrders[el].productItem.data[elem].product.price,
+                  price: (userRole === 'juridical') ? this.getUserOrders[el].productItem.data[elem].product.price_wholesale : this.getUserOrders[el].productItem.data[elem].product.price,
                 })
               }
             }

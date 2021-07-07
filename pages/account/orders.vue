@@ -76,6 +76,7 @@
             { text: '', value: 'data-table-expand' },
           ],
           ProdHeaders: [
+            { text: 'Կոդը', value: 'code', sortable: false, align: 'start',},
             { text: this.$t('image'), value: 'image',  sortable: false,  align: 'start', },
             { text: this.$t('name'),value: 'name',  sortable: false,  align: 'center', },
             { text: this.$t('size'), value: 'size',  sortable: false,  align: 'center', },
@@ -104,6 +105,8 @@
 
         await this.$store.dispatch('wishListAndCart/fetch');
         for(let el in this.getUserOrders){
+          let userRole = this.getUserOrders[el].userRole;
+
           this.getUserOrders[el].mainProducts = [];
           if(this.getUserOrders[el].product_id !== null && this.getUserOrders[el].product_id !== 0) {
             let product_info = await this.$axios.$get(this.$axios.defaults.baseURL+`/product/get/${this.getUserOrders[el].product_id}`);
@@ -113,7 +116,7 @@
               size: product_info.size,
               color: '',
               count: 1,
-              price: product_info.price,
+              price: (userRole === 'juridical') ? product_info.price_wholesale : product_info.price,
             });
           } else {
             for(let elem in this.getUserOrders[el].productItem.data){
@@ -125,7 +128,7 @@
                     size: this.getUserOrders[el].productItem.data[elem].size[0] !== undefined ? this.getUserOrders[el].productItem.data[elem].size[0] : '',
                     color: this.getUserOrders[el].productItem.data[elem].color[0] !== undefined ? this.getUserOrders[el].productItem.data[elem].color[0] : '',
                     count: this.getUserOrders[el].productItem.data[elem].count,
-                    price: this.getUserOrders[el].productItem.data[elem].product.price,
+                    price: (userRole === 'juridical') ? this.getUserOrders[el].productItem.data[elem].product.price_wholesale : this.getUserOrders[el].productItem.data[elem].product.price,
                   })
                 } else if (this.$i18n.locale == 'am') {
                   this.getUserOrders[el].mainProducts.push({
@@ -134,7 +137,7 @@
                     size: this.getUserOrders[el].productItem.data[elem].size[0] !== undefined ? this.getUserOrders[el].productItem.data[elem].size[0] : '',
                     color: this.getUserOrders[el].productItem.data[elem].color[0] !== undefined ? this.getUserOrders[el].productItem.data[elem].color[0] : '',
                     count: this.getUserOrders[el].productItem.data[elem].count,
-                    price: this.getUserOrders[el].productItem.data[elem].product.price,
+                    price: (userRole === 'juridical') ? this.getUserOrders[el].productItem.data[elem].product.price_wholesale : this.getUserOrders[el].productItem.data[elem].product.price,
                   })
                 } else if (this.$i18n.locale == 'en') {
                   this.getUserOrders[el].mainProducts.push({
@@ -143,7 +146,7 @@
                     size: this.getUserOrders[el].productItem.data[elem].size[0] !== undefined ? elem.size[0] : '',
                     color: this.getUserOrders[el].productItem.data[elem].color[0] !== undefined ? elem.color[0] : '',
                     count: this.getUserOrders[el].productItem.data[elem].count,
-                    price: this.getUserOrders[el].productItem.data[elem].product.price,
+                    price: (userRole === 'juridical') ? this.getUserOrders[el].productItem.data[elem].product.price_wholesale : this.getUserOrders[el].productItem.data[elem].product.price,
                   })
                 }
               }
