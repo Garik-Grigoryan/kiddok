@@ -11,7 +11,8 @@
             <th class="text-left">Image</th>
             <th class="text-left">Name</th>
             <th class="text-left">Bestsellers</th>
-            <th class="text-left">In stock</th>
+            <th class="text-left">Is New</th>
+            <th class="text-left">In Stock</th>
             <th class="text-left">Action</th>
           </tr>
         </thead>
@@ -34,6 +35,14 @@
               <v-radio label="Yes" value="1"></v-radio>
               <v-radio label="No" value="0" checked></v-radio>
             </v-radio-group> -->
+          </td>
+          <td>
+            <div v-if="item.isNew === 1">
+              <input type="checkbox" name="is_new" checked @click="is_new(item.id, $event)">
+            </div>
+            <div v-else>
+              <input type="checkbox" name="is_new" @click="is_new(item.id, $event)">
+            </div>
           </td>
           <td>
             <div v-if="item.in_stock === '1'">
@@ -81,6 +90,10 @@
       async in_stock(id, e) {
         let in_stock = (e.path[0].checked) ? '1' : '0';
         await this.$axios.$post(this.$axios.defaults.baseURL+'/product/in_stock', {id, in_stock});
+      },
+      async is_new(id, e) {
+        let is_new = (e.path[0].checked) ? 1 : 0;
+        await this.$axios.$post(this.$axios.defaults.baseURL+'/product/is_new', {id, is_new});
       }
     }
   }
