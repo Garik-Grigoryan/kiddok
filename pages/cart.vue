@@ -192,7 +192,10 @@
                           <v-row>
                             <v-item  v-for="(delivery, n) in deliveryMethods" :key="n" v-slot:default="{ active, toggle }">
                               <v-card class="d-flex text-center align-center mx-3" style="width: 100%; margin-bottom: 15px;" @click="toggle(), chooseDelivery($event)">
-                                  <button type="button" class="radio-input" style="width: 100%; margin: 0;">
+                                  <button v-if="active" type="button" class="radio-input selected" style="width: 100%; margin: 0;">
+                                    <span>{{delivery}}</span>
+                                  </button>
+                                  <button v-else type="button" class="radio-input" style="width: 100%; margin: 0;">
                                     <span>{{delivery}}</span>
                                   </button>
                               </v-card>
@@ -794,18 +797,18 @@
         this.changeCount(item);
       },
       chooseDelivery(e) {
-        var all = document.querySelectorAll('.delivery-block .radio-input');
-        for(let i = 0; i < all.length; i++) {
-          all[i].classList.remove("selected");
-        }
+        // var all = document.querySelectorAll('.delivery-block .radio-input');
+        // for(let i = 0; i < all.length; i++) {
+        //   all[i].classList.remove("selected");
+        // }
 
-        if(e.path[0].classList.contains('radio-input')){
-          e.path[0].classList.add("selected");
-        } else if(e.path[1].classList.contains('radio-input')) {
-          e.path[1].classList.add("selected");
-        } else {
-          e.path[2].classList.add("selected");
-        }
+        // if(e.path[0].classList.contains('radio-input')){
+        //   e.path[0].classList.add("selected");
+        // } else if(e.path[1].classList.contains('radio-input')) {
+        //   e.path[1].classList.add("selected");
+        // } else {
+        //   e.path[2].classList.add("selected");
+        // }
       }
     }
   }
