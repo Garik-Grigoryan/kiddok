@@ -188,19 +188,19 @@
                       <v-divider style="margin: 5px 0 0 0;"></v-divider>
                     </div>
                     <div class="step2_block delivery-block">
-                        <button type="button" class="radio-input" style="width: 100%;" @click="chooseDelivery($event)">
+                        <button type="button" class="radio-input" style="width: 100%;" onclick="" @click="chooseDelivery($event)">
                           <span>Անվճար առաքում Երևանում, 10000դր. և ավելի գնման դեպքում</span>
                         </button>
-                        <button type="button" class="radio-input" style="width: 100%;" @click="chooseDelivery($event)">
+                        <button type="button" class="radio-input" style="width: 100%;" onclick="" @click="chooseDelivery($event)">
                           <span>500 դր առաքում Երևանում, մինչև 10000դր. գնման դեպքում</span>
                         </button>
-                        <button type="button" class="radio-input" style="width: 100%;" @click="chooseDelivery($event)">
+                        <button type="button" class="radio-input" style="width: 100%;" onclick="" @click="chooseDelivery($event)">
                           <span>1000դր. շտապ առաքում, Երևանում *Շտապ առաքում իրագործելի է մինչ ժամը 20:00 կատարած պատվերների համար:</span>
                         </button>
-                        <button type="button" class="radio-input" style="width: 100%;" @click="chooseDelivery($event)">
+                        <button type="button" class="radio-input" style="width: 100%;" onclick="" @click="chooseDelivery($event)">
                           <span>1500դր առաքում ՀՀ մարզեր</span>
                         </button>
-                        <button type="button" class="radio-input" style="width: 100%;" @click="chooseDelivery($event)">
+                        <button type="button" class="radio-input" style="width: 100%;" onclick="" @click="chooseDelivery($event)">
                           <span>Առաքում ՀԱՅՓՈՍՏԻ միջոցով անվճար</span>
                         </button>
                     </div>
@@ -782,8 +782,10 @@
 
         if(e.path[0].classList.contains('radio-input')){
           e.path[0].classList.add("selected");
-        } else {
+        } else if(e.path[1].classList.contains('radio-input')) {
           e.path[1].classList.add("selected");
+        } else {
+          e.path[2].classList.add("selected");
         }
       }
     }
