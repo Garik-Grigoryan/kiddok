@@ -150,7 +150,21 @@
                         <v-divider style="margin: 5px 0 0 0;"></v-divider>
                       </div>
                       <div class="step2_block delivery-block">
-                          <div class="radio-input" @click="chooseDelivery($event)">
+                        <v-item-group :multiple="false">
+                          <v-row>
+                            <v-item  v-for="(delivery, n) in deliveryMethods" :key="n" v-slot:default="{ active, toggle }">
+                              <v-card class="d-flex text-center align-center mx-3" style="width: 100%; margin-bottom: 15px;" @click="toggle(), chooseDelivery($event)">
+                                  <button v-if="active" type="button" class="radio-input selected" style="width: 100%; margin: 0;">
+                                    <span>{{delivery}}</span>
+                                  </button>
+                                  <button v-else type="button" class="radio-input" style="width: 100%; margin: 0;">
+                                    <span>{{delivery}}</span>
+                                  </button>
+                              </v-card>
+                            </v-item>
+                          </v-row>
+                        </v-item-group>
+                          <!-- <div class="radio-input" @click="chooseDelivery($event)">
                             <span>Անվճար առաքում Երևանում, 10000դր. և ավելի գնման դեպքում</span>
                           </div>
                           <div class="radio-input" @click="chooseDelivery($event)">
@@ -164,7 +178,7 @@
                           </div>
                           <div class="radio-input" @click="chooseDelivery($event)">
                             <span>Առաքում ՀԱՅՓՈՍՏԻ միջոցով անվճար</span>
-                          </div>
+                          </div> -->
                       </div>
                       <div class="step2_block">
                         <label>Լրացուցիչ նշումներ. Ցանկալի է նշել 2 -րդ հեռ.</label>
@@ -227,6 +241,13 @@
       ],
       addressRules: [
         v => !!v || 'Address is required',
+      ],
+      deliveryMethods: [
+        'Անվճար առաքում Երևանում, 10000դր. և ավելի գնման դեպքում', 
+        '500 դր առաքում Երևանում, մինչև 10000դր. գնման դեպքում', 
+        '1000դր. շտապ առաքում, Երևանում *Շտապ առաքում իրագործելի է մինչ ժամը 20:00 կատարած պատվերների համար:',
+        '1500դր առաքում ՀՀ մարզեր',
+        'Առաքում ՀԱՅՓՈՍՏԻ միջոցով անվճար'
       ],
     }),
     methods: {
@@ -304,16 +325,16 @@
         }
       },
       chooseDelivery(e) {
-        let all = document.querySelectorAll('.delivery-block .radio-input');
-        for(let i = 0; i < all.length; i++) {
-          all[i].classList.remove("selected");
-        }
+        // let all = document.querySelectorAll('.delivery-block .radio-input');
+        // for(let i = 0; i < all.length; i++) {
+        //   all[i].classList.remove("selected");
+        // }
 
-        if(e.path[0].classList.contains('radio-input')){
-          e.path[0].classList.add("selected");
-        } else {
-          e.path[1].classList.add("selected");
-        }
+        // if(e.path[0].classList.contains('radio-input')){
+        //   e.path[0].classList.add("selected");
+        // } else {
+        //   e.path[1].classList.add("selected");
+        // }
       }
     },
     computed: {
